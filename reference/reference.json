@@ -1,0 +1,1347 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "implementation": "Independent Python/NumPy/SciPy reference; no production imports",
+    "python_version": "3.12.14",
+    "numpy_version": "2.3.5",
+    "scipy_version": "1.17.0",
+    "asset_order": [
+      "GOOGL",
+      "ISRG",
+      "TSM",
+      "BTC",
+      "ETH"
+    ],
+    "equations": {
+      "fx": "P_DKK[t] = P_USD[t] * FX_DKK_per_USD[t]",
+      "returns": "r[t] = P_DKK[t]/P_DKK[t-1] - 1",
+      "covariance": "Sigma_annual = 252 * centered.T @ centered / (observations-1)",
+      "risk_share": "w[i]*(Sigma@w)[i] / (w.T@Sigma@w)",
+      "erc_objective": "sum((risk_share[i] - 1/N)^2)",
+      "buy_objective": "min_x sum(((v[i]+x[i])/(sum(v)+C)-normalized_target[i])^2), x>=0, sum(x)=C",
+      "buy_projection": "y=(sum(v)+C)*normalized_target-v; x=max(y-theta,0), sum(x)=C"
+    }
+  },
+  "fx": {
+    "id": "FX-01",
+    "usd_prices": [
+      100.0,
+      102.0,
+      101.0,
+      104.0
+    ],
+    "dkk_per_usd": [
+      6.8,
+      6.9,
+      6.85,
+      7.0
+    ],
+    "dkk_prices": [
+      680.0,
+      703.8,
+      691.85,
+      728.0
+    ],
+    "simple_returns": [
+      0.035,
+      -0.016979255470304065,
+      0.0522512105225121
+    ],
+    "high_precision_simple_returns": [
+      "0.035",
+      "-0.0169792554703040636544472861608411480534",
+      "0.052251210522512105225121052251210522512"
+    ],
+    "prompt_expected_returns": [
+      0.035,
+      -0.01697926,
+      0.05225121
+    ],
+    "return_rounding_max_abs_error": 4.529695934313294e-09
+  },
+  "covariance": {
+    "id": "COV-01",
+    "returns": [
+      [
+        0.01,
+        0.02,
+        0.0
+      ],
+      [
+        -0.01,
+        0.01,
+        0.02
+      ],
+      [
+        0.02,
+        -0.01,
+        0.01
+      ],
+      [
+        0.0,
+        0.0,
+        -0.01
+      ]
+    ],
+    "ddof": 1,
+    "annualization_factor": 252,
+    "column_means": [
+      0.005,
+      0.004999999999999999,
+      0.004999999999999999
+    ],
+    "sample_covariance": [
+      [
+        0.00016666666666666666,
+        -6.666666666666667e-05,
+        -3.3333333333333335e-05
+      ],
+      [
+        -6.666666666666667e-05,
+        0.00016666666666666666,
+        1.9660199394403815e-21
+      ],
+      [
+        -3.3333333333333335e-05,
+        1.9660199394403815e-21,
+        0.00016666666666666666
+      ]
+    ],
+    "annual_covariance": [
+      [
+        0.041999999999999996,
+        -0.016800000000000002,
+        -0.008400000000000001
+      ],
+      [
+        -0.016800000000000002,
+        0.041999999999999996,
+        4.954370247389761e-19
+      ],
+      [
+        -0.008400000000000001,
+        4.954370247389761e-19,
+        0.041999999999999996
+      ]
+    ],
+    "annual_volatilities": [
+      0.20493901531919195,
+      0.20493901531919195,
+      0.20493901531919195
+    ],
+    "annual_covariance_eigenvalues": [
+      0.023217028989001742,
+      0.041999999999999996,
+      0.06078297101099822
+    ]
+  },
+  "erc": [
+    {
+      "id": "ERC-01",
+      "annual_covariance": [
+        [
+          0.010000000000000002,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.04000000000000001,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.09,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.16000000000000003,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.25
+        ]
+      ],
+      "weights": [
+        0.43795620437956206,
+        0.21897810218978103,
+        0.14598540145985403,
+        0.10948905109489052,
+        0.08759124087591241
+      ],
+      "exact_weight_fractions": [
+        "60/137",
+        "30/137",
+        "20/137",
+        "15/137",
+        "12/137"
+      ],
+      "scipy_weights": [
+        0.4379562090743901,
+        0.2189780997058158,
+        0.14598540053982828,
+        0.10948905139821274,
+        0.08759123928175311
+      ],
+      "scipy_objective": 8.356286402946984e-17,
+      "scipy_max_abs_weight_error": 4.694828026341469e-09,
+      "portfolio_variance": 0.009590281847727637,
+      "portfolio_volatility": 0.09792998441604919,
+      "marginal_volatility": [
+        0.0447213595499958,
+        0.0894427190999916,
+        0.13416407864998736,
+        0.1788854381999832,
+        0.22360679774997896
+      ],
+      "absolute_volatility_contributions": [
+        0.01958599688320984,
+        0.01958599688320984,
+        0.019585996883209836,
+        0.01958599688320984,
+        0.019585996883209836
+      ],
+      "risk_shares": [
+        0.20000000000000004,
+        0.20000000000000004,
+        0.2,
+        0.20000000000000004,
+        0.2
+      ],
+      "objective": 2.311115933264683e-33
+    },
+    {
+      "id": "ERC-02",
+      "purpose": "Independent audit fixture; these bounds are not application defaults.",
+      "annual_volatilities": [
+        0.2,
+        0.28,
+        0.35,
+        0.65,
+        0.85
+      ],
+      "correlation": [
+        [
+          1.0,
+          0.25,
+          0.4,
+          0.05,
+          0.05
+        ],
+        [
+          0.25,
+          1.0,
+          0.3,
+          0.1,
+          0.1
+        ],
+        [
+          0.4,
+          0.3,
+          1.0,
+          0.15,
+          0.15
+        ],
+        [
+          0.05,
+          0.1,
+          0.15,
+          1.0,
+          0.65
+        ],
+        [
+          0.05,
+          0.1,
+          0.15,
+          0.65,
+          1.0
+        ]
+      ],
+      "annual_covariance": [
+        [
+          0.04000000000000001,
+          0.014000000000000002,
+          0.028000000000000004,
+          0.0065000000000000014,
+          0.0085
+        ],
+        [
+          0.014000000000000002,
+          0.07840000000000001,
+          0.0294,
+          0.018200000000000004,
+          0.0238
+        ],
+        [
+          0.027999999999999997,
+          0.029400000000000003,
+          0.12249999999999998,
+          0.034125,
+          0.044625
+        ],
+        [
+          0.006500000000000001,
+          0.0182,
+          0.034124999999999996,
+          0.42250000000000004,
+          0.359125
+        ],
+        [
+          0.0085,
+          0.023800000000000005,
+          0.044625,
+          0.359125,
+          0.7224999999999999
+        ]
+      ],
+      "covariance_eigenvalues": [
+        0.030722644538305293,
+        0.06369660364618045,
+        0.14101866392619816,
+        0.1837193428834626,
+        0.9667427450058538
+      ],
+      "lower_bounds": [
+        0.05,
+        0.05,
+        0.05,
+        0.03,
+        0.03
+      ],
+      "upper_bounds": [
+        0.32,
+        0.4,
+        0.4,
+        0.2,
+        0.2
+      ],
+      "crypto_cap": 0.12,
+      "weights": [
+        0.32,
+        0.32379895467731273,
+        0.2362010453226872,
+        0.05210732278740623,
+        0.06789267721259376
+      ],
+      "portfolio_variance": 0.042317722030986264,
+      "portfolio_volatility": 0.20571271723203274,
+      "marginal_volatility": [
+        0.12086078256843576,
+        0.19140453882181108,
+        0.25385980571813954,
+        0.30348538519374624,
+        0.431341287718668
+      ],
+      "absolute_volatility_contributions": [
+        0.038675450421899446,
+        0.06197658959099555,
+        0.05996195147603885,
+        0.01581381092755085,
+        0.02928491481554806
+      ],
+      "risk_shares": [
+        0.18800709524572387,
+        0.3012773853990239,
+        0.2914839310026955,
+        0.07687327813434953,
+        0.1423583102182072
+      ],
+      "objective": 0.03725300222769519,
+      "kkt": {
+        "constraint_sign_convention": "g <= 0; L=f+lambda*(sum(w)-1)+sum(mu*g)",
+        "gradient": [
+          -0.06214484004440091,
+          0.1888936217946084,
+          0.1888936217946084,
+          -0.7157839949231031,
+          -0.715783994923103
+        ],
+        "active_constraints": [
+          "sum(weights)-1",
+          "weight-upper[GOOGL]",
+          "BTC+ETH-crypto_cap"
+        ],
+        "multipliers": {
+          "sum(weights)-1": -0.1888936217946086,
+          "weight-upper[GOOGL]": 0.25103846183900946,
+          "BTC+ETH-crypto_cap": 0.9046776167177117
+        },
+        "primal_linf": 1.1102230246251565e-16,
+        "stationarity_linf": 2.220446049250313e-16,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      },
+      "multistart": {
+        "method": "SciPy SLSQP with analytic gradient; active-face root polish",
+        "random_seed": 20261002,
+        "starts": 64,
+        "successful_starts": 64,
+        "minimum_objective": 0.03725300222769471,
+        "maximum_successful_objective": 0.03725300222769999,
+        "maximum_weight_distance_from_polished": 2.4906058979090595e-08,
+        "global_optimality_claim": false
+      },
+      "analytic_gradient_max_abs_finite_difference_error": 3.5987324231712137e-11
+    }
+  ],
+  "buy_only": [
+    {
+      "id": "BUY-01",
+      "current_values_dkk": [
+        2000.0,
+        2000.0,
+        3000.0,
+        1800.0,
+        1200.0
+      ],
+      "cash_dkk": 2500,
+      "target_input": [
+        0.26222622,
+        0.22582258,
+        0.20692069,
+        0.17811781,
+        0.12691269
+      ],
+      "target_input_sum": 0.9999999899999998,
+      "normalized_target": [
+        0.2622262226222623,
+        0.22582258225822585,
+        0.20692069206920694,
+        0.17811781178117814,
+        0.12691269126912694
+      ],
+      "post_trade_total_dkk": 12500.0,
+      "ideal_unconstrained_buys_dkk": [
+        1277.827782778279,
+        822.7822782278231,
+        -413.49134913491343,
+        426.4726472647267,
+        386.4086408640867
+      ],
+      "simplex_threshold_dkk": 103.37283728372881,
+      "buys_dkk": [
+        1174.4549454945502,
+        719.4094409440943,
+        0.0,
+        323.09980998099786,
+        283.0358035803579
+      ],
+      "buys_rounded_to_cents_dkk": [
+        1174.45,
+        719.41,
+        0.0,
+        323.1,
+        283.04
+      ],
+      "post_trade_weights": [
+        0.253956395639564,
+        0.21755275527552753,
+        0.24,
+        0.16984798479847982,
+        0.11864286428642863
+      ],
+      "l2_squared_weight_error": 0.0013678007664752884,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        1174.454937231784,
+        719.4094369941834,
+        6.992716668851778e-14,
+        323.099809787251,
+        283.03581598678176
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 1.240642387756452e-05,
+      "scipy_buys_dkk": [
+        1174.45494549455,
+        719.4094409440943,
+        0.0,
+        323.09980998099803,
+        283.0358035803579
+      ],
+      "scipy_max_abs_buy_error_dkk": 2.2737367544323206e-13,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 206.74567456745763,
+        "lower_bound_multipliers": [
+          0.0,
+          0.0,
+          1033.7283728372845,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 4.547473508864641e-13,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-02-balanced",
+      "current_values_dkk": [
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0,
+        1000.0
+      ],
+      "cash_dkk": 1000,
+      "target_input": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 6000.0,
+      "ideal_unconstrained_buys_dkk": [
+        200.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "simplex_threshold_dkk": 0.0,
+      "buys_dkk": [
+        200.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "buys_rounded_to_cents_dkk": [
+        200.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "post_trade_weights": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "l2_squared_weight_error": 0.0,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        200.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 0.0,
+      "scipy_buys_dkk": [
+        200.0,
+        200.0,
+        200.0,
+        200.0,
+        200.0
+      ],
+      "scipy_max_abs_buy_error_dkk": 0.0,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 0.0,
+        "lower_bound_multipliers": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 0.0,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-03-heavy-overweight",
+      "current_values_dkk": [
+        9000.0,
+        250.0,
+        250.0,
+        250.0,
+        250.0
+      ],
+      "cash_dkk": 2500,
+      "target_input": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 12500.0,
+      "ideal_unconstrained_buys_dkk": [
+        -6500.0,
+        2250.0,
+        2250.0,
+        2250.0,
+        2250.0
+      ],
+      "simplex_threshold_dkk": 1625.0,
+      "buys_dkk": [
+        0.0,
+        625.0,
+        625.0,
+        625.0,
+        625.0
+      ],
+      "buys_rounded_to_cents_dkk": [
+        0.0,
+        625.0,
+        625.0,
+        625.0,
+        625.0
+      ],
+      "post_trade_weights": [
+        0.72,
+        0.07,
+        0.07,
+        0.07,
+        0.07
+      ],
+      "l2_squared_weight_error": 0.33800000000000013,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        3.469446951953614e-12,
+        624.9999999999995,
+        624.9999999999995,
+        624.9999999999999,
+        624.9999999999977
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 3.469446951953614e-12,
+      "scipy_buys_dkk": [
+        0.0,
+        624.9999999999999,
+        624.9999999999999,
+        624.9999999999999,
+        624.9999999999999
+      ],
+      "scipy_max_abs_buy_error_dkk": 1.1368683772161603e-13,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 3250.0,
+        "lower_bound_multipliers": [
+          16250.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 0.0,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-04-zero-cash",
+      "current_values_dkk": [
+        2000.0,
+        2000.0,
+        3000.0,
+        1800.0,
+        1200.0
+      ],
+      "cash_dkk": 0,
+      "target_input": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 10000.0,
+      "ideal_unconstrained_buys_dkk": [
+        0.0,
+        0.0,
+        -1000.0,
+        200.0,
+        800.0
+      ],
+      "simplex_threshold_dkk": 800.0,
+      "buys_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "buys_rounded_to_cents_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "post_trade_weights": [
+        0.2,
+        0.2,
+        0.3,
+        0.18,
+        0.12
+      ],
+      "l2_squared_weight_error": 0.0168,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 0.0,
+      "scipy_buys_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scipy_max_abs_buy_error_dkk": 0.0,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 1600.0,
+        "lower_bound_multipliers": [
+          1600.0,
+          1600.0,
+          3600.0,
+          1200.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 0.0,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-05-empty-holdings",
+      "current_values_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cash_dkk": 1000,
+      "target_input": [
+        1,
+        2,
+        3,
+        2,
+        2
+      ],
+      "target_input_sum": 10.0,
+      "normalized_target": [
+        0.1,
+        0.2,
+        0.3,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 1000.0,
+      "ideal_unconstrained_buys_dkk": [
+        100.0,
+        200.0,
+        300.0,
+        200.0,
+        200.0
+      ],
+      "simplex_threshold_dkk": 0.0,
+      "buys_dkk": [
+        100.0,
+        200.0,
+        300.0,
+        200.0,
+        200.0
+      ],
+      "buys_rounded_to_cents_dkk": [
+        100.0,
+        200.0,
+        300.0,
+        200.0,
+        200.0
+      ],
+      "post_trade_weights": [
+        0.1,
+        0.2,
+        0.3,
+        0.2,
+        0.2
+      ],
+      "l2_squared_weight_error": 0.0,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        100.0,
+        200.0,
+        300.0,
+        200.0,
+        200.0
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 0.0,
+      "scipy_buys_dkk": [
+        99.99999999999999,
+        200.0,
+        300.0,
+        200.0,
+        200.0
+      ],
+      "scipy_max_abs_buy_error_dkk": 1.4210854715202004e-14,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 0.0,
+        "lower_bound_multipliers": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 0.0,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-06-sparse-target",
+      "current_values_dkk": [
+        100.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cash_dkk": 10,
+      "target_input": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "post_trade_total_dkk": 110.0,
+      "ideal_unconstrained_buys_dkk": [
+        10.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "simplex_threshold_dkk": 0.0,
+      "buys_dkk": [
+        10.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "buys_rounded_to_cents_dkk": [
+        10.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "post_trade_weights": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "l2_squared_weight_error": 0.0,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        9.999999999999996,
+        1.5265566588595902e-15,
+        3.8163916471489756e-16,
+        3.8163916471489756e-16,
+        1.908195823574488e-15
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 3.552713678800501e-15,
+      "scipy_buys_dkk": [
+        10.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scipy_max_abs_buy_error_dkk": 0.0,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 0.0,
+        "lower_bound_multipliers": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 0.0,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-07-multiple-blocked",
+      "current_values_dkk": [
+        5000.0,
+        3500.0,
+        500.0,
+        500.0,
+        500.0
+      ],
+      "cash_dkk": 500,
+      "target_input": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 10500.0,
+      "ideal_unconstrained_buys_dkk": [
+        -2900.0,
+        -1400.0,
+        1600.0,
+        1600.0,
+        1600.0
+      ],
+      "simplex_threshold_dkk": 1433.3333333333333,
+      "buys_dkk": [
+        0.0,
+        0.0,
+        166.66666666666674,
+        166.66666666666674,
+        166.66666666666674
+      ],
+      "buys_rounded_to_cents_dkk": [
+        0.0,
+        0.0,
+        166.67,
+        166.67,
+        166.66
+      ],
+      "post_trade_weights": [
+        0.47619047619047616,
+        0.3333333333333333,
+        0.0634920634920635,
+        0.0634920634920635,
+        0.0634920634920635
+      ],
+      "l2_squared_weight_error": 0.14996220710506422,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        6.192962809237201e-13,
+        3.642919299551295e-14,
+        166.66666666666669,
+        166.666666666667,
+        166.66666666666558
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 1.1652900866465643e-12,
+      "scipy_buys_dkk": [
+        0.0,
+        0.0,
+        166.66666666666666,
+        166.66666666666666,
+        166.66666666666666
+      ],
+      "scipy_max_abs_buy_error_dkk": 8.526512829121202e-14,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 2866.6666666666665,
+        "lower_bound_multipliers": [
+          8666.666666666666,
+          5666.666666666666,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 2.2737367544323206e-13,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    },
+    {
+      "id": "BUY-08-small-cash",
+      "current_values_dkk": [
+        2000.0,
+        2000.0,
+        3000.0,
+        1800.0,
+        1200.0
+      ],
+      "cash_dkk": 0.03,
+      "target_input": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "target_input_sum": 1.0,
+      "normalized_target": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "post_trade_total_dkk": 10000.03,
+      "ideal_unconstrained_buys_dkk": [
+        0.006000000000312866,
+        0.006000000000312866,
+        -999.9939999999997,
+        200.0060000000003,
+        800.0060000000003
+      ],
+      "simplex_threshold_dkk": 799.9760000000003,
+      "buys_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.029999999999972715
+      ],
+      "buys_rounded_to_cents_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.03
+      ],
+      "post_trade_weights": [
+        0.19999940000179997,
+        0.19999940000179997,
+        0.29999910000269997,
+        0.17999946000161998,
+        0.12000263999208001
+      ],
+      "l2_squared_weight_error": 0.01679941921053354,
+      "scipy_method": "SLSQP in weight coordinates; linear KKT polish on SLSQP's active set",
+      "scipy_raw_buys_dkk": [
+        0.0,
+        5.513872802927219e-13,
+        2.7382857388044334e-13,
+        0.0,
+        0.02999999999954652
+      ],
+      "scipy_raw_max_abs_buy_error_dkk": 5.513872802927219e-13,
+      "scipy_buys_dkk": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.029999999999946847
+      ],
+      "scipy_max_abs_buy_error_dkk": 2.5868196473766147e-14,
+      "kkt": {
+        "objective": "sum((x-ideal)^2); g=-x<=0",
+        "equality_multiplier": 1599.9520000000007,
+        "lower_bound_multipliers": [
+          1599.94,
+          1599.94,
+          3599.94,
+          1199.94,
+          0.0
+        ],
+        "cash_balance_abs_dkk": 2.7283730830163222e-14,
+        "stationarity_linf": 0.0,
+        "dual_violation_linf": 0.0,
+        "complementarity_linf": 0.0
+      }
+    }
+  ],
+  "singular_and_zero_variance": [
+    {
+      "id": "ERC-SINGULAR-01",
+      "annual_covariance": [
+        [
+          0.010000000000000002,
+          0.020000000000000004,
+          0.03,
+          0.04000000000000001,
+          0.05
+        ],
+        [
+          0.020000000000000004,
+          0.04000000000000001,
+          0.06,
+          0.08000000000000002,
+          0.1
+        ],
+        [
+          0.03,
+          0.06,
+          0.09,
+          0.12,
+          0.15
+        ],
+        [
+          0.04000000000000001,
+          0.08000000000000002,
+          0.12,
+          0.16000000000000003,
+          0.2
+        ],
+        [
+          0.05,
+          0.1,
+          0.15,
+          0.2,
+          0.25
+        ]
+      ],
+      "matrix_rank": 1,
+      "weights": [
+        0.43795620437956206,
+        0.21897810218978103,
+        0.14598540145985403,
+        0.10948905109489052,
+        0.08759124087591241
+      ],
+      "portfolio_variance": 0.04795140923863819,
+      "portfolio_volatility": 0.21897810218978106,
+      "marginal_volatility": [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.49999999999999994
+      ],
+      "absolute_volatility_contributions": [
+        0.043795620437956206,
+        0.043795620437956206,
+        0.043795620437956206,
+        0.043795620437956206,
+        0.0437956204379562
+      ],
+      "risk_shares": [
+        0.2,
+        0.2,
+        0.19999999999999998,
+        0.2,
+        0.19999999999999998
+      ],
+      "objective": 1.5407439555097887e-33,
+      "interpretation": "PSD rank-one covariance still admits exact ERC and positive portfolio variance."
+    },
+    {
+      "id": "ERC-SINGULAR-02",
+      "annual_covariance": [
+        [
+          0.01,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.04,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.09,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.16,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "matrix_rank": 4,
+      "weights": [
+        0.38400000000000006,
+        0.19200000000000003,
+        0.128,
+        0.09600000000000002,
+        0.2
+      ],
+      "portfolio_variance": 0.005898240000000002,
+      "portfolio_volatility": 0.07680000000000001,
+      "marginal_volatility": [
+        0.05,
+        0.1,
+        0.14999999999999997,
+        0.2,
+        0.0
+      ],
+      "absolute_volatility_contributions": [
+        0.019200000000000005,
+        0.019200000000000005,
+        0.019199999999999995,
+        0.019200000000000005,
+        0.0
+      ],
+      "risk_shares": [
+        0.25,
+        0.25,
+        0.24999999999999992,
+        0.25,
+        0.0
+      ],
+      "objective": 0.049999999999999996,
+      "interpretation": "Zero-variance ETH cannot contribute positive risk. Minimum five-asset objective is 0.05; many weights attain it."
+    },
+    {
+      "id": "ERC-ZERO-01",
+      "annual_covariance": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "expected_status": "reject_undefined_zero_portfolio_variance",
+      "rejection_verified": true
+    }
+  ],
+  "invalid_inputs": [
+    {
+      "id": "negative_cash",
+      "rejected": true,
+      "reason": "Cash must be finite and nonnegative."
+    },
+    {
+      "id": "negative_holding",
+      "rejected": true,
+      "reason": "Values must be five finite nonnegative numbers."
+    },
+    {
+      "id": "zero_target_sum",
+      "rejected": true,
+      "reason": "Target must be five finite nonnegative values with positive sum."
+    },
+    {
+      "id": "negative_target",
+      "rejected": true,
+      "reason": "Target must be five finite nonnegative values with positive sum."
+    },
+    {
+      "id": "nonfinite_target",
+      "rejected": true,
+      "reason": "Target must be five finite nonnegative values with positive sum."
+    },
+    {
+      "id": "zero_post_trade_value",
+      "rejected": true,
+      "reason": "Post-trade portfolio value must be positive."
+    }
+  ],
+  "comparison_tolerances": {
+    "fx_prices_dkk_abs": 1e-10,
+    "full_precision_returns_abs": 1e-12,
+    "prompt_rounded_returns_abs": 5e-09,
+    "annual_covariance_abs": 1e-12,
+    "diagonal_erc_weights_abs": 1e-07,
+    "constrained_erc_weights_abs": 2e-05,
+    "constrained_erc_objective_abs": 1e-08,
+    "buy_dkk_abs": 1e-05,
+    "constraint_feasibility_abs": 1e-08
+  }
+}

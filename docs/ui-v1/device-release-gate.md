@@ -1,0 +1,12 @@
+# UI v1 — next runtime/device gate
+
+Current status: browser, Safari, physical iPhone, Add to Home Screen, standalone safe areas, installed-PWA offline/update and deployed provider CORS are **NOT TESTED**. The local executable stopped at EACCES before an application assertion. No security bypass or substitute screenshot establishes success.
+
+1. Put the source at a normal GitHub Pages repository root, or use the version-matched ZIP workflow in `docs/mobile-release.md`. Run the existing full Chromium/WebKit workflow; all 24 cases per browser project must pass. Preserve failure artifacts and record commit/release hash, runner and browser versions.
+2. Inspect Overview, Allocate, Risk, Settings and Calculation Details at 320/390/430 px and 200% text. Review chart labels, horizontal regions, last-row visibility above navigation, light/system compatibility, visible focus and reduced motion. Review the premium composition from real screenshots; the package contains no claimed screenshot approval.
+3. Open the resulting HTTPS origin in physical iPhone Safari. Record device/iOS/version/URL/date. Confirm the supplied mark/icon, safe-area edges, scrolling, portrait and standalone launch. Test Danish numeric keyboard, focus, modal scroll at keyboard-open height, Escape/cancel where available, VoiceOver and larger accessibility text.
+4. Export a financial backup, change capital, restore and reload; verify saved holdings/history. Keys remain a separate local domain. Install via Add to Home Screen; cold-open offline and replay saved calculations. Cached/stale data must keep its actual status; expired inputs must still be rejected for new calculations.
+5. On that deployed origin use user-supplied read-only provider access where available, and actual public CoinGecko/Nationalbank endpoints. Record CORS/preflight/auth/schema/entitlement results for each provider; redact all values that could identify a credential. Mocked UI routes and Node data replay are not provider CORS evidence.
+6. Deploy a shell update of the same frozen Engine/data contract; verify user-approved activation and retained state. Only then mark those particular PWA/runtime gates PASS. The accepted automatic risk-refresh UI state remains unchanged by this UI release.
+
+Do not publish any financial backup, local key, authorization value, private debug trace or browser storage export to a repository or release. Local browser storage is a practical client-side tradeoff, not encrypted server-side secret storage.

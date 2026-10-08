@@ -1,0 +1,8 @@
+{"ratio":"5 ordinary shares per ADR","withholdingRate":0.21,"events":[
+ {"quarter":"3q24","exDate":"2025-03-18","payDate":"2025-04-10","grossUSDPerADR":0.677693,"netUSDPerADR":0.535377,"sourceURL":"https://investor.tsmc.com/english/dividends/3q24"},
+ {"quarter":"4q24","exDate":"2025-06-12","payDate":"2025-07-10","grossUSDPerADR":0.780305,"netUSDPerADR":0.616441,"sourceURL":"https://investor.tsmc.com/english/dividends/4q24"},
+ {"quarter":"1q25","exDate":"2025-09-16","payDate":"2025-10-09","grossUSDPerADR":0.821965,"netUSDPerADR":0.649352,"sourceURL":"https://investor.tsmc.com/english/dividends/1q25"},
+ {"quarter":"2q25","exDate":"2025-12-11","payDate":"2026-01-08","grossUSDPerADR":0.79542,"netUSDPerADR":0.628382,"sourceURL":"https://investor.tsmc.com/english/dividends/2q25"},
+ {"quarter":"3q25","exDate":"2026-03-17","payDate":"2026-04-09","grossUSDPerADR":0.938972,"netUSDPerADR":0.741788,"sourceURL":"https://investor.tsmc.com/english/dividends/3q25"},
+ {"quarter":"4q25","exDate":"2026-06-11","payDate":"2026-07-09","grossUSDPerADR":0.939325,"netUSDPerADR":0.742067,"sourceURL":"https://investor.tsmc.com/english/dividends/4q25"}
+]}

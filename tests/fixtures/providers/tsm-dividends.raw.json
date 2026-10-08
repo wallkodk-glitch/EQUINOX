@@ -1,0 +1,9 @@
+[
+ {"ticker":"TSM","currency":"USD","cash_amount":0.677693,"split_adjusted_cash_amount":0.677693,"ex_dividend_date":"2025-03-18","pay_date":"2025-04-10","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":0.780305,"split_adjusted_cash_amount":0.780305,"ex_dividend_date":"2025-06-12","pay_date":"2025-07-10","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":0.821965,"split_adjusted_cash_amount":0.821965,"ex_dividend_date":"2025-09-16","pay_date":"2025-10-09","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":0.79542,"split_adjusted_cash_amount":0.79542,"ex_dividend_date":"2025-12-11","pay_date":"2026-01-08","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":0.938972,"split_adjusted_cash_amount":0.938972,"ex_dividend_date":"2026-03-17","pay_date":"2026-04-09","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":0.939325,"split_adjusted_cash_amount":0.939325,"ex_dividend_date":"2026-06-11","pay_date":"2026-07-09","distribution_type":"recurring"},
+ {"ticker":"TSM","currency":"USD","cash_amount":1.096251,"split_adjusted_cash_amount":1.096251,"ex_dividend_date":"2026-09-16","pay_date":"2026-10-08","distribution_type":"recurring"}
+]

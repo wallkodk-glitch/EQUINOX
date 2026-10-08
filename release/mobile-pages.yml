@@ -1,0 +1,92 @@
+# Copy this file's full contents into .github/workflows/mobile-pages.yml in
+# a new GitHub repository containing EQUINOX-v1.2.0.zip at its root.
+# No local Node, terminal or PC is required. See docs/mobile-release.md.
+name: EQUINOX mobile ZIP release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: equinox-mobile-pages
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Validate and extract source release
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, pathlib, stat, zipfile
+          target = pathlib.Path(os.environ['RUNNER_TEMP']) / 'equinox-release'
+          assert not target.exists(), 'Destination already exists; refusing overwrite'
+          with zipfile.ZipFile('EQUINOX-v1.2.0.zip') as z:
+              infos = z.infolist()
+              assert len({i.filename for i in infos}) == len(infos), 'Duplicate paths'
+              assert sum(i.file_size for i in infos) < 100_000_000, 'Archive exceeds limit'
+              for i in infos:
+                  p = pathlib.PurePosixPath(i.filename)
+                  assert not p.is_absolute() and p.parts[0] == 'EQUINOX' and '..' not in p.parts and '\\' not in i.filename
+                  assert not stat.S_ISLNK(i.external_attr >> 16), 'Symlinks rejected'
+              manifest = json.loads(z.read('EQUINOX/RELEASE-MANIFEST.json'))
+              assert manifest['format'] == 'EQUINOX_UI_RELEASE_V1'
+              assert manifest['appVersion'] == '1.2.0' and manifest['engineVersion'] == '1.0.1'
+              assert manifest['marketDataModelVersion'] == '1.1.2'
+              actual = {i.filename for i in infos if not i.is_dir()} - {'EQUINOX/RELEASE-MANIFEST.json'}
+              assert actual == {'EQUINOX/' + name for name in manifest['files']}, 'Manifest coverage mismatch'
+              for name, meta in manifest['files'].items():
+                  data = z.read('EQUINOX/' + name)
+                  assert len(data) == meta['bytes'] and hashlib.sha256(data).hexdigest() == meta['sha256'], name
+              z.extractall(target)
+          print('Release manifest verified; source extracted for independent build.')
+          PY
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+          package-manager-cache: false
+      - run: npm ci
+        working-directory: ${{ runner.temp }}/equinox-release/EQUINOX
+      - run: python -m pip install -r reference/requirements.txt
+        working-directory: ${{ runner.temp }}/equinox-release/EQUINOX
+      - run: npx playwright install --with-deps chromium webkit
+        working-directory: ${{ runner.temp }}/equinox-release/EQUINOX
+      - run: npm run verify
+        working-directory: ${{ runner.temp }}/equinox-release/EQUINOX
+      - name: Build for repository path
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+        working-directory: ${{ runner.temp }}/equinox-release/EQUINOX
+        run: |
+          if [[ "$REPO_NAME" == *.github.io ]]; then
+            BASE_PATH=/ npm run build
+          else
+            BASE_PATH="/$REPO_NAME/" npm run build
+          fi
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: ${{ runner.temp }}/equinox-release/EQUINOX/dist
+          include-hidden-files: true
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+      - name: Hosted smoke
+        env:
+          DEPLOY_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          curl --fail --retry 6 --retry-delay 10 "$DEPLOY_URL" -o page.html
+          grep -q EQUINOX page.html
+          curl --fail --retry 3 "${DEPLOY_URL}manifest.webmanifest"
+          curl --fail --retry 3 "${DEPLOY_URL}sw.js"

@@ -1,0 +1,7 @@
+{
+ "acquiredAt":"2026-10-02T23:00:00.000Z",
+ "stock":{"instrument":"GOOGL","price":101,"observationDate":"2026-10-02","providerTimestamp":"2026-10-02T04:00:00.000Z","observationTimestamp":null},
+ "crypto":{"instrument":"BTC","price":100100,"bucketStart":"2026-10-02T19:59:00.000Z","bucketEnd":"2026-10-02T20:00:00.000Z"},
+ "current":[["BTC",100000,"2026-10-02T22:59:00.000Z"],["ETH",4000,"2026-10-02T22:59:00.000Z"]],
+ "fx":{"instrument":"USD/DKK","price":6.658,"unit":"DKK_PER_USD","observationDate":"2026-10-02","providerTimestamp":null,"observationTimestamp":null}
+}
