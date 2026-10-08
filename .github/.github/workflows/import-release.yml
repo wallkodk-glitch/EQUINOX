@@ -1,0 +1,108 @@
+name: EQUINOX mobile release import
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_zip:
+        description: "Release ZIP filename already committed at repository root"
+        required: true
+        default: "EQUINOX-v1.2.0-GitHub-ready.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Validate release ZIP
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+          test -f "$RELEASE_ZIP" || { echo "Missing $RELEASE_ZIP"; exit 1; }
+
+          python - "$RELEASE_ZIP" <<'PY'
+          import sys, zipfile
+          from pathlib import PurePosixPath
+
+          archive = sys.argv[1]
+          with zipfile.ZipFile(archive) as z:
+              for name in z.namelist():
+                  p = PurePosixPath(name)
+                  if p.is_absolute() or ".." in p.parts:
+                      raise SystemExit(f"Unsafe ZIP path: {name}")
+          print("ZIP path validation PASS")
+          PY
+
+      - name: Extract and identify release root
+        id: extract
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/equinox-import
+          mkdir -p /tmp/equinox-import
+          unzip -q "$RELEASE_ZIP" -d /tmp/equinox-import
+
+          if [[ -f /tmp/equinox-import/EQUINOX/package.json ]]; then
+            SRC=/tmp/equinox-import/EQUINOX
+          elif [[ -f /tmp/equinox-import/package.json ]]; then
+            SRC=/tmp/equinox-import
+          else
+            echo "Could not identify EQUINOX release root"
+            exit 1
+          fi
+
+          test -f "$SRC/package-lock.json"
+          test -d "$SRC/src"
+          test -f "$SRC/.github/workflows/pages.yml"
+          test -f "$SRC/RELEASE-MANIFEST.json"
+
+          echo "src=$SRC" >> "$GITHUB_OUTPUT"
+          echo "Release structure validation PASS"
+
+      - name: Import release while preserving repository workflows
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+          SRC: ${{ steps.extract.outputs.src }}
+        run: |
+          set -euo pipefail
+
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/workflows/' \
+            "$SRC/" ./
+
+          rm -f "$RELEASE_ZIP"
+
+          git status --short
+
+      - name: Commit imported release
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Import EQUINOX release from ${RELEASE_ZIP}"
+          git push origin HEAD:main
