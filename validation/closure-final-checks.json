@@ -1,0 +1,104 @@
+{
+  "startedAt": "2026-10-07T09:18:04.168Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "browserRuntime": "NOT TESTED",
+  "browserReason": "EACCES; zero browser application assertions",
+  "browserEvidence": {
+    "startedAt": "2026-10-07T08:10:25.669Z",
+    "finishedAt": "2026-10-07T08:10:33.639Z",
+    "exitCode": 1,
+    "source": "validation/release-checks.json",
+    "rerun": false
+  },
+  "physicalIPhone": "NOT TESTED",
+  "safariWebKit": "NOT TESTED",
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "startedAt": "2026-10-07T09:18:04.169Z",
+      "finishedAt": "2026-10-07T09:18:05.776Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 lint\n> eslint src tests scripts\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "startedAt": "2026-10-07T09:18:05.777Z",
+      "finishedAt": "2026-10-07T09:18:09.198Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 typecheck\n> tsc --noEmit\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:reference"
+      ],
+      "startedAt": "2026-10-07T09:18:09.200Z",
+      "finishedAt": "2026-10-07T09:18:09.796Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 test:reference\n> python3 reference/reproduce.py --check\n\nCommitted golden references match the independent recalculation.\nAll independent reference assertions passed.\nChecked: /workspace/scratch/bf49a1ea6825/final-data-closure/EQUINOX/reference/reference.json\nBUY-01 normalized target: [0.2622262226222623, 0.22582258225822585, 0.20692069206920694, 0.17811781178117814, 0.12691269126912694]\nBUY-01 optimal buys DKK: [1174.4549454945502, 719.4094409440943, 0.0, 323.09980998099786, 283.0358035803579]\nERC-02 constrained weights: [0.32, 0.32379895467731273, 0.2362010453226872, 0.05210732278740623, 0.06789267721259376]\nERC-02 objective: 0.03725300222769519\nERC-02 stationarity residual: 2.220446049250313e-16\n"
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-07T09:18:09.797Z",
+      "finishedAt": "2026-10-07T09:18:13.166Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 test\n> vitest run\n\n\n RUN  v5.0.3 /workspace/scratch/bf49a1ea6825/final-data-closure/EQUINOX\n\n\n Test Files  23 passed (23)\n      Tests  152 passed (152)\n   Start at  14:48:10\n   Duration  2.90s (tests 67%, import 16%, transform 15%, worker 1%)\n\n    Isolate  23 workers spawned · ~145ms startup each (spawn + environment, per file)\n             at least ~330ms faster with isolate: false — reuses workers across files instead of one per file\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-07T09:18:13.166Z",
+      "finishedAt": "2026-10-07T09:18:16.895Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.1.2 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 140 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB │ gzip:   0.45 kB\ndist/assets/index-D5Nt6CJb.css   12.16 kB │ gzip:   3.34 kB\ndist/assets/index-DLJ3RcZE.js   461.18 kB │ gzip: 130.34 kB │ map: 1,936.82 kB\n\n✓ built in 152ms\nPWA 2f5ed8af8b8f4d3e: 8 shell files; scope /EQUINOX/\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check-final-risk.mjs"
+      ],
+      "startedAt": "2026-10-07T09:18:16.896Z",
+      "finishedAt": "2026-10-07T09:18:19.217Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"windowStart\":\"2025-10-03\",\"windowEnd\":\"2026-10-06\",\"observations\":253,\"returns\":252,\"coverage\":1,\"snapshotHashes\":{\"equal\":\"4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32\",\"inverse\":\"f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab\",\"erc\":\"23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e\"},\"legacySnapshotSHA256\":\"e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891\",\"browserCORS\":\"NOT TESTED\"}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "reference/final-risk.py"
+      ],
+      "startedAt": "2026-10-07T09:18:19.217Z",
+      "finishedAt": "2026-10-07T09:18:19.365Z",
+      "exitCode": 0,
+      "output": "{\n  \"checkedAt\": \"2026-10-07T09:18:19.344004+00:00\",\n  \"status\": \"PASS\",\n  \"scope\": \"Independent raw-row/official raw FX as-of, gross total returns, DKK levels, covariance and correlation\",\n  \"returns\": 252,\n  \"observations\": 253,\n  \"maximumFXAgeDays\": 6,\n  \"maxReturnDifference\": 0.0,\n  \"maxCovarianceDifference\": 2.7755575615628914e-17,\n  \"browserRuntime\": \"NOT TESTED\"\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/audit-final-closure.mjs",
+        "/workspace/scratch/bf49a1ea6825/final-data-closure/baseline/EQUINOX",
+        "/workspace/scratch/bf49a1ea6825/baseline/EQUINOX"
+      ],
+      "startedAt": "2026-10-07T09:18:19.366Z",
+      "finishedAt": "2026-10-07T09:18:19.503Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"frozenFiles\":56,\"kernelFiles\":13,\"snapshotNumericsUnchanged\":true,\"dataMathematicsUnchanged\":true,\"noDependencyChanges\":true,\"deleted\":[]}\n"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "format": "EQUINOX_UI_BROWSER_EVIDENCE_V1",
+  "startedAt": "2026-10-07T21:42:00.965Z",
+  "finishedAt": "2026-10-07T21:42:02.429Z",
+  "command": [
+    "npm",
+    "run",
+    "test:browser",
+    "--",
+    "tests/browser/ui.spec.ts",
+    "--project=chromium-mobile",
+    "-g",
+    "primary navigation",
+    "--retries=0"
+  ],
+  "exitCode": 1,
+  "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 test:browser\n> playwright test tests/browser/ui.spec.ts --project=chromium-mobile -g primary navigation --retries=0\n\n[WebServer] (node:42) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:55) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n\nRunning 1 test using 1 worker\n\n(node:89) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n  ✘  1 [chromium-mobile] › tests/browser/ui.spec.ts:15:1 › primary navigation, title focus and drill-down return preserve the active tab (1ms)\n\n\n  1) [chromium-mobile] › tests/browser/ui.spec.ts:15:1 › primary navigation, title focus and drill-down return preserve the active tab \n\n    Error: browserType.launch: Failed to launch: Error: spawn /workspace/scratch/bf49a1ea6825/browser-runtime/chromium EACCES\n    Call log:\n      - <launching> /workspace/scratch/bf49a1ea6825/browser-runtime/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --disable-gpu --no-zygote --user-data-dir=/tmp/playwright_chromiumdev_profile-7eZb3U --remote-debugging-pipe --no-startup-window\n      - [pid=N/A] starting temporary directories cleanup\n      - [pid=N/A] finished temporary directories cleanup\n\n\n    Error Context: test-results/ui-primary-navigation-titl-fa7ee-urn-preserve-the-active-tab-chromium-mobile/error-context.md\n\n    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────\n    test-results/ui-primary-navigation-titl-fa7ee-urn-preserve-the-active-tab-chromium-mobile/trace.zip\n    Usage:\n\n        npx playwright show-trace test-results/ui-primary-navigation-titl-fa7ee-urn-preserve-the-active-tab-chromium-mobile/trace.zip\n\n    ────────────────────────────────────────────────────────────────────────────────────────────────\n\n  1 failed\n    [chromium-mobile] › tests/browser/ui.spec.ts:15:1 › primary navigation, title focus and drill-down return preserve the active tab \n",
+  "executableMode": "600",
+  "browserRuntime": "NOT TESTED",
+  "reason": "BROWSER_EXECUTABLE_PERMISSION_DENIED",
+  "applicationTestsExecuted": 0,
+  "providerRequestsExecuted": 0,
+  "browserCORS": "NOT TESTED",
+  "safariWebKit": "NOT TESTED",
+  "physicalIPhone": "NOT TESTED",
+  "installedPWA": "NOT TESTED",
+  "hostedDeployment": "NOT TESTED",
+  "security": "No chmod, executable relocation, alternate runtime, proxy, CORS/TLS disable or permission bypass."
+}

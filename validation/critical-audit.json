@@ -1,0 +1,135 @@
+{
+  "auditDate": "2026-10-03",
+  "scope": "Targeted six-area correctness audit; not full certification",
+  "submittedZipSha256": "69cd32b590a99f2542e4df27bb84325e826733bebe2a028483a8f0b799504836",
+  "baseline": {
+    "tests": "59 passed in 8 files",
+    "independentReferences": "passed",
+    "manifest": "76 hashes verified",
+    "distSourceMap": "18 source modules matched"
+  },
+  "findings": [
+    {
+      "severity": "HIGH",
+      "component": "Data Truth",
+      "rootCause": "No cross-row published-FX identity validation",
+      "counterexample": "demoDataset(2026-10-02T06:00:00.000Z); copy penultimate row FX timestamps to final row, set rate = penultimate rate * 1.10; prepareRisk previously accepted",
+      "impact": {
+        "fxBefore": 6.663816560944849,
+        "fxAfter": 7.330198217039335,
+        "targetBefore": [
+          0.28893585435874675,
+          0.22758974539478183,
+          0.1868460685951025,
+          0.1590352764824239,
+          0.1375930551689451
+        ],
+        "targetAfter": [
+          0.24500209764640954,
+          0.21641646547402044,
+          0.18900157177487573,
+          0.18984567592878046,
+          0.15973418917591378
+        ],
+        "buyBefore": [
+          1000,
+          0,
+          0,
+          426.76,
+          1073.24
+        ],
+        "buyAfter": [
+          1000,
+          0,
+          0,
+          498.695,
+          1001.305
+        ]
+      },
+      "fix": "Reject conflicting rates for identical observedAt/publishedAt instants; allow later published revisions"
+    },
+    {
+      "severity": "MEDIUM",
+      "component": "Data provenance",
+      "rootCause": "Acquisition timestamp checked only against calculation time",
+      "counterexample": "demoDataset(...); acquiredAt = rows[0].closeAt; later observations previously passed",
+      "fix": "All source timestamps must precede acquisition"
+    }
+  ],
+  "regressionFile": "tests/critical-audit.test.ts",
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-03T15:48:34.905182+00:00",
+      "exitCode": 0,
+      "output": "\n> equinox@1.0.1 test\n> vitest run\n\n\n RUN  v5.0.3 /workspace/scratch/3c17b097873d/equinox-critical-audit/EQUINOX\n\n\n Test Files  9 passed (9)\n      Tests  69 passed (69)\n   Start at  17:48:35\n   Duration  1.22s (tests 60%, transform 22%, import 17%, worker 1%)\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:reference"
+      ],
+      "startedAt": "2026-10-03T15:48:36.575027+00:00",
+      "exitCode": 0,
+      "output": "\n> equinox@1.0.1 test:reference\n> python3 reference/reproduce.py --check\n\nCommitted golden references match the independent recalculation.\nAll independent reference assertions passed.\nChecked: /workspace/scratch/3c17b097873d/equinox-critical-audit/EQUINOX/reference/reference.json\nBUY-01 normalized target: [0.2622262226222623, 0.22582258225822585, 0.20692069206920694, 0.17811781178117814, 0.12691269126912694]\nBUY-01 optimal buys DKK: [1174.4549454945502, 719.4094409440943, 0.0, 323.09980998099786, 283.0358035803579]\nERC-02 constrained weights: [0.32, 0.32379895467731273, 0.2362010453226872, 0.05210732278740623, 0.06789267721259376]\nERC-02 objective: 0.03725300222769519\nERC-02 stationarity residual: 2.220446049250313e-16\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "startedAt": "2026-10-03T15:48:37.500181+00:00",
+      "exitCode": 0,
+      "output": "\n> equinox@1.0.1 lint\n> eslint src tests scripts\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-03T15:48:38.587917+00:00",
+      "exitCode": 0,
+      "output": "\n> equinox@1.0.1 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\n\n> equinox@1.0.1 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n\u2713 127 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB \u2502 gzip:   0.45 kB\ndist/assets/index-DylzJ_-F.css   10.98 kB \u2502 gzip:   3.09 kB\ndist/assets/index-C7LIFSoe.js   421.32 kB \u2502 gzip: 118.13 kB \u2502 map: 1,826.88 kB\n\n\u2713 built in 153ms\nPWA d87356a7fa522f74: 8 shell files; scope /EQUINOX/\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--project=chromium-mobile",
+        "--grep",
+        "Node-generated ERC snapshot"
+      ],
+      "startedAt": "2026-10-03T15:49:26.372526+00:00",
+      "exitCode": 1,
+      "output": "\n> equinox@1.0.1 test:browser\n> playwright test --project=chromium-mobile --grep Node-generated ERC snapshot\n\nError: Process from config.webServer was not able to start. Exit code: 1\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--project=chromium-mobile",
+        "--grep",
+        "Node-generated ERC snapshot"
+      ],
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.0.1 test:browser\n> playwright test --project=chromium-mobile --grep Node-generated ERC snapshot\n\n[WebServer] npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:2324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n\nRunning 1 test using 1 worker\n\n(node:2358) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n  \u2713  1 [chromium-mobile] \u203a tests/browser/app.spec.ts:54:1 \u203a a Node-generated ERC snapshot is verified and regenerated in the browser (342ms)\n\n  1 passed (1.4s)\nnpm notice\nnpm notice New major version of npm available! 11.9.0 -> 12.2.0\nnpm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0\nnpm notice To update run: npm install -g npm@12.2.0\nnpm notice\n",
+      "environment": "Local-loopback permission required after sandbox EPERM; Chromium only"
+    }
+  ],
+  "notTested": [
+    "Physical iPhone",
+    "Safari/WebKit",
+    "Hosted deployment",
+    "Independent authenticity of market observations"
+  ]
+}

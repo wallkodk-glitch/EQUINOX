@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Actual in-memory gate/source/build mutations; no financial or source file writes.",
+  "rejectedCases": [
+    "failed mandatory command",
+    "missing mandatory command",
+    "mathematical regression",
+    "incomplete provider data",
+    "net rather than gross ADR",
+    "missing historical FX",
+    "partial synchronized coverage",
+    "independent reference mismatch",
+    "credential finding",
+    "unmatched build",
+    "faked browser PASS",
+    "changed audited source",
+    "changed production artifact"
+  ],
+  "unmodifiedCandidate": "ACCEPTED",
+  "writesDuringTests": false
+}

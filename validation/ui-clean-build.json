@@ -1,0 +1,32 @@
+{
+  "format": "EQUINOX_UI_CLEAN_BUILD_V1",
+  "startedAt": "2026-10-07T21:50:43.657Z",
+  "node": "v24.19.0",
+  "scope": "Separately npm-ci-installed copy without baseline dist; checksum comparison follows in reproducibility.json.",
+  "commands": [
+    {
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "startedAt": "2026-10-07T21:50:43.660Z",
+      "finishedAt": "2026-10-07T21:50:45.158Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\nadded 141 packages in 1s\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-07T21:50:45.158Z",
+      "finishedAt": "2026-10-07T21:50:48.707Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 147 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB │ gzip:   0.45 kB\ndist/assets/index-B04eiKRR.css   25.13 kB │ gzip:   6.04 kB\ndist/assets/index-CLgFVlph.js   480.08 kB │ gzip: 134.93 kB │ map: 1,979.50 kB\n\n✓ built in 202ms\nPWA 516cc9ee485a58f8: 9 shell files; scope /EQUINOX/\n"
+    }
+  ],
+  "status": "PASS",
+  "finishedAt": "2026-10-07T21:50:48.707Z"
+}

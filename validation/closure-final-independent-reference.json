@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-07T21:50:56.993012+00:00",
+  "status": "PASS",
+  "scope": "Independent raw-row/official raw FX as-of, gross total returns, DKK levels, covariance and correlation",
+  "returns": 252,
+  "observations": 253,
+  "maximumFXAgeDays": 6,
+  "maxReturnDifference": 0.0,
+  "maxCovarianceDifference": 2.7755575615628914e-17,
+  "browserRuntime": "NOT TESTED"
+}

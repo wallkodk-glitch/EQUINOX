@@ -1,0 +1,50 @@
+{
+  "format": "EQUINOX_UI_SNAPSHOT_COMPATIBILITY_V1",
+  "checkedAt": "2026-10-07T21:50:57.908Z",
+  "status": "PASS",
+  "scope": "Frozen Engine Node replay and exact canonical comparison to supplied accepted snapshots/data. Not Node-to-browser replay.",
+  "snapshots": [
+    {
+      "path": "tests/legacy-snapshot.json",
+      "engine": "1.0.0",
+      "schema": 1,
+      "sha256": "9d114db13ee5dd700208cb1fe93f709521484b20b6bcf0ce2a6e1d1423d7f633",
+      "sameBaselineResultAndHash": true,
+      "replayed": true
+    },
+    {
+      "path": "validation/node-snapshot.json",
+      "engine": "1.0.1",
+      "schema": 1,
+      "sha256": "e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891",
+      "sameBaselineResultAndHash": true,
+      "replayed": true
+    },
+    {
+      "model": "equal",
+      "engine": "1.0.1",
+      "schema": 2,
+      "sha256": "4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32",
+      "sameBaselineResultAndHash": true,
+      "replayed": true
+    },
+    {
+      "model": "inverse",
+      "engine": "1.0.1",
+      "schema": 2,
+      "sha256": "f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab",
+      "sameBaselineResultAndHash": true,
+      "replayed": true
+    },
+    {
+      "model": "erc",
+      "engine": "1.0.1",
+      "schema": 2,
+      "sha256": "23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e",
+      "sameBaselineResultAndHash": true,
+      "replayed": true
+    }
+  ],
+  "normalizedInputAndResultsIdentical": true,
+  "browserReplay": "NOT TESTED"
+}

@@ -1,0 +1,197 @@
+{
+  "format": "EQUINOX_UI_STATIC_ACCESSIBILITY_V1",
+  "checkedAt": "2026-10-07T21:51:03.056Z",
+  "status": "PASS",
+  "scope": "Declared CSS foreground/background pairs and source contracts only; not computed browser styles, whole-screen WCAG, VoiceOver, text reflow or touch/device certification.",
+  "colorChecks": [
+    {
+      "name": "dark text on bg",
+      "contrast": 16.180805964162253,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark muted on bg",
+      "contrast": 8.165405675866044,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark accent on bg",
+      "contrast": 8.253691197533941,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark warning-readable on bg",
+      "contrast": 8.87063449019649,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark danger-readable on bg",
+      "contrast": 9.387782119278494,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark text on surface",
+      "contrast": 15.355666313617473,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark muted on surface",
+      "contrast": 7.749011090771635,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark accent on surface",
+      "contrast": 7.832794495260786,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark warning-readable on surface",
+      "contrast": 8.41827678566912,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark danger-readable on surface",
+      "contrast": 8.909052488971538,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark correlation teal-primary worst of 101 magnitudes",
+      "contrast": 7.971248322435327,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark correlation violet-mineral worst of 101 magnitudes",
+      "contrast": 8.746025228297917,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark selected Risk boundary",
+      "contrast": 7.27565465173617,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "name": "light text on bg",
+      "contrast": 13.858889984299632,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light muted on bg",
+      "contrast": 5.637400506368261,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light accent on bg",
+      "contrast": 6.530035815949255,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light warning-readable on bg",
+      "contrast": 6.267455859496319,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light danger-readable on bg",
+      "contrast": 7.39203711270827,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light text on surface",
+      "contrast": 14.921773344906738,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light muted on surface",
+      "contrast": 6.06975109159442,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light accent on surface",
+      "contrast": 7.030845507115273,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light warning-readable on surface",
+      "contrast": 6.748127439539516,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light danger-readable on surface",
+      "contrast": 7.958956487707903,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light correlation teal-primary worst of 101 magnitudes",
+      "contrast": 7.8080017519111635,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light correlation violet-mineral worst of 101 magnitudes",
+      "contrast": 7.657378886279549,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "light selected Risk boundary",
+      "contrast": 6.098091861784273,
+      "minimum": 3,
+      "pass": true
+    },
+    {
+      "name": "primary button text",
+      "contrast": 5.567194476923131,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "hero dark text",
+      "contrast": 7.749011090771635,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "name": "hero focus outline, both themes",
+      "contrast": 7.832794495260786,
+      "minimum": 3,
+      "pass": true
+    }
+  ],
+  "sourceContracts": {
+    "focusVisible": true,
+    "reducedMotionStopsAllAnimations": true,
+    "inputZoomAllowed": true,
+    "safeAreaProgressiveEnhancement": true,
+    "formErrorAssociated": true,
+    "nativeModalAndCancel": true,
+    "secretInputMaskedAndCleared": true,
+    "largeTextChartsBounded": true,
+    "touchTargetsDeclared": true,
+    "noPermanentAnimationRuntime": true
+  },
+  "browserLayout": "NOT TESTED",
+  "voiceOver": "NOT TESTED",
+  "physicalIPhone": "NOT TESTED"
+}

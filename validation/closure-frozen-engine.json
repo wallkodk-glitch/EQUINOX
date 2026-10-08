@@ -1,0 +1,81 @@
+{
+  "auditedEngineBaseline": "1.0.1",
+  "kernelAndContractsByteIdentical": true,
+  "files": [
+    {
+      "path": "src/domain/core.ts",
+      "baselineSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "candidateSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1"
+    },
+    {
+      "path": "src/risk/math.ts",
+      "baselineSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "candidateSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04"
+    },
+    {
+      "path": "src/optimization/targets.ts",
+      "baselineSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "candidateSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117"
+    },
+    {
+      "path": "src/execution/allocator.ts",
+      "baselineSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "candidateSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8"
+    },
+    {
+      "path": "src/portfolio/accounting.ts",
+      "baselineSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "candidateSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713"
+    },
+    {
+      "path": "src/snapshots/calculate.ts",
+      "baselineSHA256": "740c0de0e3514740a15328fe84bbe549aaec7fbd89f0ae177133f431934ca425",
+      "candidateSHA256": "740c0de0e3514740a15328fe84bbe549aaec7fbd89f0ae177133f431934ca425"
+    },
+    {
+      "path": "src/snapshots/integrity.ts",
+      "baselineSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "candidateSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a"
+    },
+    {
+      "path": "src/persistence/schema.ts",
+      "baselineSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "candidateSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8"
+    },
+    {
+      "path": "src/persistence/store.ts",
+      "baselineSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "candidateSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640"
+    },
+    {
+      "path": "src/market-data/provider.ts",
+      "baselineSHA256": "7f393e6ce6895648460bac0068d19e92fec590c121f045008f3357ed3e5aac90",
+      "candidateSHA256": "7f393e6ce6895648460bac0068d19e92fec590c121f045008f3357ed3e5aac90"
+    },
+    {
+      "path": "src/market-data/calendar.ts",
+      "baselineSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "candidateSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c"
+    },
+    {
+      "path": "src/market-data/sessions.json",
+      "baselineSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "candidateSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f"
+    },
+    {
+      "path": "src/market-data/demo.ts",
+      "baselineSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "candidateSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09"
+    },
+    {
+      "path": "reference/reference.json",
+      "baselineSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+      "candidateSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299"
+    },
+    {
+      "path": "reference/reproduce.py",
+      "baselineSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+      "candidateSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0"
+    }
+  ]
+}

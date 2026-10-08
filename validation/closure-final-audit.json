@@ -1,0 +1,627 @@
+{
+  "checkedAt": "2026-10-07T09:18:19.496Z",
+  "appVersion": "1.1.2",
+  "engineVersion": "1.0.1",
+  "marketDataModelVersion": "1.1.2",
+  "snapshotSchemaVersions": [
+    1,
+    2
+  ],
+  "noDependencyChanges": true,
+  "frozenFilesIdentical": true,
+  "kernelFilesIdentical": true,
+  "snapshotNumericsUnchanged": true,
+  "dataMathematicsUnchanged": true,
+  "originalTestsPreserved": true,
+  "explicitExceptions": [
+    "Versioned date-only FX gate and provenance; numerical return construction unchanged.",
+    "Snapshot schema/version dispatch only; all calculation/replay mathematics identical.",
+    "TSM obsolete pending assertion replaced by unaudited-future rejection; all other original assertions unchanged."
+  ],
+  "frozen": [
+    {
+      "path": "public/apple-touch-icon.png",
+      "baselineSHA256": "26d4cbefb9319bbd70a2b9e4cca341e9c54302ff88953005e4cca7836678f127",
+      "candidateSHA256": "26d4cbefb9319bbd70a2b9e4cca341e9c54302ff88953005e4cca7836678f127",
+      "identical": true
+    },
+    {
+      "path": "public/icon-192.png",
+      "baselineSHA256": "0ccd37747ac32d1132bf652bd86f0c44f8d0d256a5c2bb73feb0f61fae4261b1",
+      "candidateSHA256": "0ccd37747ac32d1132bf652bd86f0c44f8d0d256a5c2bb73feb0f61fae4261b1",
+      "identical": true
+    },
+    {
+      "path": "public/icon-512.png",
+      "baselineSHA256": "8e098b91e32d1f74cdf453efc91d83b96225a11fa79572bbdf632db404302402",
+      "candidateSHA256": "8e098b91e32d1f74cdf453efc91d83b96225a11fa79572bbdf632db404302402",
+      "identical": true
+    },
+    {
+      "path": "public/icon.svg",
+      "baselineSHA256": "7d0b1b26b9ee974794bfc4ce43bef35a493451a51883a58f8d33855ab499f448",
+      "candidateSHA256": "7d0b1b26b9ee974794bfc4ce43bef35a493451a51883a58f8d33855ab499f448",
+      "identical": true
+    },
+    {
+      "path": "reference/reference.json",
+      "baselineSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+      "candidateSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+      "identical": true
+    },
+    {
+      "path": "reference/reproduce.py",
+      "baselineSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+      "candidateSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+      "identical": true
+    },
+    {
+      "path": "reference/requirements.txt",
+      "baselineSHA256": "1668a3152e33680d94637b13421c15e68bd97cd8701f7f555c691f5bc5c0b9f3",
+      "candidateSHA256": "1668a3152e33680d94637b13421c15e68bd97cd8701f7f555c691f5bc5c0b9f3",
+      "identical": true
+    },
+    {
+      "path": "src/domain/core.ts",
+      "baselineSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "candidateSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "identical": true
+    },
+    {
+      "path": "src/execution/allocator.ts",
+      "baselineSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "candidateSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "identical": true
+    },
+    {
+      "path": "src/main.tsx",
+      "baselineSHA256": "4007a6fb3a5f5d8b157b6570616cb0a6443be12ef6508fac2a72b8de2de08cd8",
+      "candidateSHA256": "4007a6fb3a5f5d8b157b6570616cb0a6443be12ef6508fac2a72b8de2de08cd8",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/calendar.ts",
+      "baselineSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "candidateSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/demo.ts",
+      "baselineSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "candidateSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/sessions.json",
+      "baselineSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "candidateSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "identical": true
+    },
+    {
+      "path": "src/optimization/targets.ts",
+      "baselineSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "candidateSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "identical": true
+    },
+    {
+      "path": "src/persistence/schema.ts",
+      "baselineSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "candidateSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "identical": true
+    },
+    {
+      "path": "src/persistence/store.ts",
+      "baselineSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "candidateSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "identical": true
+    },
+    {
+      "path": "src/portfolio/accounting.ts",
+      "baselineSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "candidateSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "identical": true
+    },
+    {
+      "path": "src/risk/math.ts",
+      "baselineSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "candidateSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "identical": true
+    },
+    {
+      "path": "src/snapshots/integrity.ts",
+      "baselineSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "candidateSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "identical": true
+    },
+    {
+      "path": "src/ui/App.tsx",
+      "baselineSHA256": "68d1a28103669cd9c3c4d60ea8667c140f250771d28a9e0201e182c5e3e3742c",
+      "candidateSHA256": "68d1a28103669cd9c3c4d60ea8667c140f250771d28a9e0201e182c5e3e3742c",
+      "identical": true
+    },
+    {
+      "path": "src/ui/Details.tsx",
+      "baselineSHA256": "5c9212c4413a366774a26ffd7516d2decf246c36a0ee2501a76d013a0dd3411e",
+      "candidateSHA256": "5c9212c4413a366774a26ffd7516d2decf246c36a0ee2501a76d013a0dd3411e",
+      "identical": true
+    },
+    {
+      "path": "src/ui/MarketDataSettings.tsx",
+      "baselineSHA256": "4b70c1e0ee2fcf559087e9db81a2b4d8c691051874884bf5de243932214e3c1d",
+      "candidateSHA256": "4b70c1e0ee2fcf559087e9db81a2b4d8c691051874884bf5de243932214e3c1d",
+      "identical": true
+    },
+    {
+      "path": "src/ui/calculation-job.ts",
+      "baselineSHA256": "49ead0c62b1636755e72920434037e48525dc5fff2c616ac0be7d4995ef3e092",
+      "candidateSHA256": "49ead0c62b1636755e72920434037e48525dc5fff2c616ac0be7d4995ef3e092",
+      "identical": true
+    },
+    {
+      "path": "src/ui/format.ts",
+      "baselineSHA256": "18f9a98dd9f974df57277cd3e650cf1f5859a0ed0f524ca2a2fa496bd3bc6cb8",
+      "candidateSHA256": "18f9a98dd9f974df57277cd3e650cf1f5859a0ed0f524ca2a2fa496bd3bc6cb8",
+      "identical": true
+    },
+    {
+      "path": "src/ui/styles.css",
+      "baselineSHA256": "0983b802023a13388eb4695c1bffe1b74c2d19a7a71b9e1896fe5fe4cae5fc7b",
+      "candidateSHA256": "0983b802023a13388eb4695c1bffe1b74c2d19a7a71b9e1896fe5fe4cae5fc7b",
+      "identical": true
+    },
+    {
+      "path": "tests/browser-fixture.test.ts",
+      "baselineSHA256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
+      "candidateSHA256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
+      "identical": true
+    },
+    {
+      "path": "tests/browser/app.spec.ts",
+      "baselineSHA256": "0037725e26906ae4ef7027ae6c474a0cf49118203d2c4b1fbf81f362cbe94aea",
+      "candidateSHA256": "0037725e26906ae4ef7027ae6c474a0cf49118203d2c4b1fbf81f362cbe94aea",
+      "identical": true
+    },
+    {
+      "path": "tests/browser/market-settings.spec.ts",
+      "baselineSHA256": "64c639a7400c193bc78e0b7432e087b481a7e5ca1d85f0be5f7ce6e37fe82566",
+      "candidateSHA256": "64c639a7400c193bc78e0b7432e087b481a7e5ca1d85f0be5f7ce6e37fe82566",
+      "identical": true
+    },
+    {
+      "path": "tests/browser/nationalbank.spec.ts",
+      "baselineSHA256": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
+      "candidateSHA256": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
+      "identical": true
+    },
+    {
+      "path": "tests/calculation-job.test.ts",
+      "baselineSHA256": "2a762cb8d8e964c204b7ab78b52dc937f1565343ee06506338787054e8d7d3a0",
+      "candidateSHA256": "2a762cb8d8e964c204b7ab78b52dc937f1565343ee06506338787054e8d7d3a0",
+      "identical": true
+    },
+    {
+      "path": "tests/canonical-stock-close.test.ts",
+      "baselineSHA256": "86ee6e5bf18c4fe63c7dd7102772a87185b983d32a4848a661fee2b87b35edd9",
+      "candidateSHA256": "86ee6e5bf18c4fe63c7dd7102772a87185b983d32a4848a661fee2b87b35edd9",
+      "identical": true
+    },
+    {
+      "path": "tests/credentials.test.ts",
+      "baselineSHA256": "0de3d2a70bfa45f435553ca382713147e676807d02f702673233d0aa451abfb8",
+      "candidateSHA256": "0de3d2a70bfa45f435553ca382713147e676807d02f702673233d0aa451abfb8",
+      "identical": true
+    },
+    {
+      "path": "tests/critical-audit.test.ts",
+      "baselineSHA256": "5792b2da63622b9c022663a2923d7da968664d05abe67d02dc02e39bc2e522d5",
+      "candidateSHA256": "5792b2da63622b9c022663a2923d7da968664d05abe67d02dc02e39bc2e522d5",
+      "identical": true
+    },
+    {
+      "path": "tests/data.test.ts",
+      "baselineSHA256": "7be28bb2c945cf68a7dca84e2126f26ec1c4d1d458fbe8f6b1fff5a508c2bded",
+      "candidateSHA256": "7be28bb2c945cf68a7dca84e2126f26ec1c4d1d458fbe8f6b1fff5a508c2bded",
+      "identical": true
+    },
+    {
+      "path": "tests/engine.test.ts",
+      "baselineSHA256": "47acc3cc360ebb45fe31c8f4b7d7ed8f4264f5a16c6aa19559c3fb4483fe2240",
+      "candidateSHA256": "47acc3cc360ebb45fe31c8f4b7d7ed8f4264f5a16c6aa19559c3fb4483fe2240",
+      "identical": true
+    },
+    {
+      "path": "tests/execution-greedy.test.ts",
+      "baselineSHA256": "3ac55179eb1af2c92cca0f179017adfe76528a7b6bf612395bbf5067b0a843c7",
+      "candidateSHA256": "3ac55179eb1af2c92cca0f179017adfe76528a7b6bf612395bbf5067b0a843c7",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/README.md",
+      "baselineSHA256": "1f029975448bdf90350fa116b95b9a036a55e146166cf0a56c5f2924c0c831ce",
+      "candidateSHA256": "1f029975448bdf90350fa116b95b9a036a55e146166cf0a56c5f2924c0c831ce",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/coingecko.raw.json",
+      "baselineSHA256": "742d75de537bf0587e7f83bc7541d9a8a8094f7af2e7488350ae303665468181",
+      "candidateSHA256": "742d75de537bf0587e7f83bc7541d9a8a8094f7af2e7488350ae303665468181",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/expected.normalized.json",
+      "baselineSHA256": "094b1fa439cd1c294e2796175f46093f1bc831a467aebc88e7141ad3d515509e",
+      "candidateSHA256": "094b1fa439cd1c294e2796175f46093f1bc831a467aebc88e7141ad3d515509e",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/massive-crypto.raw.json",
+      "baselineSHA256": "38d7bbc424f4d26eb803e6fd38a59488cc4f88a46fb60bd525c592973a74d7f5",
+      "candidateSHA256": "38d7bbc424f4d26eb803e6fd38a59488cc4f88a46fb60bd525c592973a74d7f5",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/massive-stock.raw.json",
+      "baselineSHA256": "5c8b715712889e26aa4bb2040e29ba5c7c3f0f3e8dd115d74699f166a92e3c5c",
+      "candidateSHA256": "5c8b715712889e26aa4bb2040e29ba5c7c3f0f3e8dd115d74699f166a92e3c5c",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/nationalbank-history.expected.json",
+      "baselineSHA256": "e6bd316422e55b592dcdda2f8807030bce7e446422278ffa4f7724dc1daba601",
+      "candidateSHA256": "e6bd316422e55b592dcdda2f8807030bce7e446422278ffa4f7724dc1daba601",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/nationalbank-history.raw.json",
+      "baselineSHA256": "739c732f3c6b1482ad24d62676da1065296e702d1735e1c320137d3a0fefab07",
+      "candidateSHA256": "739c732f3c6b1482ad24d62676da1065296e702d1735e1c320137d3a0fefab07",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/nationalbank.raw.xml",
+      "baselineSHA256": "f2fc88cc173ffc61f785ceebfef438df9c5c3a9775cad533df2090c4eaa73dee",
+      "candidateSHA256": "f2fc88cc173ffc61f785ceebfef438df9c5c3a9775cad533df2090c4eaa73dee",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/tsm-dividends.raw.json",
+      "baselineSHA256": "116e213f6afd7c56c7b341627782435796fe37b7c60acb0b9f5d38d4c946a68e",
+      "candidateSHA256": "116e213f6afd7c56c7b341627782435796fe37b7c60acb0b9f5d38d4c946a68e",
+      "identical": true
+    },
+    {
+      "path": "tests/fixtures/providers/tsmc-dividends.expected.json",
+      "baselineSHA256": "de85309b99f40b7c0fece6fedff34169ac50a4dbb7417357a5c4236671669d17",
+      "candidateSHA256": "de85309b99f40b7c0fece6fedff34169ac50a4dbb7417357a5c4236671669d17",
+      "identical": true
+    },
+    {
+      "path": "tests/historical-fx.test.ts",
+      "baselineSHA256": "7d0ccec1ff6e302f0a102e4f537e8c0bc98bef20a95cc35ed15995b39c85d392",
+      "candidateSHA256": "7d0ccec1ff6e302f0a102e4f537e8c0bc98bef20a95cc35ed15995b39c85d392",
+      "identical": true
+    },
+    {
+      "path": "tests/legacy-snapshot.json",
+      "baselineSHA256": "b82ea8d9fcc6b8a28dcb27425abf236fb6132c8892772eae54f9282871e62061",
+      "candidateSHA256": "b82ea8d9fcc6b8a28dcb27425abf236fb6132c8892772eae54f9282871e62061",
+      "identical": true
+    },
+    {
+      "path": "tests/market-cache.test.ts",
+      "baselineSHA256": "6c78c5f0719864a827557acaa7abe36f46ce37df7167d487307d208ca5890c8a",
+      "candidateSHA256": "6c78c5f0719864a827557acaa7abe36f46ce37df7167d487307d208ca5890c8a",
+      "identical": true
+    },
+    {
+      "path": "tests/market-network.test.ts",
+      "baselineSHA256": "701f5626fc67d712f207d28438c1f70357db7d1e84669bf984864d467a761324",
+      "candidateSHA256": "701f5626fc67d712f207d28438c1f70357db7d1e84669bf984864d467a761324",
+      "identical": true
+    },
+    {
+      "path": "tests/market-parsers.test.ts",
+      "baselineSHA256": "518e1d7adae8bd84dba8121364cb6d284456054d04f690b33a866ebd2ac21424",
+      "candidateSHA256": "518e1d7adae8bd84dba8121364cb6d284456054d04f690b33a866ebd2ac21424",
+      "identical": true
+    },
+    {
+      "path": "tests/persistence.test.ts",
+      "baselineSHA256": "baf8bdb01c7cc301cb68c462e900399b6f8e96a1c465b1386f2871c3b562f0ac",
+      "candidateSHA256": "baf8bdb01c7cc301cb68c462e900399b6f8e96a1c465b1386f2871c3b562f0ac",
+      "identical": true
+    },
+    {
+      "path": "tests/reference.test.ts",
+      "baselineSHA256": "e55599644f1d6b0a401a6abe611b7d19adb618373aa1b8393f43188917a3d6c5",
+      "candidateSHA256": "e55599644f1d6b0a401a6abe611b7d19adb618373aa1b8393f43188917a3d6c5",
+      "identical": true
+    },
+    {
+      "path": "tests/service-worker-security.test.ts",
+      "baselineSHA256": "2cdb0c05325b62dc9e3a64ea785a6adb288c7d6bf9b0459cb9dce18ffb91bb20",
+      "candidateSHA256": "2cdb0c05325b62dc9e3a64ea785a6adb288c7d6bf9b0459cb9dce18ffb91bb20",
+      "identical": true
+    },
+    {
+      "path": "tests/snapshots.test.ts",
+      "baselineSHA256": "1f922ed62f3a8dd9834f08844d3ef376a03cb664b79c84265bf099fbf2bcbcb5",
+      "candidateSHA256": "1f922ed62f3a8dd9834f08844d3ef376a03cb664b79c84265bf099fbf2bcbcb5",
+      "identical": true
+    },
+    {
+      "path": "tests/synchronized-risk-boundary.test.ts",
+      "baselineSHA256": "9a4450fd2cfac8f524982d287d7beb226b774161c2405b2a0ec354cebac7e265",
+      "candidateSHA256": "9a4450fd2cfac8f524982d287d7beb226b774161c2405b2a0ec354cebac7e265",
+      "identical": true
+    }
+  ],
+  "kernel": [
+    {
+      "path": "src/domain/core.ts",
+      "baselineSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "candidateSHA256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "identical": true
+    },
+    {
+      "path": "src/risk/math.ts",
+      "baselineSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "candidateSHA256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "identical": true
+    },
+    {
+      "path": "src/optimization/targets.ts",
+      "baselineSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "candidateSHA256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "identical": true
+    },
+    {
+      "path": "src/execution/allocator.ts",
+      "baselineSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "candidateSHA256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "identical": true
+    },
+    {
+      "path": "src/portfolio/accounting.ts",
+      "baselineSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "candidateSHA256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "identical": true
+    },
+    {
+      "path": "src/snapshots/integrity.ts",
+      "baselineSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "candidateSHA256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "identical": true
+    },
+    {
+      "path": "src/persistence/schema.ts",
+      "baselineSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "candidateSHA256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "identical": true
+    },
+    {
+      "path": "src/persistence/store.ts",
+      "baselineSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "candidateSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/calendar.ts",
+      "baselineSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "candidateSHA256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/sessions.json",
+      "baselineSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "candidateSHA256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "identical": true
+    },
+    {
+      "path": "src/market-data/demo.ts",
+      "baselineSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "candidateSHA256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "identical": true
+    },
+    {
+      "path": "reference/reference.json",
+      "baselineSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+      "candidateSHA256": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+      "identical": true
+    },
+    {
+      "path": "reference/reproduce.py",
+      "baselineSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+      "candidateSHA256": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+      "identical": true
+    }
+  ],
+  "dataMathematics": [
+    {
+      "name": "equityFactor",
+      "baselineSHA256": "7b4a3d7fd273ca874590fcad3e29543332133dfb879d6eb4351bf2ecfb020c7b",
+      "candidateSHA256": "7b4a3d7fd273ca874590fcad3e29543332133dfb879d6eb4351bf2ecfb020c7b",
+      "identical": true
+    },
+    {
+      "name": "levelsAndTotalReturns",
+      "baselineSHA256": "6f7e84674f03094f5beab29412815ee1bed77d05b8a516614681f3e3fc6b3a0f",
+      "candidateSHA256": "6f7e84674f03094f5beab29412815ee1bed77d05b8a516614681f3e3fc6b3a0f",
+      "identical": true
+    },
+    {
+      "name": "coverageAndHistory",
+      "baselineSHA256": "e3b93eefa494bc525890cb56e86535c24be649cb5560e4c05593fd20d00d3cb9",
+      "candidateSHA256": "e3b93eefa494bc525890cb56e86535c24be649cb5560e4c05593fd20d00d3cb9",
+      "identical": true
+    }
+  ],
+  "tsmTestException": true,
+  "changed": [
+    "README.md",
+    "docs/data-contract.md",
+    "docs/release-status.md",
+    "package-lock.json",
+    "package.json",
+    "scripts/package-release.py",
+    "scripts/record-browser-blocker.mjs",
+    "scripts/scan-release-secrets.mjs",
+    "src/market-data/live/massive.ts",
+    "src/market-data/live/model.ts",
+    "src/market-data/live/nationalbank-history.ts",
+    "src/market-data/live/network.ts",
+    "src/market-data/live/tsm-adr.ts",
+    "src/market-data/provider.ts",
+    "src/snapshots/calculate.ts",
+    "tests/tsm-adr.test.ts"
+  ],
+  "added": [
+    "docs/final-data-closure/data-semantics.md",
+    "docs/final-data-closure/evidence-index.md",
+    "docs/final-data-closure/release-status.md",
+    "reference/final-risk.py",
+    "scripts/audit-final-closure.mjs",
+    "scripts/check-final-risk.mjs",
+    "scripts/probe-final-fx.mjs",
+    "scripts/verify-final-closure.mjs",
+    "src/market-data/live/risk-actions.ts",
+    "src/market-data/live/risk-provenance.ts",
+    "src/market-data/live/synchronized.ts",
+    "src/market-data/retrospective-fx.ts",
+    "tests/canonical-import-pages.test.ts",
+    "tests/official-fx-holiday-gaps.test.ts",
+    "tests/retrospective-fx-contract.test.ts",
+    "tests/synchronized-import.test.ts",
+    "tests/tsm-final-dividend.test.ts"
+  ],
+  "deleted": [],
+  "sourceHashes": {
+    ".github/workflows/pages.yml": "9695c60a2a60281c398aae85e3d9dc3f81d6983136e480829eb36369ca2ea7d1",
+    ".gitignore": "57740b56d8e6d449a0008018c8440f0de638d08d46d4052d8b32035c6dd1e58d",
+    "README.md": "c1f83582857882206ba82905325be04164530d27c5d0b4ce20f446e7010129d0",
+    "RELEASE-MANIFEST.json": "9baa34312ab6ba3f48c7144fc00234bd4e889a3f45c19943be2f9ec477372945",
+    "docs/audit.md": "f25143ba79a1c0e23c577ccbb64a0a50eab323217cd958e0cbd7599db2804984",
+    "docs/blocker-closure/blockers.md": "3c8a20d46cf8b391c5a737b0c06f0d13afb596ab42cf19835550e8e13cced6cc",
+    "docs/blocker-closure/evidence-index.md": "2d5fff856955a0eff409bf46cc3dc4516a0c7fb50e7f2b36f962b2bbf89ed5fe",
+    "docs/blocker-closure/provider-evidence.md": "1d6fb58feef39b3dbfdfcae27fdc1f8fbc7bdf93c332c97258fe62220f9b5156",
+    "docs/blocker-closure/release-status.md": "d47275b74008ef419caf3f389936823de8d77571dffe32dae582480dfdd84f49",
+    "docs/data-contract.md": "ef152cbe572bb05060c3695bf6d85d22d6532a9ff786abb3e4ce6c3a000170a0",
+    "docs/data-provider-research.md": "884f3cc44e67fd78a7bf12ed745f76dbc2a845309d7148e73184d8311f3b6335",
+    "docs/dependencies.md": "c10eb4e5d25a01a3296e692856b30a3ec9d4a0bdd2bc9ec73436db4f497e97d8",
+    "docs/final-data-closure/data-semantics.md": "34ee6f667da14792e1ad57d955fa3890bb6097cc6e271df2de430c7ef0909b27",
+    "docs/final-data-closure/evidence-index.md": "0173c96c32bf18499be0743b5a42563198b80f035e3a806a0bac83750897a564",
+    "docs/final-data-closure/release-status.md": "c48db776679f0f587fe2da7b3251f9138dac890daf4494dadb195520b503ae10",
+    "docs/iphone-checklist.md": "8342d71a4cede0e1e9e6f17e3ed4d8df4ee625e2edccf2a24c29492c2c95b71c",
+    "docs/mobile-release.md": "8617ae575e7134d61082a3bb5ae29dd11219c4d41808fedc0d92c14c39fd582e",
+    "docs/reference-audit.md": "ac7eae88302885d65f0e3d2b623225529ac3ac7e7967a73a7174acf9b43c4f15",
+    "docs/release-status.md": "7053c70439aa4272b09c65f0f9cdf9dbd1811617a61fba7f53818e084dfcc1fc",
+    "docs/superpowers/plans/2026-10-02-equinox-v1.md": "caa4b68259689931def49cd2c8d534a1af0a59b54839384da4a720a742950605",
+    "docs/v1.1/implementation-plan.md": "c50c6745dfdddcbe766aff0b6cd2901b4148a495c65d202a40db58abbb5a2dc6",
+    "docs/v1.1/provider-evidence.md": "ca24c24020c2e9b3b7c6457de23ef1c8c345ffff5b02cad7a467fb0a2bb111d2",
+    "docs/v1.1/release-status.md": "662c75ac073c7351de9df9591e45a4a7b36c9f793dd866850d11fe8a8cf78fad",
+    "docs/v1.1/review.md": "2ed08b539415def80f63bf1ef2a712869d461232483d5b4f4a5036dff65d1194",
+    "docs/v1.1/security-and-data-model.md": "71cb0f5b46055a821fd16b3c140a42ef4299f55040d500950da4e42f9b4f469c",
+    "eslint.config.js": "219319470fbcc1654f1f4426451697591a13541486ef7068efb30028e03bd1ac",
+    "index.html": "0215f753c03ec8c922f754b26b79dea28758c642c320670cdcbcc89dae394f13",
+    "package-lock.json": "c7d26ceea6a4bf19b2c7520d3ca4c5e9788dcbb9c532d32a6d1ce14b7bcfe14c",
+    "package.json": "c4655bfaf3f75a94a6e44525f84eac971b2e1a191bda301e4b2e7b93fcd01818",
+    "playwright.config.ts": "da571aae4e36c68540b480a249af5b06c0dbbeeada591ce92761837e21f6940a",
+    "public/apple-touch-icon.png": "26d4cbefb9319bbd70a2b9e4cca341e9c54302ff88953005e4cca7836678f127",
+    "public/icon-192.png": "0ccd37747ac32d1132bf652bd86f0c44f8d0d256a5c2bb73feb0f61fae4261b1",
+    "public/icon-512.png": "8e098b91e32d1f74cdf453efc91d83b96225a11fa79572bbdf632db404302402",
+    "public/icon.svg": "7d0b1b26b9ee974794bfc4ce43bef35a493451a51883a58f8d33855ab499f448",
+    "reference/final-risk.py": "917586681f08a2bfe5ae4b785282864f3d49fb5cf3e0fa7a29ea8e1e709e2899",
+    "reference/reference.json": "dda1b8e354dcd0fdacd88488b6dfca30d29bc0e2c4888aca0dd01cb5868d8299",
+    "reference/reproduce.py": "cefb4e577261acb171d5bcb557e0b3a344a3c3038dd7561f2540c6c292972bf0",
+    "reference/requirements.txt": "1668a3152e33680d94637b13421c15e68bd97cd8701f7f555c691f5bc5c0b9f3",
+    "release/mobile-pages.yml": "97f9720a405dd8d25ae4dbd42928af1eec5ffc6738edf720f09e9ef6ac6348a3",
+    "scripts/audit-final-closure.mjs": "f09a6f941b3eef062d271c9d879d0a0c5db0a865fdc848b7df2aaaea8d765997",
+    "scripts/audit-v1.1.mjs": "b4e499a5b41c548d2eb7d34f18107a6aa5fcb6701d0f9915bc3c400bad4701b7",
+    "scripts/build-pwa.mjs": "d74971429f2a4221911d2194f8834a3679ebb8f834af349b382ef75c55713ced",
+    "scripts/calendar.py": "c5a68897ab9bc8f17d46fe1655ac38972ef6992e3db7351f55575c44bc4903bc",
+    "scripts/check-final-risk.mjs": "a1305eec41fe4ebafd867278b03f91ffee256296bbcdff0d3a01e9f700180ed1",
+    "scripts/check-reproducibility.mjs": "f535bd9d8331840a42e4ea0f5582e877c974a4668bd03beb5d74bf24c36afbea",
+    "scripts/package-release.py": "360b4623bde6d699f74488d58c6056374b3ec15f594a9a976e3bf100ce5be568",
+    "scripts/probe-cors.mjs": "93d99b6fdc8a168ca66000c0413a09ea3a438e6f9427a5fcbb3da5aa01bc52df",
+    "scripts/probe-final-fx.mjs": "56da0cf1287df74c0933bb44bf034402e752c94b230dc79936c284abd3e266bc",
+    "scripts/record-browser-blocker.mjs": "f49905c682bf10fcd0b73c95d8064e97e43e1e2c5ab1b8f5f5942196d9e99717",
+    "scripts/scan-release-secrets.mjs": "1c33662f26b986e339b27a104d40503092020f4c5299dce256bd5071305b8a32",
+    "scripts/verify-final-closure.mjs": "c4e704173c8f714ef49b93e0125f165754f68a113a2a6b4af3f8cb9342eaa36c",
+    "scripts/verify.mjs": "c0ab4af45a64d16cf96f7649b8189febdb553c3dd71cbb023d9172e490b34b82",
+    "src/domain/core.ts": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+    "src/execution/allocator.ts": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+    "src/main.tsx": "4007a6fb3a5f5d8b157b6570616cb0a6443be12ef6508fac2a72b8de2de08cd8",
+    "src/market-data/calendar.ts": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+    "src/market-data/demo.ts": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+    "src/market-data/live/cache.ts": "17c86777b738b7142e26bb538ba154c4cab5580747f33836b6709607b8ce23d3",
+    "src/market-data/live/coingecko.ts": "cc18737f4da4dadc1e43317014dcecd5d03bec98081be6aa343cbc98079e9885",
+    "src/market-data/live/credentials.ts": "090c40be20d8547f5d39fcd0a040261774595b34cd188bff9629fe58e83de2c4",
+    "src/market-data/live/massive.ts": "c8e2262a47bb1b11aa1ef0e1a19d6c87d2bf412c902671f9ffbfcda3fd380b22",
+    "src/market-data/live/model.ts": "c43db350efdcc2218a697fa9ab0c86013eeab98ed2847e1950fa1384e0f8614f",
+    "src/market-data/live/nationalbank-history.ts": "6d655088bff84addc0c7853af0677bab31eb1a6aef6a63d3acfc520e52787813",
+    "src/market-data/live/nationalbank.ts": "4f98f70ebc3b76a006014c3633e585128350601c65a3438dbd16b095785716dc",
+    "src/market-data/live/network.ts": "81fa1db1e7c2ca1b0d356c283d6532744979386de7dcb437da81f28b37fd92c8",
+    "src/market-data/live/risk-actions.ts": "0a862518845a6cb355f991a8559418b4286a7d33e481c6552600843801455fa2",
+    "src/market-data/live/risk-provenance.ts": "a36050f94444489b1f57f49da0560671053c4b537bad2604ff47d5d29a44ac68",
+    "src/market-data/live/synchronized.ts": "b2b46daa9b7368ec69e158813b54ca6545031a7b4e409dd62bd2a6dc8a27668e",
+    "src/market-data/live/timestamps.ts": "77ae8e81cf84470a560dec4db999b3b7b52a1d3e19ad7c8795ec794496567135",
+    "src/market-data/live/tsm-adr.ts": "ec44e9ab1d0eaf138c76f732690a29bd56e122a8bcd49413edc132bad46ad1cf",
+    "src/market-data/provider.ts": "6c96ec17740ea92b0621797832481fa7e5534dfc3c3a4e060d03ac0d20bc780a",
+    "src/market-data/retrospective-fx.ts": "24536d8e31d6433072e99fb89faaf3898fb59aa27386ca8acc9fdeb502748fad",
+    "src/market-data/sessions.json": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+    "src/optimization/targets.ts": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+    "src/persistence/schema.ts": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+    "src/persistence/store.ts": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+    "src/portfolio/accounting.ts": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+    "src/risk/math.ts": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+    "src/snapshots/calculate.ts": "ea0ccb9a55d6eb0dacd7a01a1d7780f88eeba01ea8669dc3df94ad9bbec2efbb",
+    "src/snapshots/integrity.ts": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+    "src/ui/App.tsx": "68d1a28103669cd9c3c4d60ea8667c140f250771d28a9e0201e182c5e3e3742c",
+    "src/ui/Details.tsx": "5c9212c4413a366774a26ffd7516d2decf246c36a0ee2501a76d013a0dd3411e",
+    "src/ui/MarketDataSettings.tsx": "4b70c1e0ee2fcf559087e9db81a2b4d8c691051874884bf5de243932214e3c1d",
+    "src/ui/calculation-job.ts": "49ead0c62b1636755e72920434037e48525dc5fff2c616ac0be7d4995ef3e092",
+    "src/ui/format.ts": "18f9a98dd9f974df57277cd3e650cf1f5859a0ed0f524ca2a2fa496bd3bc6cb8",
+    "src/ui/styles.css": "0983b802023a13388eb4695c1bffe1b74c2d19a7a71b9e1896fe5fe4cae5fc7b",
+    "tests/browser-fixture.test.ts": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
+    "tests/browser/app.spec.ts": "0037725e26906ae4ef7027ae6c474a0cf49118203d2c4b1fbf81f362cbe94aea",
+    "tests/browser/market-settings.spec.ts": "64c639a7400c193bc78e0b7432e087b481a7e5ca1d85f0be5f7ce6e37fe82566",
+    "tests/browser/nationalbank.spec.ts": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
+    "tests/calculation-job.test.ts": "2a762cb8d8e964c204b7ab78b52dc937f1565343ee06506338787054e8d7d3a0",
+    "tests/canonical-import-pages.test.ts": "e8bf3f0c7b33df745f408cb69a1ade9e371b2f10a96dc2ab6362d8f0ae177274",
+    "tests/canonical-stock-close.test.ts": "86ee6e5bf18c4fe63c7dd7102772a87185b983d32a4848a661fee2b87b35edd9",
+    "tests/credentials.test.ts": "0de3d2a70bfa45f435553ca382713147e676807d02f702673233d0aa451abfb8",
+    "tests/critical-audit.test.ts": "5792b2da63622b9c022663a2923d7da968664d05abe67d02dc02e39bc2e522d5",
+    "tests/data.test.ts": "7be28bb2c945cf68a7dca84e2126f26ec1c4d1d458fbe8f6b1fff5a508c2bded",
+    "tests/engine.test.ts": "47acc3cc360ebb45fe31c8f4b7d7ed8f4264f5a16c6aa19559c3fb4483fe2240",
+    "tests/execution-greedy.test.ts": "3ac55179eb1af2c92cca0f179017adfe76528a7b6bf612395bbf5067b0a843c7",
+    "tests/fixtures/providers/README.md": "1f029975448bdf90350fa116b95b9a036a55e146166cf0a56c5f2924c0c831ce",
+    "tests/fixtures/providers/coingecko.raw.json": "742d75de537bf0587e7f83bc7541d9a8a8094f7af2e7488350ae303665468181",
+    "tests/fixtures/providers/expected.normalized.json": "094b1fa439cd1c294e2796175f46093f1bc831a467aebc88e7141ad3d515509e",
+    "tests/fixtures/providers/massive-crypto.raw.json": "38d7bbc424f4d26eb803e6fd38a59488cc4f88a46fb60bd525c592973a74d7f5",
+    "tests/fixtures/providers/massive-stock.raw.json": "5c8b715712889e26aa4bb2040e29ba5c7c3f0f3e8dd115d74699f166a92e3c5c",
+    "tests/fixtures/providers/nationalbank-history.expected.json": "e6bd316422e55b592dcdda2f8807030bce7e446422278ffa4f7724dc1daba601",
+    "tests/fixtures/providers/nationalbank-history.raw.json": "739c732f3c6b1482ad24d62676da1065296e702d1735e1c320137d3a0fefab07",
+    "tests/fixtures/providers/nationalbank.raw.xml": "f2fc88cc173ffc61f785ceebfef438df9c5c3a9775cad533df2090c4eaa73dee",
+    "tests/fixtures/providers/tsm-dividends.raw.json": "116e213f6afd7c56c7b341627782435796fe37b7c60acb0b9f5d38d4c946a68e",
+    "tests/fixtures/providers/tsmc-dividends.expected.json": "de85309b99f40b7c0fece6fedff34169ac50a4dbb7417357a5c4236671669d17",
+    "tests/historical-fx.test.ts": "7d0ccec1ff6e302f0a102e4f537e8c0bc98bef20a95cc35ed15995b39c85d392",
+    "tests/legacy-snapshot.json": "b82ea8d9fcc6b8a28dcb27425abf236fb6132c8892772eae54f9282871e62061",
+    "tests/market-cache.test.ts": "6c78c5f0719864a827557acaa7abe36f46ce37df7167d487307d208ca5890c8a",
+    "tests/market-network.test.ts": "701f5626fc67d712f207d28438c1f70357db7d1e84669bf984864d467a761324",
+    "tests/market-parsers.test.ts": "518e1d7adae8bd84dba8121364cb6d284456054d04f690b33a866ebd2ac21424",
+    "tests/official-fx-holiday-gaps.test.ts": "0500b9bed7d9c8f99d82e3903b6783e775c8e9bcc27ce4542b9f0f25919b1794",
+    "tests/persistence.test.ts": "baf8bdb01c7cc301cb68c462e900399b6f8e96a1c465b1386f2871c3b562f0ac",
+    "tests/reference.test.ts": "e55599644f1d6b0a401a6abe611b7d19adb618373aa1b8393f43188917a3d6c5",
+    "tests/retrospective-fx-contract.test.ts": "3040c22b495c1965f201275d0df242cfbd281b1baeba2964e81602b453a53152",
+    "tests/service-worker-security.test.ts": "2cdb0c05325b62dc9e3a64ea785a6adb288c7d6bf9b0459cb9dce18ffb91bb20",
+    "tests/snapshots.test.ts": "1f922ed62f3a8dd9834f08844d3ef376a03cb664b79c84265bf099fbf2bcbcb5",
+    "tests/synchronized-import.test.ts": "9659376c6a1ab301c1432c756335fef409084ef108586dce091dd3b3bc37223b",
+    "tests/synchronized-risk-boundary.test.ts": "9a4450fd2cfac8f524982d287d7beb226b774161c2405b2a0ec354cebac7e265",
+    "tests/tsm-adr.test.ts": "6a2bdf16951bddb6c5cc2224e77d86c4fbe03ed4459d43ff0b0105b37e061faa",
+    "tests/tsm-final-dividend.test.ts": "371a228308b5130c92c6848c34ab552749a7f8e59028afa745111974d4be6ad2",
+    "tsconfig.json": "b9f16ca0b2377d7242e712ebcf6b807d0ecfd7dc6422ea834cfca4f58ea0a5bb",
+    "vite.config.ts": "9ef20eb4880a4bac7dfbbc5f2938cc1e29883ac450a0c5179078a175bdd726b1",
+    "vitest.config.ts": "a0f7c1e0fc8c4803cc4ac9bed783bee5f64b7c37adc0a3232fe4ed623e62c839"
+  },
+  "status": "PASS"
+}

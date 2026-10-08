@@ -1,0 +1,138 @@
+{
+  "format": "EQUINOX_UI_RELEASE_CHECKS_V1",
+  "startedAt": "2026-10-07T21:50:44.966Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "status": "PASS",
+  "browserRuntime": "NOT TESTED",
+  "steps": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "startedAt": "2026-10-07T21:50:44.967Z",
+      "finishedAt": "2026-10-07T21:50:46.984Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 lint\n> eslint src tests scripts\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "startedAt": "2026-10-07T21:50:46.985Z",
+      "finishedAt": "2026-10-07T21:50:50.436Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 typecheck\n> tsc --noEmit\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "startedAt": "2026-10-07T21:50:50.439Z",
+      "finishedAt": "2026-10-07T21:50:53.938Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 test\n> vitest run\n\n\n RUN  v5.0.3 /workspace/scratch/bf49a1ea6825/equinox-ui-v1-57SyNe/clean-build-cepixc\n\n\n Test Files  24 passed (24)\n      Tests  172 passed (172)\n   Start at  23:50:50\n   Duration  3.13s (tests 67%, import 18%, transform 14%, worker 1%)\n\n    Isolate  24 workers spawned · ~142ms startup each (spawn + environment, per file)\n             at least ~346ms faster with isolate: false — reuses workers across files instead of one per file\n\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:reference"
+      ],
+      "startedAt": "2026-10-07T21:50:53.938Z",
+      "finishedAt": "2026-10-07T21:50:54.496Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 test:reference\n> python3 reference/reproduce.py --check\n\nCommitted golden references match the independent recalculation.\nAll independent reference assertions passed.\nChecked: /workspace/scratch/bf49a1ea6825/equinox-ui-v1-57SyNe/clean-build-cepixc/reference/reference.json\nBUY-01 normalized target: [0.2622262226222623, 0.22582258225822585, 0.20692069206920694, 0.17811781178117814, 0.12691269126912694]\nBUY-01 optimal buys DKK: [1174.4549454945502, 719.4094409440943, 0.0, 323.09980998099786, 283.0358035803579]\nERC-02 constrained weights: [0.32, 0.32379895467731273, 0.2362010453226872, 0.05210732278740623, 0.06789267721259376]\nERC-02 objective: 0.03725300222769519\nERC-02 stationarity residual: 2.220446049250313e-16\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check-final-risk.mjs"
+      ],
+      "startedAt": "2026-10-07T21:50:54.496Z",
+      "finishedAt": "2026-10-07T21:50:56.873Z",
+      "exitCode": 0,
+      "output": "{\"status\":\"PASS\",\"windowStart\":\"2025-10-03\",\"windowEnd\":\"2026-10-06\",\"observations\":253,\"returns\":252,\"coverage\":1,\"snapshotHashes\":{\"equal\":\"4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32\",\"inverse\":\"f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab\",\"erc\":\"23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e\"},\"legacySnapshotSHA256\":\"e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891\",\"browserCORS\":\"NOT TESTED\"}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "reference/final-risk.py"
+      ],
+      "startedAt": "2026-10-07T21:50:56.873Z",
+      "finishedAt": "2026-10-07T21:50:57.012Z",
+      "exitCode": 0,
+      "output": "{\n  \"checkedAt\": \"2026-10-07T21:50:56.993012+00:00\",\n  \"status\": \"PASS\",\n  \"scope\": \"Independent raw-row/official raw FX as-of, gross total returns, DKK levels, covariance and correlation\",\n  \"returns\": 252,\n  \"observations\": 253,\n  \"maximumFXAgeDays\": 6,\n  \"maxReturnDifference\": 0.0,\n  \"maxCovarianceDifference\": 2.7755575615628914e-17,\n  \"browserRuntime\": \"NOT TESTED\"\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check-ui-snapshots.mjs",
+        "/workspace/scratch/bf49a1ea6825/equinox-ui-v1-57SyNe/baseline/EQUINOX"
+      ],
+      "startedAt": "2026-10-07T21:50:57.013Z",
+      "finishedAt": "2026-10-07T21:50:58.946Z",
+      "exitCode": 0,
+      "output": "{\n  \"format\": \"EQUINOX_UI_SNAPSHOT_COMPATIBILITY_V1\",\n  \"checkedAt\": \"2026-10-07T21:50:57.908Z\",\n  \"status\": \"PASS\",\n  \"scope\": \"Frozen Engine Node replay and exact canonical comparison to supplied accepted snapshots/data. Not Node-to-browser replay.\",\n  \"snapshots\": [\n    {\n      \"path\": \"tests/legacy-snapshot.json\",\n      \"engine\": \"1.0.0\",\n      \"schema\": 1,\n      \"sha256\": \"9d114db13ee5dd700208cb1fe93f709521484b20b6bcf0ce2a6e1d1423d7f633\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"path\": \"validation/node-snapshot.json\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 1,\n      \"sha256\": \"e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"equal\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"inverse\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"erc\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    }\n  ],\n  \"normalizedInputAndResultsIdentical\": true,\n  \"browserReplay\": \"NOT TESTED\"\n}\n"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-07T21:50:58.949Z",
+      "finishedAt": "2026-10-07T21:51:02.923Z",
+      "exitCode": 0,
+      "output": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> equinox@1.2.0 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 147 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB │ gzip:   0.45 kB\ndist/assets/index-B04eiKRR.css   25.13 kB │ gzip:   6.04 kB\ndist/assets/index-CLgFVlph.js   480.08 kB │ gzip: 134.93 kB │ map: 1,979.50 kB\n\n✓ built in 153ms\nPWA 516cc9ee485a58f8: 9 shell files; scope /EQUINOX/\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check-ui-pwa.mjs"
+      ],
+      "startedAt": "2026-10-07T21:51:02.923Z",
+      "finishedAt": "2026-10-07T21:51:03.003Z",
+      "exitCode": 0,
+      "output": "{\n  \"status\": \"PASS\",\n  \"shellAssets\": 9,\n  \"protectedRequestGuards\": 8,\n  \"assets\": [\n    {\n      \"file\": \"index-B04eiKRR.css\",\n      \"bytes\": 25137,\n      \"gzipBytes\": 6010,\n      \"sha256\": \"25b1d49b6208d3d768d92aae2585cff978eafb0e08abddcf424738bface3f6e9\"\n    },\n    {\n      \"file\": \"index-CLgFVlph.js\",\n      \"bytes\": 480085,\n      \"gzipBytes\": 134761,\n      \"sha256\": \"e7409c4406d1a0083843dfda2e9439d309f0eb04e04694810659cbe8ed38478f\"\n    }\n  ],\n  \"primaryBrandBytes\": 130188\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check-ui-accessibility.mjs"
+      ],
+      "startedAt": "2026-10-07T21:51:03.003Z",
+      "finishedAt": "2026-10-07T21:51:03.061Z",
+      "exitCode": 0,
+      "output": "{\n  \"status\": \"PASS\",\n  \"colorPairs\": 29,\n  \"minimumTextContrast\": 5.567194476923131,\n  \"failed\": [],\n  \"sourceContracts\": {\n    \"focusVisible\": true,\n    \"reducedMotionStopsAllAnimations\": true,\n    \"inputZoomAllowed\": true,\n    \"safeAreaProgressiveEnhancement\": true,\n    \"formErrorAssociated\": true,\n    \"nativeModalAndCancel\": true,\n    \"secretInputMaskedAndCleared\": true,\n    \"largeTextChartsBounded\": true,\n    \"touchTargetsDeclared\": true,\n    \"noPermanentAnimationRuntime\": true\n  }\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/audit-ui-release.mjs",
+        "/workspace/scratch/bf49a1ea6825/equinox-ui-v1-57SyNe/baseline/EQUINOX"
+      ],
+      "startedAt": "2026-10-07T21:51:03.063Z",
+      "finishedAt": "2026-10-07T21:51:03.460Z",
+      "exitCode": 0,
+      "output": "{\n  \"status\": \"PASS\",\n  \"frozenFiles\": 67,\n  \"changed\": [\n    \"README.md\",\n    \"docs/mobile-release.md\",\n    \"index.html\",\n    \"package-lock.json\",\n    \"package.json\",\n    \"public/apple-touch-icon.png\",\n    \"public/icon-192.png\",\n    \"public/icon-512.png\",\n    \"public/icon.svg\",\n    \"release/mobile-pages.yml\",\n    \"scripts/build-pwa.mjs\",\n    \"src/ui/App.tsx\",\n    \"src/ui/Details.tsx\",\n    \"src/ui/MarketDataSettings.tsx\",\n    \"src/ui/format.ts\",\n    \"src/ui/styles.css\",\n    \"tests/browser/app.spec.ts\",\n    \"tests/browser/market-settings.spec.ts\"\n  ],\n  \"added\": [\n    \"docs/ui-v1/design-system.md\",\n    \"docs/ui-v1/device-release-gate.md\",\n    \"docs/ui-v1/release-status.md\",\n    \"docs/ui-v1/review.md\",\n    \"docs/ui-v1/visual-strategy.md\",\n    \"public/brand/equinox-primary.jpeg\",\n    \"scripts/audit-ui-release.mjs\",\n    \"scripts/check-ui-accessibility.mjs\",\n    \"scripts/check-ui-clean-build.mjs\",\n    \"scripts/check-ui-pwa.mjs\",\n    \"scripts/check-ui-snapshots.mjs\",\n    \"scripts/package-ui-release.py\",\n    \"scripts/record-ui-browser.mjs\",\n    \"scripts/scan-ui-release.mjs\",\n    \"scripts/verify-ui-release.mjs\",\n    \"src/ui/BalanceRail.tsx\",\n    \"src/ui/BuyPlan.tsx\",\n    \"src/ui/Glyph.tsx\",\n    \"src/ui/Overview.tsx\",\n    \"src/ui/RiskView.tsx\",\n    \"src/ui/presentation.ts\",\n    \"tests/browser/ui.spec.ts\",\n    \"tests/ui-presentation.test.ts\"\n  ],\n  \"deleted\": [],\n  \"unexpectedChanges\": [],\n  \"unexpectedAdditions\": [],\n  \"failedHandlers\": [],\n  \"serviceWorkerLogicIdentical\": true,\n  \"originalUIEffectsPreserved\": true,\n  \"originalFormChangeHandlersPreserved\": true,\n  \"browserCases\": [\n    {\n      \"path\": \"tests/browser/app.spec.ts\",\n      \"originalNamesPreserved\": true,\n      \"originalTests\": 6,\n      \"currentTests\": 6,\n      \"baselineAssertions\": 37,\n      \"currentAssertions\": 37\n    },\n    {\n      \"path\": \"tests/browser/market-settings.spec.ts\",\n      \"originalNamesPreserved\": true,\n      \"originalTests\": 5,\n      \"currentTests\": 5,\n      \"baselineAssertions\": 39,\n      \"currentAssertions\": 39\n    },\n    {\n      \"path\": \"tests/browser/nationalbank.spec.ts\",\n      \"originalNamesPreserved\": true,\n      \"originalTests\": 4,\n      \"currentTests\": 4,\n      \"baselineAssertions\": 11,\n      \"currentAssertions\": 11\n    }\n  ],\n  \"noDependencyChanges\": true,\n  \"primaryBrandIdentical\": true\n}\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/scan-release-secrets.mjs"
+      ],
+      "startedAt": "2026-10-07T21:51:03.461Z",
+      "finishedAt": "2026-10-07T21:51:03.616Z",
+      "exitCode": 0,
+      "output": "{\n  \"checkedAt\": \"2026-10-07T21:51:03.609Z\",\n  \"status\": \"PASS\",\n  \"scope\": \"Static structural scan of production/source and committed fixture/snapshot data; no real provider credentials were supplied. Not runtime browser exclusion evidence.\",\n  \"productionFiles\": 12,\n  \"sourceFiles\": 40,\n  \"serializedFiles\": 20,\n  \"findings\": []\n}\n"
+    }
+  ],
+  "scope": "Local checks and replay of already accepted acquired data; no fresh authenticated HTTP or browser result is inferred.",
+  "finishedAt": "2026-10-07T21:51:03.617Z"
+}

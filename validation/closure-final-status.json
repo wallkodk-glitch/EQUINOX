@@ -1,0 +1,71 @@
+{
+  "format": "EQUINOX_FINAL_DATA_RELEASE_STATUS_V1",
+  "appVersion": "1.1.2",
+  "engineVersion": "1.0.1",
+  "marketDataModelVersion": "1.1.2",
+  "snapshotSchemaVersions": [
+    1,
+    2
+  ],
+  "financialBackupSchemaVersion": 1,
+  "dataIntegrationStatus": "DATA-INTEGRATION PASS",
+  "releaseScope": "VERIFIED_252_RETURN_DATA_LAYER_PRE_UI",
+  "riskWindow": {
+    "from": "2025-10-03",
+    "to": "2026-10-06",
+    "observations": 253,
+    "returns": 252,
+    "coverage": 1,
+    "acquiredAt": "2026-10-07T08:46:37.541Z"
+  },
+  "TSMEvidenceWindow": {
+    "from": "2025-01-01",
+    "to": "2026-10-07"
+  },
+  "canonicalStockCryptoClose": "PASS",
+  "corporateActions": "PASS",
+  "historicalFXContract": "PASS \u2014 retrospective date-only, NOT point-in-time",
+  "synchronizedBuilderAndQualityGate": "PASS \u2014 all-or-nothing",
+  "automaticImportAPI": "IMPLEMENTED; unmocked local-key HTTP refresh NOT TESTED",
+  "automaticImportUI": "NOT ACTIVATED \u2014 intentionally outside pre-UI scope",
+  "authenticatedMassiveTransport": "PASS \u2014 configured connector typed public rows only",
+  "nativeMassiveHTTPEnvelope": "NOT EXPOSED BY CONNECTOR; live native adapter NOT TESTED",
+  "nationalbankPublicNodeHTTP": "PASS",
+  "coinGeckoNativeBrowserHTTP": "NOT TESTED",
+  "credentialSecurity": "Existing local-client tradeoff; not cryptographically secure secret storage",
+  "credentialExclusion": "PASS \u2014 deterministic tests and structural scan; no real key supplied",
+  "mathematicalRegression": "PASS \u2014 frozen Engine 1.0.1, no formula changes",
+  "snapshotReplay": "PASS \u2014 schema 1 compatibility and deterministic schema 2",
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "tests": "152/152 PASS",
+  "pythonReferences": "PASS \u2014 original goldens and independent real-data reference",
+  "productionBuild": "PASS",
+  "cleanRebuild": "PASS \u2014 11 byte-identical files",
+  "browserRuntime": "NOT TESTED",
+  "browserCORS": "NOT TESTED",
+  "browserReason": "EACCES at 15 launches; zero app assertions/provider requests",
+  "safariWebKit": "NOT TESTED",
+  "physicalIPhone": "NOT TESTED",
+  "offlinePWARuntime": "NOT TESTED",
+  "hostedDeployment": "NOT TESTED",
+  "remainingLimits": [
+    "Future/wider TSM periods fail closed outside official evidence; no ongoing certification.",
+    "Retrospective FX/final ADR conversion is not historical intraday information availability.",
+    "Run native HTTP/CORS and Chromium/WebKit/iPhone/Pages verification before UI activation."
+  ],
+  "evidence": [
+    "validation/closure-final-checks.json",
+    "validation/closure-final-audit.json",
+    "validation/closure-final-provider-rows.json",
+    "validation/closure-final-fx.json",
+    "validation/closure-final-tsm.json",
+    "validation/closure-final-synchronized.json",
+    "validation/closure-final-snapshots.json",
+    "validation/closure-final-independent-reference.json",
+    "validation/reproducibility.json",
+    "validation/credential-scan.json",
+    "validation/cors-probe.json"
+  ],
+  "checkedAt": "2026-10-07T09:20:10.713999+00:00"
+}

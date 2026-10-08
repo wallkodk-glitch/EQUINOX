@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-07T21:51:36.902Z",
+  "node": "v24.19.0",
+  "cleanDependencyInstallation": "npm ci (run separately before this comparison)",
+  "identicalLockfile": true,
+  "identicalDist": true,
+  "differences": [],
+  "distSHA256": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "apple-touch-icon.png": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37",
+    "assets/index-B04eiKRR.css": "25b1d49b6208d3d768d92aae2585cff978eafb0e08abddcf424738bface3f6e9",
+    "assets/index-CLgFVlph.js": "e7409c4406d1a0083843dfda2e9439d309f0eb04e04694810659cbe8ed38478f",
+    "assets/index-CLgFVlph.js.map": "3cc4b867a1b6958e2fa4b96c895c5f71586df54ccba9eae3c3249dbf46c43d27",
+    "brand/equinox-primary.jpeg": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551",
+    "icon-192.png": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07",
+    "icon-512.png": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4",
+    "icon.svg": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b",
+    "index.html": "ef8928eefe2bc52674ac65575cfda1875f63eb0efcf1aa57c504990f701b5cce",
+    "manifest.webmanifest": "1f809c7e2800661ac5b26480021fcce3e30205486ec5ea8f688c65104ff4fe57",
+    "sw.js": "422c190f5bc6ecf3aaa1be9ba272c9c86e2a7f04671d865659d8d04c3830f6b6"
+  }
+}

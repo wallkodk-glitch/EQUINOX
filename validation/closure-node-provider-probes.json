@@ -1,0 +1,50 @@
+[
+  {
+    "task": "historical",
+    "transport": "NODE_PUBLIC",
+    "status": "FAILED",
+    "code": "PROVIDER_UNAVAILABLE"
+  },
+  {
+    "provider": "coingecko",
+    "transport": "NODE_PUBLIC",
+    "status": "PASS",
+    "startedAt": "2026-10-06T19:02:50.502Z",
+    "finishedAt": "2026-10-06T19:03:02.315Z",
+    "observations": 2,
+    "first": {
+      "schemaVersion": 1,
+      "dataModelVersion": "1.1.1",
+      "provider": "coingecko",
+      "instrument": "BTC",
+      "observationDate": "2026-10-06",
+      "observationTimestamp": "2026-10-06T19:01:30.000Z",
+      "providerTimestamp": "2026-10-06T19:01:30.000Z",
+      "acquiredAt": "2026-10-06T19:03:02.311Z",
+      "price": 85504,
+      "unit": "USD",
+      "kind": "crypto-current",
+      "bucketStart": null,
+      "bucketEnd": null,
+      "sourceURL": "https://api.coingecko.com/api/v3/simple/price",
+      "semantics": "COINGECKO_CURRENT_REFERENCE"
+    },
+    "last": {
+      "schemaVersion": 1,
+      "dataModelVersion": "1.1.1",
+      "provider": "coingecko",
+      "instrument": "ETH",
+      "observationDate": "2026-10-06",
+      "observationTimestamp": "2026-10-06T19:01:30.000Z",
+      "providerTimestamp": "2026-10-06T19:01:30.000Z",
+      "acquiredAt": "2026-10-06T19:03:02.311Z",
+      "price": 2690.02,
+      "unit": "USD",
+      "kind": "crypto-current",
+      "bucketStart": null,
+      "bucketEnd": null,
+      "sourceURL": "https://api.coingecko.com/api/v3/simple/price",
+      "semantics": "COINGECKO_CURRENT_REFERENCE"
+    }
+  }
+]

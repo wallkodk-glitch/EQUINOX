@@ -1,0 +1,94 @@
+{
+  "format": "EQUINOX_UI_PWA_STATIC_V1",
+  "checkedAt": "2026-10-07T21:51:02.998Z",
+  "status": "PASS",
+  "scope": "Generated manifest/icon/brand checks plus Node VM worker request-guard and install-asset exercise only.",
+  "manifest": {
+    "id": "/EQUINOX/",
+    "name": "EQUINOX",
+    "short_name": "EQUINOX",
+    "lang": "da",
+    "start_url": "/EQUINOX/",
+    "scope": "/EQUINOX/",
+    "display": "standalone",
+    "background_color": "#071012",
+    "theme_color": "#0A1417",
+    "icons": [
+      {
+        "src": "/EQUINOX/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "/EQUINOX/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+  },
+  "iconSizes": [
+    192,
+    512,
+    180
+  ],
+  "noStaleBuildAssets": true,
+  "authRequestsNeverIntercepted": true,
+  "guards": [
+    {
+      "name": "external Massive request",
+      "intercepted": false
+    },
+    {
+      "name": "external CoinGecko request",
+      "intercepted": false
+    },
+    {
+      "name": "external Nationalbank request",
+      "intercepted": false
+    },
+    {
+      "name": "same-origin Authorization header",
+      "intercepted": false
+    },
+    {
+      "name": "same-origin CoinGecko auth header",
+      "intercepted": false
+    },
+    {
+      "name": "same-origin query request",
+      "intercepted": false
+    },
+    {
+      "name": "same-origin POST",
+      "intercepted": false
+    },
+    {
+      "name": "unknown same-origin API request",
+      "intercepted": false
+    }
+  ],
+  "shellAssetCount": 9,
+  "assets": [
+    {
+      "file": "index-B04eiKRR.css",
+      "bytes": 25137,
+      "gzipBytes": 6010,
+      "sha256": "25b1d49b6208d3d768d92aae2585cff978eafb0e08abddcf424738bface3f6e9"
+    },
+    {
+      "file": "index-CLgFVlph.js",
+      "bytes": 480085,
+      "gzipBytes": 134761,
+      "sha256": "e7409c4406d1a0083843dfda2e9439d309f0eb04e04694810659cbe8ed38478f"
+    }
+  ],
+  "primaryBrandBytes": 130188,
+  "externalRuntimeFontsOrChartDependenciesAdded": false,
+  "performanceScope": "Artifact sizes and static animation architecture only. Frame time, energy use, scrolling and keyboard NOT TESTED.",
+  "browserOffline": "NOT TESTED",
+  "installedPWA": "NOT TESTED",
+  "actualSafeAreas": "NOT TESTED",
+  "serviceWorkerUpdateRuntime": "NOT TESTED"
+}

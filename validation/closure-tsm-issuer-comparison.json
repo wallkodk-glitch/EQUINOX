@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-06T19:17:25.976Z",
+  "status": "PARTIAL_VERIFIED_LATEST_BLOCKED",
+  "verifiedFinalEvents": 6,
+  "latest": {
+    "exDate": "2026-09-16",
+    "payDate": "2026-10-08",
+    "massiveOriginalUSDPerADR": 1.096251,
+    "issuerSource": "https://investor.tsmc.com/english/dividends/1q26",
+    "latestDirectPublicFetchHTTPStatus": 200,
+    "officialText": "~US$1.11 per ADR",
+    "finalPDFLinksObserved": [],
+    "exactOfficialGrossVerified": false
+  },
+  "basis": {
+    "ratio": "5 ordinary shares per ADR",
+    "grossVsNet": "Official final 3Q25 notice: gross 0.938972 USD/ADR; withholding 21%, 0.197184 USD; net 0.741788 USD; listed cash dividend/tax relief fees 0",
+    "source": "https://investor.tsmc.com/system/files/2026-04/Final%20Dividend%20Announcement_3Q25.pdf"
+  },
+  "rawPublicFields": "tests/fixtures/providers/tsm-dividends.raw.json",
+  "independentIssuerFacts": "tests/fixtures/providers/tsmc-dividends.expected.json",
+  "verifiedForCompleteRisk": false
+}
