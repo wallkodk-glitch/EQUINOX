@@ -1,90 +1,108 @@
-name: EQUINOX validated release
+name: EQUINOX mobile release import
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
+    inputs:
+      release_zip:
+        description: "Release ZIP filename already committed at repository root"
+        required: true
+        default: "EQUINOX-v1.2.0-GitHub-ready.zip"
 
 permissions:
-  contents: read
-
-concurrency:
-  group: equinox-${{ github.ref }}
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  verify:
+  import:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          node-version: 24.19.0
-          cache: npm
+          fetch-depth: 0
 
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: "3.12"
-
-      - run: npm ci
-      - run: python -m pip install -r reference/requirements.txt
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm run test:reference
-      - run: npm test
-      - run: npm run build
-      - run: npx playwright install --with-deps chromium webkit
-      - run: npm run test:browser
-
-      - name: Build for this repository's Pages path
+      - name: Validate release ZIP
         shell: bash
         env:
-          REPO_NAME: ${{ github.event.repository.name }}
+          RELEASE_ZIP: ${{ inputs.release_zip }}
         run: |
-          if [[ "$REPO_NAME" == *.github.io ]]; then
-            BASE_PATH=/ npm run build
+          set -euo pipefail
+          test -f "$RELEASE_ZIP" || { echo "Missing $RELEASE_ZIP"; exit 1; }
+
+          python - "$RELEASE_ZIP" <<'PY'
+          import sys, zipfile
+          from pathlib import PurePosixPath
+
+          archive = sys.argv[1]
+          with zipfile.ZipFile(archive) as z:
+              for name in z.namelist():
+                  p = PurePosixPath(name)
+                  if p.is_absolute() or ".." in p.parts:
+                      raise SystemExit(f"Unsafe ZIP path: {name}")
+          print("ZIP path validation PASS")
+          PY
+
+      - name: Extract and identify release root
+        id: extract
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/equinox-import
+          mkdir -p /tmp/equinox-import
+          unzip -q "$RELEASE_ZIP" -d /tmp/equinox-import
+
+          if [[ -f /tmp/equinox-import/EQUINOX/package.json ]]; then
+            SRC=/tmp/equinox-import/EQUINOX
+          elif [[ -f /tmp/equinox-import/package.json ]]; then
+            SRC=/tmp/equinox-import
           else
-            BASE_PATH="/$REPO_NAME/" npm run build
+            echo "Could not identify EQUINOX release root"
+            exit 1
           fi
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: equinox-static-build
-          path: dist
-          include-hidden-files: true
+          test -f "$SRC/package-lock.json"
+          test -d "$SRC/src"
+          test -f "$SRC/.github/workflows/pages.yml"
+          test -f "$SRC/RELEASE-MANIFEST.json"
 
-      - uses: actions/upload-pages-artifact@v5.0.0
-        if: github.event_name != 'pull_request'
-        with:
-          path: dist
-          include-hidden-files: true
+          echo "src=$SRC" >> "$GITHUB_OUTPUT"
+          echo "Release structure validation PASS"
 
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs: verify
-    runs-on: ubuntu-latest
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy Pages
-        id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
-
-      - name: Hosted smoke
+      - name: Import release while preserving repository workflows
+        shell: bash
         env:
-          DEPLOY_URL: ${{ steps.deployment.outputs.page_url }}
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+          SRC: ${{ steps.extract.outputs.src }}
         run: |
-          curl --fail --retry 6 --retry-delay 10 "$DEPLOY_URL" -o page.html
-          grep -q EQUINOX page.html
-          curl --fail --retry 3 "${DEPLOY_URL}manifest.webmanifest"
-          curl --fail --retry 3 "${DEPLOY_URL}sw.js"
+          set -euo pipefail
+
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/workflows/' \
+            "$SRC/" ./
+
+          rm -f "$RELEASE_ZIP"
+
+          git status --short
+
+      - name: Commit imported release
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Import EQUINOX release from ${RELEASE_ZIP}"
+          git push origin HEAD:main
