@@ -134,8 +134,10 @@ test("manual freshness expires visibly and offline does not imply live valuation
   await page.getByRole("button", { name: "Bekræft priser som aktuelle" }).click();
   await navigate(page, "Overview");
   await expect(page.locator(".freshness")).toHaveText("Manuelle priser · bekræftet");
-  await page.clock.setSystemTime(new Date(now.getTime() + 24 * 3600e3 + 1));
-  await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+  // Advance the installed Playwright clock so Date.now() and the app's
+  // 60-second freshness timer move together. setSystemTime() changes the
+  // wall clock without firing timers, which can leave React state unchanged.
+  await page.clock.fastForward(24 * 3600e3 + 1);
   await expect(page.locator(".freshness")).toHaveText("Priser udløbet · bekræft igen");
   await context.setOffline(true);
   await expect(page.locator(".freshness")).toHaveText("Offline · manuelle priser");

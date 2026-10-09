@@ -8,18 +8,18 @@
     2
   ],
   "financialBackupSchemaVersion": 1,
-  "verdict": "BROWSER HARDENING RC1 — CI REQUIRED",
+  "verdict": "BROWSER HARDENING RC2 — CI REQUIRED",
   "fullBrowserPWAReleaseAcceptance": false,
-  "implementation": "PATCHED — browser/runtime failures addressed; GitHub CI rerun required",
+  "implementation": "PATCHED — RC1 reduced browser failures from 11 to 2; RC2 corrects Playwright clock advancement in freshness expiry test; GitHub CI rerun required",
   "mathematicalRegression": "PASS — independent Python reference reproduced; frozen engine/data source files unchanged",
   "dataLayerRegression": "FROZEN SOURCE UNCHANGED — full GitHub CI pending",
   "acceptedDataIntegrationBaseline": "DATA-INTEGRATION PASS — v1.1.2 accepted historical window; no new live transport verification",
-  "lint": "PENDING GITHUB CI",
-  "typecheck": "PENDING GITHUB CI",
-  "tests": "PENDING GITHUB CI",
+  "lint": "PASS — GitHub RC1 run",
+  "typecheck": "PASS — GitHub RC1 run",
+  "tests": "PASS — 172/172 GitHub RC1 run",
   "pythonReferences": "PASS — reference/reproduce.py --check and reference/final-risk.py executed locally; generated evidence reverted",
   "snapshots": "PASS — 5 exact baseline hashes/results replayed in Node",
-  "productionBuild": "PENDING GITHUB CI",
+  "productionBuild": "PASS — GitHub RC1 run",
   "cleanRebuild": "PENDING GITHUB CI",
   "staticAccessibility": "PASS — declared colors/source contracts; no full WCAG claim",
   "staticPWA": "PASS — manifest/icons and Node worker guards; no browser lifecycle claim",
@@ -27,9 +27,9 @@
   "credentialStorage": "Client-side local browser storage; not cryptographically secure secret storage",
   "dependencyChanges": "NONE",
   "browserCasesPrepared": 24,
-  "browserRuntime": "PENDING GITHUB CI",
+  "browserRuntime": "PENDING GITHUB CI — RC1: 46/48 PASS; only freshness expiry clock-emulation case remained in Chromium and WebKit",
   "browserCORS": "NOT TESTED",
-  "browserReason": "Previous GitHub run: 37/48 PASS; RC1 addresses selector scope, freshness clock, 200% text containment, provider routing and known Playwright WebKit offline-emulation bug",
+  "browserReason": "RC1 GitHub run: 46/48 PASS. Remaining two failures were the same freshness-expiry test in Chromium/WebKit; test used clock.setSystemTime(), which Playwright documents as not triggering timers. RC2 uses clock.fastForward() so Date.now() and the app freshness interval advance together.",
   "safariWebKit": "PENDING GITHUB CI; Playwright WebKit offline emulation limitation documented in tests",
   "physicalIPhone": "NOT TESTED",
   "addToHomeScreen": "NOT TESTED",
@@ -536,6 +536,10 @@
       "sha256": "30cafdf1abe4e2ac49bd5cb636c6132d62cf228695cd2debd3606d35b6fd2826",
       "bytes": 28853
     },
+    "tests/browser-fixture.test.ts": {
+      "sha256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
+      "bytes": 949
+    },
     "tests/browser/app.spec.ts": {
       "sha256": "960a589f2ebbacf07a6309785cb2dc0035ae4764cfe770258a178bb6cb26e1a8",
       "bytes": 9282
@@ -549,12 +553,8 @@
       "bytes": 3209
     },
     "tests/browser/ui.spec.ts": {
-      "sha256": "3a376cbce79c5bdacfd45cf346cc08b49bd9d2ade6a5f205d8c6c2cae24310fb",
-      "bytes": 7500
-    },
-    "tests/browser-fixture.test.ts": {
-      "sha256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
-      "bytes": 949
+      "sha256": "4c94593d6a7c5c00a74e464e0da99f235bcb9b270e582a192da172b94a73bb09",
+      "bytes": 7612
     },
     "tests/calculation-job.test.ts": {
       "sha256": "2a762cb8d8e964c204b7ab78b52dc937f1565343ee06506338787054e8d7d3a0",
