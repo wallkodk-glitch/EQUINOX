@@ -38,7 +38,7 @@ test('current reference cache survives reload and offline without changing finan
  const before=JSON.parse(await backupText(page));expect(before.state.holdings).toHaveLength(5);expect(Array.isArray(before.snapshots)).toBe(true);
  await page.getByRole('button',{name:'Test public access CoinGecko'}).click();await expect(page.getByText('Public access verified')).toBeVisible();await expect(page.getByTestId('market-references')).toContainText('CURRENT');await expect(page.getByTestId('market-references')).toContainText('100.000');
  const after=JSON.parse(await backupText(page));expect(after.state).toEqual(before.state);expect(after.snapshots).toEqual(before.snapshots);
- await page.reload();await settings(page);await expect(page.getByTestId('market-references')).toContainText('CACHED');await context.setOffline(true);await expect(page.getByTestId('market-references')).toContainText('OFFLINE');await expect(page.getByText('RISK_INTEGRATION_BLOCKED',{exact:false}).first()).toBeVisible();
+ await page.reload();await settings(page);await expect(page.getByTestId('market-references')).toContainText('CACHED');await context.setOffline(true);await expect(page.getByTestId('market-references')).toContainText('OFFLINE');await expect(page.getByRole('button',{name:'Opdatér risikohistorik',exact:true})).toBeDisabled();
 });
 test('saved auth is header-only and excluded from logs, snapshot, cache and bundle',async({page})=>{
  const key=crypto.randomUUID(),logs:string[]=[];page.on('console',m=>logs.push(m.text()));page.on('pageerror',e=>logs.push(e.message));

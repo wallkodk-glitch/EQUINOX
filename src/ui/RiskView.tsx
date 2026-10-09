@@ -9,7 +9,7 @@ import { StateLegend } from "./BalanceRail";
 export function RiskSummary({ sealed, sameInput, onOpen }: { sealed: SealedSnapshot | null; sameInput: boolean; onOpen: () => void }) {
   const risk = sealed?.snapshot.output.risk;
   return <section className="risk-summary" aria-labelledby="risk-summary-title">
-    <div className="section-heading"><div><span className="eyebrow">RISK · DKK</span><h2 id="risk-summary-title">Porteføljerisiko</h2></div><button className="icon-button" type="button" aria-label="Åbn Risk" onClick={onOpen}><Glyph name="arrow" /></button></div>
+    <div className="section-heading"><div><span className="eyebrow">Risiko · DKK</span><h2 id="risk-summary-title">Porteføljerisiko</h2></div><button className="icon-button" type="button" aria-label="Åbn Risk" onClick={onOpen}><Glyph name="arrow" /></button></div>
     <div className="three-metrics">
       {([['Current', risk?.current], ['Target', risk?.target], ['Projected', risk?.projected]] as const).map(([label, value]) => <div key={label}><span>{label}</span><strong>{percent(value?.volatility)}</strong></div>)}
     </div>
@@ -20,7 +20,7 @@ export function RiskSummary({ sealed, sameInput, onOpen }: { sealed: SealedSnaps
 
 export function CorrelationMatrix({ matrix }: { matrix: readonly (readonly number[])[] | null }) {
   return <section className="correlation-section">
-    <div className="section-heading"><div><span className="eyebrow">DEPENDENCE</span><h2>Korrelation</h2></div><span className="micro">−1 til +1</span></div>
+    <div className="section-heading"><div><span className="eyebrow">Relationer</span><h2>Korrelation</h2></div><span className="micro">−1 til +1</span></div>
     {matrix ? <>
       <div className="matrix-scroll" role="region" aria-label="Korrelationsmatrix" tabIndex={0}>
         <table className="correlation-table"><caption className="sr-only">Korrelation mellem aktivernes DKK-returns. Tallene er afrundet til to decimaler.</caption><thead><tr><th scope="col" aria-label="Aktiv" />{ASSETS.map(asset => <th scope="col" key={asset}>{asset}</th>)}</tr></thead><tbody>
@@ -43,15 +43,15 @@ export function RiskView({ sealed, onDetails, onAllocate, sameInput }: {
   const signed = shares?.some(share => share < 0) ?? false;
   const domain = Math.max(1, ...shares?.map(Math.abs) ?? []);
   return <>
-    <div className="section-title"><span className="eyebrow">RISK · INSTRUMENT</span><h1 data-page-title tabIndex={-1}>Risk</h1><p>Risiko fra en reproducerbar beregning.</p></div>
+    <div className="section-title"><span className="eyebrow">Risiko · datagrundlag</span><h1 data-page-title tabIndex={-1}>Risk</h1><p>Risiko fra en reproducerbar beregning.</p></div>
     {!sealed || !risk ? <section className="empty"><Glyph name="balance" /><h2>{sealed ? "Risikohistorik mangler" : "Ingen beregnet risiko"}</h2><p>{sealed ? "Denne beregning indeholder ingen risikohistorik. Equal Weight kan beregnes uden den." : "Beregn en fordeling med historik for at se volatilitet, risikobidrag og korrelation."}</p><button type="button" onClick={onAllocate}>Åbn Allocate</button>{sealed && <button className="text-button" type="button" onClick={onDetails}>Calculation Details</button>}</section> : <>
       <div className="snapshot-context"><span>{riskSource(sealed)}</span><span>{time(sealed.snapshot.timestamp)}</span>{!sameInput && <strong>Input ændret · historisk beregning</strong>}</div>
       <StateLegend />
       <div className="risk-state-control" role="group" aria-label="Vælg risikofordeling">
         {([['current', 'Current'], ['target', 'Target'], ['projected', 'Projected']] as const).map(([state, label]) => <button type="button" aria-pressed={selected === state} onClick={() => setSelected(state)} key={state}>{label}</button>)}
       </div>
-      <section className="risk-hero" aria-label={`${selected} volatilitet`}><span className="eyebrow">ANNUALIZED · DKK</span><div className="hero-metric">{percent(selectedRisk?.volatility)}</div><p>{selected === "target" ? "Constrained Target" : selected === "projected" ? "Projected · efter købsplan" : "Current · før købsplan"}</p></section>
-      <section className="risk-contribution"><div className="section-heading"><div><span className="eyebrow">RC / VOLATILITY</span><h2>Risikobidrag</h2></div><span className="micro">RCShare</span></div>
+      <section className="risk-hero" aria-label={`${selected} volatilitet`}><span className="eyebrow">Annualized · DKK</span><div className="hero-metric">{percent(selectedRisk?.volatility)}</div><p>{selected === "target" ? "Constrained Target" : selected === "projected" ? "Projected · efter købsplan" : "Current · før købsplan"}</p></section>
+      <section className="risk-contribution"><div className="section-heading"><div><span className="eyebrow">RC / volatilitet</span><h2>Risikobidrag</h2></div><span className="micro">RCShare</span></div>
         {shares ? <div className="contribution-rows">{ASSETS.map((asset, i) => {
           const origin = signed ? 140 : 8;
           const width = shares[i] / domain * (signed ? 128 : 264);

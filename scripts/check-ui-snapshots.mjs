@@ -28,6 +28,6 @@ try {
   const report = { format: 'EQUINOX_UI_SNAPSHOT_COMPATIBILITY_V1', checkedAt: new Date().toISOString(), status: 'PASS',
     scope: 'Frozen Engine Node replay and exact canonical comparison to supplied accepted snapshots/data. Not Node-to-browser replay.',
     snapshots, normalizedInputAndResultsIdentical: true, browserReplay: 'NOT TESTED' };
-  await writeFile('validation/ui-snapshot-compatibility.json', JSON.stringify(report, null, 2));
+  await writeFile(process.argv[3] ?? 'validation/ui-snapshot-compatibility.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } finally { await server.close(); }

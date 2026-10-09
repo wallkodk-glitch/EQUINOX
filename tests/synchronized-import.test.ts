@@ -13,12 +13,12 @@ import * as nationalbank from '../src/market-data/live/nationalbank-history';
 import tsm from './fixtures/providers/tsm-dividends.raw.json';
 
 const now='2026-10-07T12:00:00.000Z';
-function fixture() {
-  const grid=sessionWindow(now,252);
+function fixture(at=now) {
+  const grid=sessionWindow(at,252);
   const observations=Object.fromEntries(ASSETS.map((instrument,i)=>[instrument,grid.map((s,k):Observation=>({
     schemaVersion:1,dataModelVersion:'1.1.1',provider:'massive',instrument,
     observationDate:s.date,observationTimestamp:s.close,providerTimestamp:new Date(Date.parse(s.close)-60000).toISOString(),
-    acquiredAt:now,price:i===2?100:100+k*0.07*(i+1)+Math.sin((k+1)*(i+1))*2,
+    acquiredAt:at,price:i===2?100:100+k*0.07*(i+1)+Math.sin((k+1)*(i+1))*2,
     unit:'USD',kind:i<3?'equity-minute':'crypto-minute',bucketStart:new Date(Date.parse(s.close)-60000).toISOString(),
     bucketEnd:s.close,sourceURL:'https://api.massive.com',semantics:'LAST_ELIGIBLE_TRADE_IN_MINUTE',
   }))])) as Record<(typeof ASSETS)[number],Observation[]>;
@@ -30,14 +30,14 @@ function fixture() {
   });
   const fx=[...new Set(dates)].sort().map((date):Observation=>({
     schemaVersion:1,dataModelVersion:'1.1.1',provider:'nationalbank',instrument:'USD/DKK',
-    observationDate:date,observationTimestamp:null,providerTimestamp:null,acquiredAt:now,price:6.658,
+    observationDate:date,observationTimestamp:null,providerTimestamp:null,acquiredAt:at,price:6.658,
     unit:'DKK_PER_USD',kind:'fx-reference',bucketStart:null,bucketEnd:null,sourceURL:NATIONALBANK_HISTORY_SOURCE,
     semantics:'NATIONALBANK_DATE_ONLY_DKK_PER_100_DIVIDED_BY_100',
   }));
   const from=grid[0].date,to=grid.at(-1)!.date;
   const corporateActions=(['GOOGL','ISRG','TSM'] as const).map(ticker=>riskActionEvidence(
-    [],ticker==='TSM'?tsm.filter(e=>e.ex_dividend_date>=from&&e.ex_dividend_date<=to):[],ticker,from,to,now));
-  return {now,lookback:252,observations,fx,corporateActions};
+    [],ticker==='TSM'?tsm.filter(e=>e.ex_dividend_date>=from&&e.ex_dividend_date<=to):[],ticker,from,to,at));
+  return {now:at,lookback:252,observations,fx,corporateActions};
 }
 it('constructs all five assets and retrospective FX atomically, with gross ADR dividend reinvestment exactly once', () => {
   const data=buildSynchronizedRisk(fixture()), prepared=prepareRisk(data,now,252);
@@ -47,6 +47,19 @@ it('constructs all five assets and retrospective FX atomically, with gross ADR d
   expect(data.rows.find(r=>r.date==='2026-09-16')!.dividendUSD[2]).toBe(1.096251);
   expect(data.provenance!.marketObservations).toHaveLength(1265);
   expect(Object.isFrozen(data)).toBe(true);expect(buildSynchronizedRisk(fixture())).toEqual(data);
+  expect(JSON.stringify(data)).not.toMatch(/authorization|apiKey|publishedAt|observedAt/i);
+});
+it('the full synchronized gate accepts October 8 without rebooking the ADR payment or relaxing FX/calendar semantics', () => {
+  // Synthetic prices/FX only: this is a boundary integration test, NOT live acquisition evidence.
+  const acquiredAt='2026-10-09T12:00:00.000Z';
+  const data=buildSynchronizedRisk(fixture(acquiredAt)),prepared=prepareRisk(data,acquiredAt,252);
+  expect(data.rows.at(-1)).toMatchObject({date:'2026-10-08',closeAt:'2026-10-08T20:00:00.000Z',dividendUSD:[0,0,0]});
+  expect(data.provenance!.corporateActions.find(a=>a.ticker==='TSM')!.to).toBe('2026-10-08');
+  expect(prepared.coverage).toBe(1);expect(prepared.missingDates).toEqual([]);expect(prepared.returns).toHaveLength(252);
+  const ex=prepared.returnDates.indexOf('2026-09-16');
+  expect(ex).toBeGreaterThan(-1);expect(prepared.returns[ex][2]).toBeCloseTo(0.01096251,14);
+  expect(data.provenance!.marketObservations).toHaveLength(1265);
+  expect(data.provenance!.fxAvailability).toBe('RETROSPECTIVE_DATE_ONLY_NOT_POINT_IN_TIME');
   expect(JSON.stringify(data)).not.toMatch(/authorization|apiKey|publishedAt|observedAt/i);
 });
 it('fails closed on any missing asset/close, current crypto, daily stock c, mixed provider or malformed observation', () => {
@@ -126,4 +139,27 @@ it('missing credentials and pre-aborted jobs are rejected before any network or 
   const c=new AbortController();c.abort();
   await expect(refreshSynchronizedRisk({key:crypto.randomUUID(),lookback:252,signal:c.signal})).rejects.toThrow('ABORTED');
   expect(get).not.toHaveBeenCalled();get.mockRestore();
+});
+it('reports acquisition, synchronization and validation truthfully without changing normalized output', async () => {
+  vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(now));const f=fixture(),phases:string[]=[];
+  vi.spyOn(MassiveAdapter.prototype,'canonicalCloses').mockImplementation(async instrument=>f.observations[instrument]);
+  vi.spyOn(MassiveAdapter.prototype,'riskActions').mockImplementation(async ticker=>f.corporateActions.find(a=>a.ticker===ticker)!);
+  vi.spyOn(nationalbank,'historicalFX').mockResolvedValue(f.fx);
+  try {
+    const data=await refreshSynchronizedRisk({key:crypto.randomUUID(),lookback:252,onProgress:p=>phases.push(p.phase)});
+    expect([...new Set(phases)]).toEqual(['acquiring','synchronizing','validating']);
+    expect(data).toEqual(buildSynchronizedRisk(f));
+  } finally {vi.restoreAllMocks();vi.useRealTimers();}
+});
+it('cancellation during the final cache write cannot return a ready risk dataset', async () => {
+  vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date(now));const f=fixture(),c=new AbortController(),cache=await MarketCache.open(crypto.randomUUID());
+  vi.spyOn(MassiveAdapter.prototype,'canonicalCloses').mockImplementation(async instrument=>f.observations[instrument]);
+  vi.spyOn(MassiveAdapter.prototype,'riskActions').mockImplementation(async ticker=>f.corporateActions.find(a=>a.ticker===ticker)!);
+  vi.spyOn(nationalbank,'historicalFX').mockResolvedValue(f.fx);
+  const put=cache.put.bind(cache);vi.spyOn(cache,'put').mockImplementation(async rows=>{await put(rows);c.abort();});
+  try {
+    const result=await refreshSynchronizedRisk({key:crypto.randomUUID(),lookback:252,cache,signal:c.signal}).then(()=> 'READY',e=>e instanceof Error?e.message:'UNKNOWN');
+    expect(result).toBe('ABORTED');
+    expect((await cache.all()).length).toBeGreaterThan(1265); // validated market cache is not financial acceptance
+  } finally {cache.close();vi.restoreAllMocks();vi.useRealTimers();}
 });

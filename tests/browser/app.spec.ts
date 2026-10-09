@@ -188,6 +188,7 @@ test("service worker waits for approval and preserves local state through update
   await expect(page.getByText("Gemt lokalt", { exact: true })).toBeVisible();
   const swPath = "dist/sw.js",
     original = await readFile(swPath, "utf8");
+  let release: (() => void) | undefined;
   try {
     await writeFile(
       swPath,
@@ -205,6 +206,23 @@ test("service worker waits for approval and preserves local state through update
         Boolean((await navigator.serviceWorker.getRegistration())?.waiting),
       ),
     ).toBe(true);
+    await settings(page);
+    await page.locator('.provider-row').filter({ hasText: 'Massive' }).locator('summary').click();
+    await page.getByRole('button', { name: 'Connect Massive', exact: true }).click();
+    await page.getByLabel('API key').fill(crypto.randomUUID());
+    await page.getByRole('button', { name: 'Save locally', exact: true }).click();
+    const held = new Promise<void>(resolve => { release = resolve; });
+    await page.route('https://api.coingecko.com/**', async route => {
+      await held;
+      await route.fulfill({ json: { bitcoin: { usd: 100000, last_updated_at: Math.floor(Date.now()/1000) }, ethereum: { usd: 4000, last_updated_at: Math.floor(Date.now()/1000) } } }).catch(() => {});
+    });
+    await page.locator('.provider-row').filter({ hasText: 'CoinGecko' }).locator('summary').click();
+    await page.getByRole('button', { name: 'Test public access CoinGecko', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Opdatér app', exact: true })).toBeDisabled();
+    await page.getByRole('button', { name: 'Cancel request', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Opdatér app', exact: true })).toBeEnabled();
+    release?.();
+    await navigate(page, 'Overview');
     await Promise.all([
       page.waitForEvent("domcontentloaded"),
       page.getByRole("button", { name: "Opdatér app" }).click(),
@@ -217,7 +235,11 @@ test("service worker waits for approval and preserves local state through update
     expect(cachesAfter.some((k) => k.endsWith("-browser-update-test"))).toBe(
       true,
     );
+    await settings(page);
+    await page.locator('.provider-row').filter({ hasText: 'Massive' }).locator('summary').click();
+    await expect(page.getByRole('button', { name: 'Replace key Massive', exact: true })).toBeVisible();
   } finally {
+    release?.();
     await writeFile(swPath, original);
   }
 });

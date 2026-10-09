@@ -62,6 +62,13 @@ export class MarketCache {
     } catch { throw new MarketError('CACHE_UNAVAILABLE'); }
   }
   close() { this.db.close(); }
+  // Explicit user recovery of this cache only. Never opens financial/credential storage.
+  async clear(): Promise<void> {
+    try {
+      const t = this.db.transaction('normalized', 'readwrite'), done = complete(t);
+      t.objectStore('normalized').clear(); await done;
+    } catch { throw new MarketError('CACHE_UNAVAILABLE'); }
+  }
   async all(): Promise<Observation[]> {
     try {
       const t = this.db.transaction('normalized'), done = complete(t);

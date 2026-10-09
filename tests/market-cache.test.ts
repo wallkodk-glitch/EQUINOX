@@ -36,3 +36,13 @@ it('cached equity dates must match the provider window and a completed canonical
 it('offline, stale and cached statuses never say live or current', () => {
  const q=fixture()[0]; expect(freshness(q,acquired,true,false)).toBe('CURRENT'); expect(freshness(q,acquired,true,true)).toBe('CACHED'); expect(freshness(q,acquired,false,true)).toBe('OFFLINE'); expect(freshness(q,'2026-10-03T00:00:00.000Z',true,true)).toBe('STALE');
 });
+it('explicit cache recovery removes corrupt market rows only and allows validated data after reopen', async () => {
+ const name=crypto.randomUUID(),cache=await MarketCache.open(name);
+ await new Promise<void>((resolve,reject)=>{
+  const r=indexedDB.open(name);r.onsuccess=()=>{const db=r.result,t=db.transaction('normalized','readwrite');
+   t.objectStore('normalized').put({price:'corrupt'},'broken');t.oncomplete=()=>{db.close();resolve();};t.onerror=()=>reject(t.error);};r.onerror=()=>reject(r.error);
+ });
+ await expect(cache.all()).rejects.toThrow('CACHE_INVALID');
+ await cache.clear();expect(await cache.all()).toEqual([]);await cache.put(fixture());cache.close();
+ const reopened=await MarketCache.open(name);expect((await reopened.all()).map(q=>q.price)).toEqual([100000,4000]);reopened.close();
+});

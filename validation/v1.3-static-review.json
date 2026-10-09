@@ -1,0 +1,48 @@
+{
+  "format": "EQUINOX_V13_STATIC_REVIEW_V1",
+  "checkedAt": "2026-10-09T12:56:10.107Z",
+  "status": "STATIC CHECKS PASS",
+  "scope": "Local source/YAML/contrast inspection and browser test discovery, NOT rendered runtime or GitHub execution",
+  "workflow": {
+    "yamlParsed": true,
+    "embeddedPythonParsed": true,
+    "pagesVerifySteps": 18,
+    "importSteps": 4,
+    "deployNeedsVerify": true,
+    "mainImportGuard": true,
+    "emptyDefault": true
+  },
+  "contrastPairs": [
+    {
+      "pair": "primary/base",
+      "ratio": 16.18
+    },
+    {
+      "pair": "secondary/base",
+      "ratio": 8.17
+    },
+    {
+      "pair": "primary action",
+      "ratio": 13.35
+    },
+    {
+      "pair": "readable teal/surface",
+      "ratio": 7.83
+    },
+    {
+      "pair": "warning/base",
+      "ratio": 8.87
+    },
+    {
+      "pair": "danger/base",
+      "ratio": 9.39
+    }
+  ],
+  "browserDiscovery": {
+    "chromiumMobile": 38,
+    "webkitMobile": 38,
+    "executedAssertions": 0
+  },
+  "runtimeAccessibility": "PENDING — focus, keyboard, VoiceOver, safe areas, scaling and rendered contrast",
+  "runtimePerformance": "NOT TESTED — no new dependency or permanent ambient animation, retained Vite chunk warning"
+}

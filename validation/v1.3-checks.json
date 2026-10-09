@@ -1,0 +1,165 @@
+{
+  "format": "EQUINOX_V13_VALIDATION_V1",
+  "startedAt": "2026-10-09T15:14:55.538Z",
+  "finishedAt": "2026-10-09T15:19:47.868Z",
+  "status": "PASS WITH LIMITATIONS",
+  "node": "v24.19.0",
+  "checks": [
+    {
+      "name": "INSTALL",
+      "command": "npm ci",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 11666,
+      "output": "\nadded 141 packages in 11s\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n",
+      "environmentError": null
+    },
+    {
+      "name": "LINT",
+      "command": "npm run lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 9087,
+      "output": "\n> equinox@1.3.1 lint\n> eslint src tests scripts\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n",
+      "environmentError": null
+    },
+    {
+      "name": "TYPECHECK",
+      "command": "npm run typecheck",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 22030,
+      "output": "\n> equinox@1.3.1 typecheck\n> tsc --noEmit\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n",
+      "environmentError": null
+    },
+    {
+      "name": "PYTHON_REFERENCE",
+      "command": "npm run test:reference",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 2141,
+      "output": "\n> equinox@1.3.1 test:reference\n> python3 reference/reproduce.py --check\n\nCommitted golden references match the independent recalculation.\nAll independent reference assertions passed.\nChecked: /workspace/scratch/bf49a1ea6825/equinox-v13-jYkUui/candidate/reference/reference.json\nBUY-01 normalized target: [0.2622262226222623, 0.22582258225822585, 0.20692069206920694, 0.17811781178117814, 0.12691269126912694]\nBUY-01 optimal buys DKK: [1174.4549454945502, 719.4094409440943, 0.0, 323.09980998099786, 283.0358035803579]\nERC-02 constrained weights: [0.32, 0.32379895467731273, 0.2362010453226872, 0.05210732278740623, 0.06789267721259376]\nERC-02 objective: 0.03725300222769519\nERC-02 stationarity residual: 2.220446049250313e-16\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n",
+      "environmentError": null
+    },
+    {
+      "name": "UNIT_INTEGRATION",
+      "command": "npm test -- --maxWorkers=1 --testTimeout=30000",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 108432,
+      "output": "\n> equinox@1.3.1 test\n> vitest run --maxWorkers=1 --testTimeout=30000\n\n\n RUN  v5.0.3 /workspace/scratch/bf49a1ea6825/equinox-v13-jYkUui/candidate\n\n\n Test Files  29 passed (29)\n      Tests  237 passed (237)\n   Start at  15:15:43\n   Duration  105.69s (tests 81%, import 12%, transform 7%)\n\n    Isolate  29 workers spawned · ~480ms startup each (spawn + environment, per file)\n             at least ~13.45s faster with isolate: false — reuses workers across files instead of one per file\n\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n",
+      "environmentError": null
+    },
+    {
+      "name": "ACCEPTED_PROVIDER_REPLAY",
+      "command": "node scripts/check-final-risk.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 9737,
+      "output": "3:17:30 PM [vite] (client) [optimizer] scanning dependencies...\n{\"status\":\"PASS\",\"windowStart\":\"2025-10-03\",\"windowEnd\":\"2026-10-06\",\"observations\":253,\"returns\":252,\"coverage\":1,\"snapshotHashes\":{\"equal\":\"4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32\",\"inverse\":\"f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab\",\"erc\":\"23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e\"},\"legacySnapshotSHA256\":\"e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891\",\"browserCORS\":\"NOT TESTED\"}\n",
+      "environmentError": null
+    },
+    {
+      "name": "PYTHON_RAW_DATA_REFERENCE",
+      "command": "python3 reference/final-risk.py",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 449,
+      "output": "{\n  \"checkedAt\": \"2026-10-09T15:17:39.047444+00:00\",\n  \"status\": \"PASS\",\n  \"scope\": \"Independent raw-row/official raw FX as-of, gross total returns, DKK levels, covariance and correlation\",\n  \"returns\": 252,\n  \"observations\": 253,\n  \"maximumFXAgeDays\": 6,\n  \"maxReturnDifference\": 0.0,\n  \"maxCovarianceDifference\": 2.7755575615628914e-17,\n  \"browserRuntime\": \"NOT TESTED\"\n}\n",
+      "environmentError": null
+    },
+    {
+      "name": "SNAPSHOT_NODE_REPLAY",
+      "command": "node scripts/check-ui-snapshots.mjs ../baseline validation/v1.3-snapshot-replay.json",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 4440,
+      "output": "{\n  \"format\": \"EQUINOX_UI_SNAPSHOT_COMPATIBILITY_V1\",\n  \"checkedAt\": \"2026-10-09T15:17:42.427Z\",\n  \"status\": \"PASS\",\n  \"scope\": \"Frozen Engine Node replay and exact canonical comparison to supplied accepted snapshots/data. Not Node-to-browser replay.\",\n  \"snapshots\": [\n    {\n      \"path\": \"tests/legacy-snapshot.json\",\n      \"engine\": \"1.0.0\",\n      \"schema\": 1,\n      \"sha256\": \"9d114db13ee5dd700208cb1fe93f709521484b20b6bcf0ce2a6e1d1423d7f633\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"path\": \"validation/node-snapshot.json\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 1,\n      \"sha256\": \"e491090dd7e2cf8a81bd33c23d67460158aab62bac455d2f177de25038c50891\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"equal\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"4dfb67140ec54a31ea378cedd9174001d37ad19d84d321c0980ab4c60724ee32\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"inverse\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"f3bba5c76e9d1ddbec06702f76cc276dcfd6c4260fdf393897718491da8ee0ab\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    },\n    {\n      \"model\": \"erc\",\n      \"engine\": \"1.0.1\",\n      \"schema\": 2,\n      \"sha256\": \"23a15359290b9b6ed414ab08aa40966e29cbbe6aa77008c06f78dcb48d63c84e\",\n      \"sameBaselineResultAndHash\": true,\n      \"replayed\": true\n    }\n  ],\n  \"normalizedInputAndResultsIdentical\": true,\n  \"browserReplay\": \"NOT TESTED\"\n}\n",
+      "environmentError": null
+    },
+    {
+      "name": "FROZEN_SOURCE",
+      "command": "node scripts/audit-v13.mjs ../baseline",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 743,
+      "output": "{\"status\":\"PASS\",\"frozenFiles\":24,\"changedOrAdded\":56,\"dependencies\":\"UNCHANGED\"}\n",
+      "environmentError": null
+    },
+    {
+      "name": "BUILD_/EQUINOX/",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 32322,
+      "output": "\n> equinox@1.3.1 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\n\n> equinox@1.3.1 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 153 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB │ gzip:   0.45 kB\ndist/assets/index-Cn0XyK9b.css   28.06 kB │ gzip:   6.55 kB\ndist/assets/index-CjlICM75.js   501.72 kB │ gzip: 141.17 kB │ map: 2,038.23 kB\n\n✓ built in 3.07s\nPWA 1b2700cd322820ee: 9 shell files; scope /EQUINOX/\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n",
+      "environmentError": null
+    },
+    {
+      "name": "BUILD_/",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 23338,
+      "output": "\n> equinox@1.3.1 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\n\n> equinox@1.3.1 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 153 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.91 kB │ gzip:   0.45 kB\ndist/assets/index-Cn0XyK9b.css   28.06 kB │ gzip:   6.55 kB\ndist/assets/index-D9LoiTDU.js   501.70 kB │ gzip: 141.16 kB │ map: 2,038.23 kB\n\n✓ built in 703ms\nPWA d9874c739942f0bd: 9 shell files; scope /\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n",
+      "environmentError": null
+    },
+    {
+      "name": "BUILD_/equinox-v13-path-check/",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 25164,
+      "output": "\n> equinox@1.3.1 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\n\n> equinox@1.3.1 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 153 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   1.02 kB │ gzip:   0.47 kB\ndist/assets/index-Cn0XyK9b.css   28.06 kB │ gzip:   6.55 kB\ndist/assets/index-Dw9fDoGl.js   501.76 kB │ gzip: 141.17 kB │ map: 2,038.23 kB\n\n✓ built in 1.29s\nPWA 34223382e591dfb7: 9 shell files; scope /equinox-v13-path-check/\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n",
+      "environmentError": null
+    },
+    {
+      "name": "PRODUCTION_BUILD",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 25878,
+      "output": "\n> equinox@1.3.1 build\n> npm run typecheck && vite build && node scripts/build-pwa.mjs\n\n\n> equinox@1.3.1 typecheck\n> tsc --noEmit\n\nvite v8.3.2 building client environment for production...\ntransforming...\n✓ 153 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   0.95 kB │ gzip:   0.45 kB\ndist/assets/index-Cn0XyK9b.css   28.06 kB │ gzip:   6.55 kB\ndist/assets/index-CjlICM75.js   501.72 kB │ gzip: 141.17 kB │ map: 2,038.23 kB\n\n✓ built in 779ms\nPWA 1b2700cd322820ee: 9 shell files; scope /EQUINOX/\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n",
+      "environmentError": null
+    },
+    {
+      "name": "CHROMIUM_BROWSER",
+      "command": "npm run test:browser -- --project=chromium-mobile --max-failures=1",
+      "status": "NOT TESTED",
+      "exitCode": 1,
+      "durationMs": 7869,
+      "output": "\n> equinox@1.3.1 test:browser\n> playwright test --project=chromium-mobile --max-failures=1\n\n\nRunning 38 tests using 1 worker\n\n  ✘   1 [chromium-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence (18ms)\nTesting stopped early after 1 maximum allowed failures.\n\n\n  1) [chromium-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence \n\n    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell\n    ╔════════════════════════════════════════════════════════════╗\n    ║ Looks like Playwright was just installed or updated.       ║\n    ║ Please run the following command to download new browsers: ║\n    ║                                                            ║\n    ║     npx playwright install                                 ║\n    ║                                                            ║\n    ║ <3 Playwright Team                                         ║\n    ╚════════════════════════════════════════════════════════════╝\n\n    Error Context: test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-chromium-mobile/error-context.md\n\n    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────\n    test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-chromium-mobile/trace.zip\n    Usage:\n\n        npx playwright show-trace test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-chromium-mobile/trace.zip\n\n    ────────────────────────────────────────────────────────────────────────────────────────────────\n\n  1 failed\n    [chromium-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence \n  37 did not run\n  1 error was not a part of any test, see above for details\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:1001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n(node:1048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "environmentError": null
+    },
+    {
+      "name": "WEBKIT_BROWSER",
+      "command": "npm run test:browser -- --project=webkit-mobile --max-failures=1",
+      "status": "NOT TESTED",
+      "exitCode": 1,
+      "durationMs": 7724,
+      "output": "\n> equinox@1.3.1 test:browser\n> playwright test --project=webkit-mobile --max-failures=1\n\n\nRunning 38 tests using 1 worker\n\n  ✘   1 [webkit-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence (13ms)\nTesting stopped early after 1 maximum allowed failures.\n\n\n  1) [webkit-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence \n\n    Error: browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/webkit-2359/pw_run.sh\n    ╔════════════════════════════════════════════════════════════╗\n    ║ Looks like Playwright was just installed or updated.       ║\n    ║ Please run the following command to download new browsers: ║\n    ║                                                            ║\n    ║     npx playwright install                                 ║\n    ║                                                            ║\n    ║ <3 Playwright Team                                         ║\n    ╚════════════════════════════════════════════════════════════╝\n\n    Error Context: test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-webkit-mobile/error-context.md\n\n    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────\n    test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-webkit-mobile/trace.zip\n    Usage:\n\n        npx playwright show-trace test-results/app-demo-isolation-plan-de-ee11a-yout-and-reload-persistence-webkit-mobile/trace.zip\n\n    ────────────────────────────────────────────────────────────────────────────────────────────────\n\n  1 failed\n    [webkit-mobile] › tests/browser/app.spec.ts:19:1 › demo isolation, plan details, mobile layout and reload persistence \n  37 did not run\n  1 error was not a part of any test, see above for details\nnpm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:1086) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n[WebServer] (node:1099) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n(node:1146) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      "environmentError": null
+    },
+    {
+      "name": "CREDENTIAL_SCAN",
+      "command": "node scripts/scan-release-secrets.mjs validation/v1.3-credential-scan.json",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 736,
+      "output": "{\n  \"checkedAt\": \"2026-10-09T15:19:47.844Z\",\n  \"status\": \"PASS\",\n  \"scope\": \"Static structural scan of production/source and committed fixture/snapshot data; no real provider credentials were supplied. Not runtime browser exclusion evidence.\",\n  \"productionFiles\": 12,\n  \"sourceFiles\": 44,\n  \"serializedFiles\": 29,\n  \"findings\": []\n}\n",
+      "environmentError": null
+    }
+  ],
+  "hostedDeployment": "PENDING",
+  "physicalIPhone": "PENDING",
+  "localTestBudget": {
+    "workers": 1,
+    "testTimeoutMs": 30000,
+    "changesApplicationTimeouts": false,
+    "default5000msProbe": "FAIL also on unchanged delivered v1.3.0; diagnostic history retained in validation/v1.3-tsm-renewal-checks.json"
+  },
+  "liveProviderAuthAndCORS": "NOT TESTED — no real provider key supplied, no browser request executed",
+  "liveSynchronizedRefresh": "TSM evidence permits 2025-01-01–2026-10-08 only; later/wider windows FAIL CLOSED. Actual authenticated refresh NOT TESTED.",
+  "browserInstallation": "Normal install --with-deps attempted; OS package permissions denied. No permission/security bypass.",
+  "packageStatus": "Verify archive/manifest separately after reports are finalized"
+}

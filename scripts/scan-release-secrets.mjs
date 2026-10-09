@@ -32,7 +32,7 @@ function inspect(value, file) {
   }
   else if (typeof value === 'string' && /[?&](?:api[_-]?key|access_token|authorization|secret)=/i.test(value)) findings.push({ category: 'CREDENTIAL_URL_IN_SERIALIZED_DATA', file });
 }
-const finalReports=(await readdir('validation')).filter(p=>p.startsWith('closure-final-')&&p.endsWith('.json')).map(p=>join('validation',p));
+const finalReports=(await readdir('validation')).filter(p=>(p.startsWith('closure-final-')||p.startsWith('v1.3-'))&&p.endsWith('.json')).map(p=>join('validation',p));
 const serialized = [...fixtures.filter(p => p.endsWith('.json')), 'validation/node-snapshot.json', 'tests/legacy-snapshot.json',...finalReports];
 for (const file of serialized) inspect(JSON.parse(await readFile(file, 'utf8')), file);
 const report = {
@@ -41,6 +41,6 @@ const report = {
   productionFiles: production.length, sourceFiles: sources.length, serializedFiles: serialized.length,
   findings
 };
-await writeFile('validation/credential-scan.json', JSON.stringify(report, null, 2));
+await writeFile(process.argv[2] ?? 'validation/credential-scan.json', JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));
 if (findings.length) process.exitCode = 1;

@@ -5,8 +5,11 @@ import { initialState, type AppState } from "../persistence/schema";
 import { canonical, inputFromState } from "../snapshots/calculate";
 import { validateSeal, type SealedSnapshot } from "../snapshots/integrity";
 import { finishCalculation } from "./calculation-job";
+import { finishRiskImport } from "./risk-import";
+import { LaunchIntro } from "./LaunchIntro";
 import { demoDataset } from "../market-data/demo";
-import { ImportProvider, prepareRisk } from "../market-data/provider";
+import { ImportProvider, prepareRisk, type RetrospectiveDataset } from "../market-data/provider";
+import { MarketError } from "../market-data/live/network";
 import { money, signedMoney, amount, time, download } from "./format";
 import { Details } from "./Details";
 import { MarketDataSettings } from "./MarketDataSettings";
@@ -96,6 +99,11 @@ export function App() {
     [notice, setNotice] = useState(""),
     [fatal, setFatal] = useState(false),
     [loaded, setLoaded] = useState(false),
+    [introComplete, setIntroComplete] = useState(false),
+    [marketBusy, setMarketBusy] = useState(false),
+    [riskCommitting, setRiskCommitting] = useState(false),
+    [updating, setUpdating] = useState(false),
+    [fileBusy, setFileBusy] = useState(false),
     [busy, setBusy] = useState(false),
     [history, setHistory] = useState<SealedSnapshot[]>([]),
     [current, setCurrent] = useState<SealedSnapshot | null>(null),
@@ -108,6 +116,9 @@ export function App() {
     queue = useRef<Promise<unknown>>(Promise.resolve()),
     alive = useRef(true),
     pending = useRef(0),
+    committing = useRef(false),
+    updateApproved = useRef(false),
+    filePending = useRef(false),
     stateRef = useRef(state),
     demoRef = useRef(demo);
   const data = demo ?? state;
@@ -240,6 +251,7 @@ export function App() {
     return job;
   }
   function edit(fn: (d: AppState) => void) {
+    if (committing.current || updateApproved.current || filePending.current) return;
     const next = structuredClone(demoRef.current ?? stateRef.current);
     fn(next);
     setError("");
@@ -273,6 +285,7 @@ export function App() {
   }
   async function run(e: FormEvent) {
     e.preventDefault();
+    if (committing.current || updateApproved.current || filePending.current) return;
     const wasDemo = demoRef.current !== null,
       source = structuredClone(demoRef.current ?? stateRef.current);
     setBusy(true);
@@ -313,7 +326,8 @@ export function App() {
     file: File | undefined,
     type: "dataset" | "backup" | "snapshot",
   ) {
-    if (!file) return;
+    if (!file || committing.current || updateApproved.current || filePending.current) return;
+    filePending.current = true; setFileBusy(true);
     try {
       if (type !== "backup" && file.size > 50_000_000)
         throw new Error("Denne enkeltfil er større end 50 MB.");
@@ -322,9 +336,13 @@ export function App() {
           "Stor backup: validering kan tage tid og kræver ledig hukommelse. Eksisterende data ændres først efter fuld validering.",
         );
       const text = await file.text();
+      if (committing.current || updateApproved.current) throw new Error("REQUEST_IN_PROGRESS");
       if (type === "dataset") {
         const d = new ImportProvider().readHistory(JSON.parse(text));
         prepareRisk(d, new Date().toISOString(), data.lookback);
+        // The validated file owns this edit. Release only the synchronous
+        // handler guard; the disabled UI remains locked until finally.
+        filePending.current = false;
         edit((s) => {
           s.dataset = d;
           s.acknowledgeUserData = false;
@@ -343,6 +361,7 @@ export function App() {
         const restored = await db.current!.restore(text, revisionNow);
         revision.current = restored.revision;
         const r = await db.current!.load();
+        stateRef.current = r.state; demoRef.current = null;
         setState(r.state);
         setHistory(r.snapshots);
         setCurrent(null);
@@ -357,10 +376,24 @@ export function App() {
       }
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
-    }
+    } finally { filePending.current = false; setFileBusy(false); }
+  }
+  async function acceptRiskDataset(dataset: RetrospectiveDataset, signal: AbortSignal) {
+    if (fatal || demoRef.current || committing.current || updateApproved.current || filePending.current) throw new MarketError('ABORTED');
+    // This callback is captured when Refresh is pressed. Dataset/lookback changes
+    // invalidate the job; unrelated latest manual edits are preserved at commit.
+    const source = state;
+    committing.current = true; setRiskCommitting(true);
+    try {
+      await queue.current;
+      if (!alive.current) throw new MarketError('ABORTED');
+      const result = await finishRiskImport(dataset, source, () => stateRef.current, signal, persist, new Date().toISOString());
+      stateRef.current = result; setState(result);
+    } finally { committing.current = false; if (alive.current) setRiskCommitting(false); }
   }
   const capitalForm = (
 <form className="capital-form" onSubmit={(e) => void run(e)}>
+                  <fieldset disabled={riskCommitting || updating || fileBusy}>
                   <section className="capital">
                     <NumberField
                       label="Ny kapital i DKK"
@@ -418,25 +451,21 @@ export function App() {
                       Buy-only · Fees = 0 · Ingen automatisk handel
                     </p>
                   </section>
+                  </fieldset>
                 </form>
   );
-  if (!loaded)
-    return (
-      <main className="loading">
-        <BrandMark />
-        <h1>EQUINOX</h1>
-        <InfinityLoader label="Åbner din lokale portefølje…" />
-      </main>
-    );
   return (
-    <div className="app">
+    <>
+    {!introComplete && <LaunchIntro ready={loaded} onComplete={() => setIntroComplete(true)} />}
+    <p className="sr-only" role="status">{updating ? 'Opdaterer app. Lokale ændringer er gemt.' : ''}</p>
+    {loaded && <div className="app" inert={!introComplete || updating}>
       <a className="skip-link" href="#main-content">Gå til indhold</a>
       <header className="app-header">
         <div className="brand">
           <BrandMark />
           <div>
             <strong>EQUINOX</strong>
-            <small>CAPITAL ALLOCATION</small>
+            <small>Capital allocation</small>
           </div>
         </div>
         <span className="connection">{online ? "Local first" : "Offline"}</span>
@@ -465,14 +494,18 @@ export function App() {
         )}
         {update && (
           <div className="banner">
-            <span>En ny version er klar.</span>
+            {updating ? <InfinityLoader label="Opdaterer app. Lokale ændringer er gemt." compact /> : <span>En ny version er klar.</span>}
             <button
               type="button"
-              disabled={busy || pending.current > 0 || fatal}
+              disabled={busy || marketBusy || riskCommitting || fileBusy || pending.current > 0 || fatal || updating}
               onClick={async () => {
-                await queue.current;
-                dispatchEvent(new Event("equinox-update"));
-                update.waiting?.postMessage({ type: "ACTIVATE_UPDATE" });
+                if (busy || marketBusy || committing.current || filePending.current || pending.current > 0 || fatal || updateApproved.current || !update.waiting) return;
+                updateApproved.current = true; setUpdating(true);
+                try {
+                  await queue.current;
+                  dispatchEvent(new Event("equinox-update"));
+                  update.waiting.postMessage({ type: "ACTIVATE_UPDATE" });
+                } catch { updateApproved.current = false; setUpdating(false); }
               }}
             >
               Opdatér app
@@ -529,7 +562,7 @@ export function App() {
             {tab === "allocation" && (
               <>
                 <div className="section-title">
-                  <span className="eyebrow">KAPITAL · FORDELING</span>
+                  <span className="eyebrow">Kapital · fordeling</span>
                   <h1 data-page-title tabIndex={-1}>Allocate</h1>
                   <p>Ny kapital. En præcis købsplan.</p>
                 </div>
@@ -559,9 +592,9 @@ export function App() {
               </>
             )}
             {tab === "portfolio" && (
-              <>
+              <fieldset disabled={riskCommitting || updating || fileBusy}>
                 <div className="section-title">
-                  <span className="eyebrow">A · PORTFOLIO STATE</span>
+                  <span className="eyebrow">Beholdninger · manuelle priser</span>
                   <h1 data-page-title tabIndex={-1}>Portefølje</h1>
                   <p>Antal, kostpris og markedspris holdes adskilt.</p>
                 </div>
@@ -669,17 +702,18 @@ export function App() {
                     Bekræft priser som aktuelle
                   </button>
                 </section>
-              </>
+              </fieldset>
             )}
             {tab === "details" && <Details sealed={current} />}
             {tab === "data" && (
               <>
                 <div className="section-title">
-                  <span className="eyebrow">DATA · POLICY · HISTORIK</span>
+                  <span className="eyebrow">Data · policy · historik</span>
                   <h1 data-page-title tabIndex={-1}>Settings</h1>
                   <p>Lokale data, forbindelser og præferencer.</p>
                 </div>
-                <MarketDataSettings online={online} />
+                <MarketDataSettings online={online} disabled={!!demo || busy || fileBusy || riskCommitting || updating} lookback={state.lookback} dataset={state.dataset} onAcceptRiskDataset={acceptRiskDataset} onBusyChange={setMarketBusy} />
+                <fieldset disabled={riskCommitting || updating || fileBusy}>
                 <section className="card">
                   <details className="settings-group">
                   <summary>Historiske markedsdata</summary>
@@ -944,6 +978,7 @@ export function App() {
                   </p>
                   </details>
                 </section>
+                </fieldset>
                 <section className="about-equinox">
                   <img src={`${import.meta.env.BASE_URL}brand/equinox-primary.jpeg`} width="1254" height="1254" alt="EQUINOX: teal øvre hemisfære, violet nedre crescent og central balanceakse" loading="lazy" />
                   <p>App {UI_VERSION} · Engine {VERSIONS.engine}</p>
@@ -966,6 +1001,7 @@ export function App() {
           <button
             type="button"
             key={id}
+            disabled={riskCommitting || updating || fileBusy}
             aria-current={activeTab === id ? "page" : undefined}
             onClick={() => {
               setTab(id);
@@ -977,6 +1013,7 @@ export function App() {
           </button>
         ))}
       </nav>
-    </div>
+    </div>}
+    </>
   );
 }

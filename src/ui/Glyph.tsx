@@ -18,9 +18,9 @@ export function Glyph({ name, className = "" }: { name: GlyphName; className?: s
 /** Simplified geometry of the supplied EQUINOX hemispheres and central axis. */
 export function BrandMark() {
   return <svg className="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
-    <path d="M12 30C12 19 21 10 32 10s20 9 20 20C42 13 25 16 12 30Z" fill="var(--teal-active)" />
-    <path d="M12 34c0 11 9 20 20 20s20-9 20-20C42 51 25 48 12 34Z" fill="var(--violet-mineral)" />
-    <path d="M5 32h54" stroke="var(--text-secondary)" strokeWidth="1" />
+    <path className="mark-upper" d="M12 30C12 19 21 10 32 10s20 9 20 20C42 13 25 16 12 30Z" fill="var(--teal-active)" />
+    <path className="mark-lower" d="M12 34c0 11 9 20 20 20s20-9 20-20C42 51 25 48 12 34Z" fill="var(--violet-mineral)" />
+    <path className="mark-axis" d="M5 32h54" stroke="var(--text-secondary)" strokeWidth="1" />
   </svg>;
 }
 

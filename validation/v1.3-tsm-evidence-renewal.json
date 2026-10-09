@@ -1,0 +1,46 @@
+{
+  "format": "EQUINOX_BOUNDED_TSM_EVIDENCE_RENEWAL_V1",
+  "appVersion": "1.3.1",
+  "reviewDate": "2026-10-09",
+  "userApproval": "User explicitly approved the separate extension through 2026-10-08 only",
+  "previousCoverage": {"from": "2025-01-01", "through": "2026-10-07"},
+  "approvedCoverage": {"from": "2025-01-01", "through": "2026-10-08"},
+  "evidenceKind": "Manually inspected official issuer and depositary facts, not a native provider response",
+  "sources": [
+    "https://investor.tsmc.com/english/dividends",
+    "https://investor.tsmc.com/english/dividends/1q26",
+    "https://investor.tsmc.com/system/files/2026-10/Final%20Dividend%20Announcement_1Q26.pdf",
+    "https://depositaryreceipts.citi.com/adr/guides/pgm_dispaDivd.aspx?Type=D&cusip=874039100&pageId=15&subpageID=113"
+  ],
+  "depositaryHistoryGeneratedDate": "2026-10-09",
+  "providerPublicationTimestamp": null,
+  "timestampNote": "The depositary page's generation date is not a historical economic publication timestamp; no timezone or publication instant is invented",
+  "fieldProvenance": {
+    "exDividendDate": "Issuer dividend history; September also explicit ADR Ex-Date in final PDF",
+    "payDate": "Issuer and depositary history",
+    "grossUSDPerADR": "Final depositary rates, cross-checked with issuer per-ADS history",
+    "depositaryTableDate": "US Record Date column, not silently reinterpreted as ex-date"
+  },
+  "finalEvents": [
+    {"exDate":"2025-03-18","payDate":"2025-04-10","grossUSDPerADR":0.677693},
+    {"exDate":"2025-06-12","payDate":"2025-07-10","grossUSDPerADR":0.780305},
+    {"exDate":"2025-09-16","payDate":"2025-10-09","grossUSDPerADR":0.821965},
+    {"exDate":"2025-12-11","payDate":"2026-01-08","grossUSDPerADR":0.795420},
+    {"exDate":"2026-03-17","payDate":"2026-04-09","grossUSDPerADR":0.938972},
+    {"exDate":"2026-06-11","payDate":"2026-07-09","grossUSDPerADR":0.939325},
+    {"exDate":"2026-09-16","payDate":"2026-10-08","grossUSDPerADR":1.0962510}
+  ],
+  "septemberFinal": {
+    "ordinarySharesPerADR":5,
+    "grossUSDPerADR":1.0962510,
+    "withheldUSDPerADR":0.2302130,
+    "netUSDPerADR":0.8660380,
+    "exDate":"2026-09-16",
+    "payDate":"2026-10-08"
+  },
+  "reviewFinding": "Both inspected histories retain the seven final events and list no additional distribution in the newly admitted date; October 8 is payment of the existing September ex-date dividend, not another return event",
+  "excluded": "2026-10-09 onward, pre-2025 history, December preliminary conversion, unverified actions or splits",
+  "unchanged": "Exact original gross USD/ADR cash, ex-date attribution, no split-adjusted/net substitution, cardinality/duplicate checks, retrospective acquisition rule and all other gates",
+  "fullLiveRiskAcceptance": "NOT TESTED: a bounded dividend review is not actual authenticated market acquisition, CORS or the complete synchronized gate",
+  "previousReleaseZIP_SHA256": "c172179ac8d7492becf6a86f5ca690f1c6a0d07eeb2b4392810bf04b658df914"
+}

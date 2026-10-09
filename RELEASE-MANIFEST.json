@@ -1,124 +1,26 @@
 {
-  "format": "EQUINOX_UI_RELEASE_V1",
-  "appVersion": "1.2.0",
+  "format": "EQUINOX_RELEASE_MANIFEST_V3",
+  "appVersion": "1.3.1",
   "engineVersion": "1.0.1",
   "marketDataModelVersion": "1.1.2",
   "snapshotSchemaVersions": [
     1,
     2
   ],
-  "financialBackupSchemaVersion": 1,
-  "verdict": "BROWSER HARDENING RC2 — CI REQUIRED",
-  "fullBrowserPWAReleaseAcceptance": false,
-  "implementation": "PATCHED — RC1 reduced browser failures from 11 to 2; RC2 corrects Playwright clock advancement in freshness expiry test; GitHub CI rerun required",
-  "mathematicalRegression": "PASS — independent Python reference reproduced; frozen engine/data source files unchanged",
-  "dataLayerRegression": "FROZEN SOURCE UNCHANGED — full GitHub CI pending",
-  "acceptedDataIntegrationBaseline": "DATA-INTEGRATION PASS — v1.1.2 accepted historical window; no new live transport verification",
-  "lint": "PASS — GitHub RC1 run",
-  "typecheck": "PASS — GitHub RC1 run",
-  "tests": "PASS — 172/172 GitHub RC1 run",
-  "pythonReferences": "PASS — reference/reproduce.py --check and reference/final-risk.py executed locally; generated evidence reverted",
-  "snapshots": "PASS — 5 exact baseline hashes/results replayed in Node",
-  "productionBuild": "PASS — GitHub RC1 run",
-  "cleanRebuild": "PENDING GITHUB CI",
-  "staticAccessibility": "PASS — declared colors/source contracts; no full WCAG claim",
-  "staticPWA": "PASS — manifest/icons and Node worker guards; no browser lifecycle claim",
-  "credentialExclusion": "PASS — existing deterministic tests and source/artifact scan; browser cases NOT TESTED",
-  "credentialStorage": "Client-side local browser storage; not cryptographically secure secret storage",
-  "dependencyChanges": "NONE",
-  "browserCasesPrepared": 24,
-  "browserRuntime": "PENDING GITHUB CI — RC1: 46/48 PASS; only freshness expiry clock-emulation case remained in Chromium and WebKit",
-  "browserCORS": "NOT TESTED",
-  "browserReason": "RC1 GitHub run: 46/48 PASS. Remaining two failures were the same freshness-expiry test in Chromium/WebKit; test used clock.setSystemTime(), which Playwright documents as not triggering timers. RC2 uses clock.fastForward() so Date.now() and the app freshness interval advance together.",
-  "safariWebKit": "PENDING GITHUB CI; Playwright WebKit offline emulation limitation documented in tests",
-  "physicalIPhone": "NOT TESTED",
-  "addToHomeScreen": "NOT TESTED",
-  "standaloneSafeAreas": "NOT TESTED",
-  "installedOfflineRuntime": "NOT TESTED",
-  "installedServiceWorkerUpdate": "NOT TESTED",
-  "hostedDeployment": "BLOCKED UNTIL CI PASS",
-  "automaticRiskRefreshUI": "NOT ACTIVATED — accepted baseline behavior preserved",
-  "performanceRuntime": "NOT TESTED — sizes and animation architecture documented only",
-  "remainingLimits": [
-    "GitHub lint/typecheck/unit/build/browser pipeline has not yet been rerun for this RC.",
-    "Playwright WebKit 1.63 cannot reliably emulate offline navigation with an active service worker (upstream microsoft/playwright#42775); Chromium retains the automated offline reload assertion.",
-    "Physical iPhone Safari/installed-PWA validation remains required after hosted deployment.",
-    "Deployed-origin provider CORS/auth still requires real-provider verification."
-  ],
-  "exactNextStep": "Import this RC into main and run EQUINOX validated release. Deploy only after verify PASS.",
-  "evidence": [
-    "validation/ui-release-checks.json",
-    "validation/ui-frozen-audit.json",
-    "validation/ui-snapshot-compatibility.json",
-    "validation/ui-accessibility.json",
-    "validation/ui-pwa.json",
-    "validation/ui-browser-evidence.json",
-    "validation/reproducibility.json",
-    "validation/ui-clean-build.json",
-    "validation/credential-scan.json",
-    "validation/closure-final-synchronized.json",
-    "validation/closure-final-independent-reference.json"
-  ],
+  "releaseStatus": "RELEASE CANDIDATE \u2014 PASS WITH LIMITATIONS",
+  "authoritativeBaseline": {
+    "head": "9deaef0e207615cded6fb2f961133ee3f11bbd2a",
+    "tree": "8f46a030b6058800601566509dd833778c3c6897"
+  },
+  "scope": "Complete archive product payload; excludes this manifest itself and infrastructure. No dist/node_modules/traces/financial backups/secrets.",
   "files": {
-    ".github/workflows/pages.yml": {
-      "sha256": "9695c60a2a60281c398aae85e3d9dc3f81d6983136e480829eb36369ca2ea7d1",
-      "bytes": 2428
-    },
     ".gitignore": {
       "sha256": "57740b56d8e6d449a0008018c8440f0de638d08d46d4052d8b32035c6dd1e58d",
       "bytes": 87
     },
     "README.md": {
-      "sha256": "4d44167af096ea35afd56866773e8f6821666586e63f92351f69d3406b9d7cd9",
-      "bytes": 8943
-    },
-    "dist/.nojekyll": {
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "bytes": 0
-    },
-    "dist/apple-touch-icon.png": {
-      "sha256": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37",
-      "bytes": 3314
-    },
-    "dist/assets/index-B04eiKRR.css": {
-      "sha256": "25b1d49b6208d3d768d92aae2585cff978eafb0e08abddcf424738bface3f6e9",
-      "bytes": 25137
-    },
-    "dist/assets/index-CLgFVlph.js": {
-      "sha256": "e7409c4406d1a0083843dfda2e9439d309f0eb04e04694810659cbe8ed38478f",
-      "bytes": 480085
-    },
-    "dist/assets/index-CLgFVlph.js.map": {
-      "sha256": "3cc4b867a1b6958e2fa4b96c895c5f71586df54ccba9eae3c3249dbf46c43d27",
-      "bytes": 1979508
-    },
-    "dist/brand/equinox-primary.jpeg": {
-      "sha256": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551",
-      "bytes": 130188
-    },
-    "dist/icon-192.png": {
-      "sha256": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07",
-      "bytes": 3615
-    },
-    "dist/icon-512.png": {
-      "sha256": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4",
-      "bytes": 13687
-    },
-    "dist/icon.svg": {
-      "sha256": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b",
-      "bytes": 378
-    },
-    "dist/index.html": {
-      "sha256": "ef8928eefe2bc52674ac65575cfda1875f63eb0efcf1aa57c504990f701b5cce",
-      "bytes": 952
-    },
-    "dist/manifest.webmanifest": {
-      "sha256": "1f809c7e2800661ac5b26480021fcce3e30205486ec5ea8f688c65104ff4fe57",
-      "bytes": 379
-    },
-    "dist/sw.js": {
-      "sha256": "422c190f5bc6ecf3aaa1be9ba272c9c86e2a7f04671d865659d8d04c3830f6b6",
-      "bytes": 1370
+      "sha256": "1253d32218171f8c145ebc6019f24160bdf132fe4ab96784a5d994f85459b94b",
+      "bytes": 9173
     },
     "docs/audit.md": {
       "sha256": "f25143ba79a1c0e23c577ccbb64a0a50eab323217cd958e0cbd7599db2804984",
@@ -169,8 +71,8 @@
       "bytes": 2111
     },
     "docs/mobile-release.md": {
-      "sha256": "5a2885ea05cdf99c078d9f6e04507cef45a5be15e5634de43d3d2f368886b086",
-      "bytes": 2702
+      "sha256": "4e4dc86aab2302cfd20ce4cbfd8dea8e34c8dbdd4df414728990ea822ee414af",
+      "bytes": 3027
     },
     "docs/reference-audit.md": {
       "sha256": "ac7eae88302885d65f0e3d2b623225529ac3ac7e7967a73a7174acf9b43c4f15",
@@ -224,6 +126,26 @@
       "sha256": "71cb0f5b46055a821fd16b3c140a42ef4299f55040d500950da4e42f9b4f469c",
       "bytes": 4179
     },
+    "docs/v1.3/EQUINOX-v1.3-CHANGELOG.md": {
+      "sha256": "947356436499e0df1e430ff6470febdf1bc0f560d1c18ddd49574f1a88b23e62",
+      "bytes": 4120
+    },
+    "docs/v1.3/EQUINOX-v1.3-VALIDATION.md": {
+      "sha256": "35a4c073fa80ae8d4783cfd51f0934a1f94202697ab20510f89ae782eaae8ac7",
+      "bytes": 7452
+    },
+    "docs/v1.3/audit.md": {
+      "sha256": "f0ea732455e608f86559825042cab8ea8f4f0950806816e14f3bb0c5ef6e5030",
+      "bytes": 3975
+    },
+    "docs/v1.3/device-gate.md": {
+      "sha256": "c997daf900b02e48f8444e083e7f371a596da2b65265416993d55aa14466ee99",
+      "bytes": 2169
+    },
+    "docs/v1.3/strategy.md": {
+      "sha256": "86105b7ebafffe01eb5de49e0556bce34847ecef4f372fd5b22c959cd8271643",
+      "bytes": 4472
+    },
     "eslint.config.js": {
       "sha256": "219319470fbcc1654f1f4426451697591a13541486ef7068efb30028e03bd1ac",
       "bytes": 401
@@ -233,11 +155,11 @@
       "bytes": 841
     },
     "package-lock.json": {
-      "sha256": "f24f610c6f675c77e97761c23d796abca7a0d97b8d31591bd673b863399d5281",
+      "sha256": "ba97bda244e2d1d2e67e8c7443d836420a6aedb7f521ba539cad232db4a9b4c8",
       "bytes": 84932
     },
     "package.json": {
-      "sha256": "61faa24983f06dfccc3d2a7f8192d547669e0f2676b6c53abf60dc34630c224c",
+      "sha256": "48c1f4cc5966da9360ef56e78bfa415bd53aeba1a34a55cfe265c2bb90f0198c",
       "bytes": 959
     },
     "playwright.config.ts": {
@@ -296,6 +218,10 @@
       "sha256": "b4e499a5b41c548d2eb7d34f18107a6aa5fcb6701d0f9915bc3c400bad4701b7",
       "bytes": 2682
     },
+    "scripts/audit-v13.mjs": {
+      "sha256": "9c69450f596cca18cc4c610f0a5a1a774e3d5224d433f76eef96933101906004",
+      "bytes": 4075
+    },
     "scripts/build-pwa.mjs": {
       "sha256": "53991497cd298a50834726bd7e22989485c372abb1f0d3c2badfdef5d23cd2c1",
       "bytes": 2783
@@ -325,8 +251,8 @@
       "bytes": 5235
     },
     "scripts/check-ui-snapshots.mjs": {
-      "sha256": "e040fb1854debb30de11cbf516322b285790441769a72db74e9b586066884943",
-      "bytes": 2745
+      "sha256": "65eded31ad0f892dc489d0ed5f463c5b3827b4c8da96048cea81159ab459ec6a",
+      "bytes": 2764
     },
     "scripts/package-release.py": {
       "sha256": "360b4623bde6d699f74488d58c6056374b3ec15f594a9a976e3bf100ce5be568",
@@ -335,6 +261,10 @@
     "scripts/package-ui-release.py": {
       "sha256": "898f29e254f47633199248a1db788bb8efe447e00d88024bda42995806591fe3",
       "bytes": 10892
+    },
+    "scripts/package-v13.py": {
+      "sha256": "8a6009fc39fad4f1ea27fc915592f982f0cf0b3d8167a21d99c6461fd69a53b5",
+      "bytes": 5314
     },
     "scripts/probe-cors.mjs": {
       "sha256": "93d99b6fdc8a168ca66000c0413a09ea3a438e6f9427a5fcbb3da5aa01bc52df",
@@ -353,12 +283,16 @@
       "bytes": 2297
     },
     "scripts/scan-release-secrets.mjs": {
-      "sha256": "1c33662f26b986e339b27a104d40503092020f4c5299dce256bd5071305b8a32",
-      "bytes": 3201
+      "sha256": "7721c6a89a61d5d84def11b2cafc18908e6c80e434a3febc73b3e4d46866c89f",
+      "bytes": 3245
     },
     "scripts/scan-ui-release.mjs": {
       "sha256": "48431eeb11c6bc17155d1136407900bcdd97186ecc441dc4010fe121f2ad6cef",
       "bytes": 1857
+    },
+    "scripts/validate-v13.mjs": {
+      "sha256": "10cc1e2b8f1bc46c52075ea79e2b2338fec875291d2a6cbf610ba5b386228707",
+      "bytes": 5731
     },
     "scripts/verify-final-closure.mjs": {
       "sha256": "c4e704173c8f714ef49b93e0125f165754f68a113a2a6b4af3f8cb9342eaa36c",
@@ -393,8 +327,8 @@
       "bytes": 1647
     },
     "src/market-data/live/cache.ts": {
-      "sha256": "17c86777b738b7142e26bb538ba154c4cab5580747f33836b6709607b8ce23d3",
-      "bytes": 5372
+      "sha256": "d820dfcf32a36f3d4d2144689babc6be506f53d0c702705817d311e17faa7ce8",
+      "bytes": 5708
     },
     "src/market-data/live/coingecko.ts": {
       "sha256": "cc18737f4da4dadc1e43317014dcecd5d03bec98081be6aa343cbc98079e9885",
@@ -433,15 +367,15 @@
       "bytes": 2384
     },
     "src/market-data/live/synchronized.ts": {
-      "sha256": "b2b46daa9b7368ec69e158813b54ca6545031a7b4e409dd62bd2a6dc8a27668e",
-      "bytes": 7066
+      "sha256": "8aadb93d4361adb5852adeef5edce3389c2bd59f8199d400639b32ca62f13d6e",
+      "bytes": 7648
     },
     "src/market-data/live/timestamps.ts": {
       "sha256": "77ae8e81cf84470a560dec4db999b3b7b52a1d3e19ad7c8795ec794496567135",
       "bytes": 2292
     },
     "src/market-data/live/tsm-adr.ts": {
-      "sha256": "ec44e9ab1d0eaf138c76f732690a29bd56e122a8bcd49413edc132bad46ad1cf",
+      "sha256": "1b121946882b7efbd025c9fcd188e6ef3b240851f325e10f0e0334153bbbb26e",
       "bytes": 2395
     },
     "src/market-data/provider.ts": {
@@ -485,8 +419,8 @@
       "bytes": 1276
     },
     "src/ui/App.tsx": {
-      "sha256": "e26678a5c1bcba6d3a017b17ec7542f7fce2c400536842e836bccff5f975bef0",
-      "bytes": 37618
+      "sha256": "11bf63d70cf7b3f89eab62dee8c7163d9a7c74de6619ff28f78095d5a860e3a1",
+      "bytes": 40801
     },
     "src/ui/BalanceRail.tsx": {
       "sha256": "797f0fb5fb7acecee433bebc1269a9a3b171089cf064aeca21b3e94c72586924",
@@ -497,24 +431,28 @@
       "bytes": 3118
     },
     "src/ui/Details.tsx": {
-      "sha256": "56a2c18bfc74279907f1823c1602c6ae14579bfb0d59fdd813146203b9982fc2",
-      "bytes": 9120
+      "sha256": "fbd67ea76c6cc5f31ac7d519ea4bd1204fa96f1f5c4afe1187018069f97b481b",
+      "bytes": 9138
     },
     "src/ui/Glyph.tsx": {
-      "sha256": "4b8b9585b52692f0aee343a7cc9ca2bbb83b066548df56ec527df420fef46088",
-      "bytes": 2050
+      "sha256": "c9cf1f4811f1c7e274bb1b33cf2310c00f4f32e8d8358da1c7e9c646c1982268",
+      "bytes": 2118
+    },
+    "src/ui/LaunchIntro.tsx": {
+      "sha256": "22c54e4b2e5ac3dfe512d1c68d6afcfd82f004b5cd95a948550c6b430b45f40b",
+      "bytes": 1812
     },
     "src/ui/MarketDataSettings.tsx": {
-      "sha256": "16ab4658a9663fc54e11121dc849e2147a6cef980b72b94fd8702cb22ae6c7fa",
-      "bytes": 13417
+      "sha256": "6597f07e3acfedbe544f79a751ad71f8aabe2392081f1c5274b61939b4c3e81b",
+      "bytes": 19921
     },
     "src/ui/Overview.tsx": {
-      "sha256": "a09df05430071c13fddd37767e0c3644039c49529aa07c5f6fc6900f32e9c8b6",
-      "bytes": 4470
+      "sha256": "8b4690e4048d367f999d71d7f630176f0a793f7197ec904a56b2d8211bef7321",
+      "bytes": 4475
     },
     "src/ui/RiskView.tsx": {
-      "sha256": "a4b6365fe47b5a29ce2d95b070bf175ba50e273607b86070d608f0fd63b09abb",
-      "bytes": 6827
+      "sha256": "cafb2d465af3544de78fd116be560af932e3d19d742566715f1222da0807d69c",
+      "bytes": 6834
     },
     "src/ui/browser-hardening.css": {
       "sha256": "138cc1587c190d0e8be65392af4f65fa829fe01237f600d9385f4fb2bc1ec035",
@@ -528,33 +466,49 @@
       "sha256": "61f9905e5e033ee66680667891b4062e5778e6eb590bfc63ec34a2229a4c8ffb",
       "bytes": 1523
     },
+    "src/ui/launch-state.ts": {
+      "sha256": "47094a9bce43754e6ebd08a883ff67d70963a3544e2a128a9f94b881509ce15f",
+      "bytes": 353
+    },
     "src/ui/presentation.ts": {
-      "sha256": "09c325542ae9e3fd6cf0161f0f8cf3710a5e3cf1637f7e11c5ecf8b1a0bba4e1",
-      "bytes": 2544
+      "sha256": "1f5cb1bcce33ef9a5029b853cb14f5cfd257032177a9b371e7c9bce9b683c2a4",
+      "bytes": 5471
+    },
+    "src/ui/risk-import.ts": {
+      "sha256": "7be068ca98f7e2ea7a9d63bd52f0f300560c1b83733cf1a3c629281d9f943fe6",
+      "bytes": 1770
     },
     "src/ui/styles.css": {
-      "sha256": "30cafdf1abe4e2ac49bd5cb636c6132d62cf228695cd2debd3606d35b6fd2826",
-      "bytes": 28853
-    },
-    "tests/browser-fixture.test.ts": {
-      "sha256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
-      "bytes": 949
+      "sha256": "1b0f465d38d2b866ef35340a08baade31fb9fbc9ef269345440d73716b921a29",
+      "bytes": 31405
     },
     "tests/browser/app.spec.ts": {
-      "sha256": "960a589f2ebbacf07a6309785cb2dc0035ae4764cfe770258a178bb6cb26e1a8",
-      "bytes": 9282
+      "sha256": "86cc7592eb2f8670f43e226de8599db5f4a4c267c3c7cac2ab05df5ebac86b89",
+      "bytes": 10829
+    },
+    "tests/browser/launch.spec.ts": {
+      "sha256": "fd9dbe6ecefa625588cdea80da06f046553c5fb2f70c040b5c40e3f8763986f7",
+      "bytes": 2758
     },
     "tests/browser/market-settings.spec.ts": {
-      "sha256": "4da6b39b7a41a1865a03e1e3370975814ee23755f532f0c0d85f2255cc4e6e4e",
-      "bytes": 8406
+      "sha256": "b22d15727bcf3e8d08b4dd6577c1f7759e9fb87bd6805dc441aa75d5262fa84d",
+      "bytes": 8411
     },
     "tests/browser/nationalbank.spec.ts": {
       "sha256": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
       "bytes": 3209
     },
+    "tests/browser/risk-refresh.spec.ts": {
+      "sha256": "3da443f872118c52b239305d08af21a1b9aa9fb423622eebfa03350ea3f02d01",
+      "bytes": 11132
+    },
     "tests/browser/ui.spec.ts": {
       "sha256": "4c94593d6a7c5c00a74e464e0da99f235bcb9b270e582a192da172b94a73bb09",
       "bytes": 7612
+    },
+    "tests/browser-fixture.test.ts": {
+      "sha256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
+      "bytes": 949
     },
     "tests/calculation-job.test.ts": {
       "sha256": "2a762cb8d8e964c204b7ab78b52dc937f1565343ee06506338787054e8d7d3a0",
@@ -587,6 +541,10 @@
     "tests/execution-greedy.test.ts": {
       "sha256": "3ac55179eb1af2c92cca0f179017adfe76528a7b6bf612395bbf5067b0a843c7",
       "bytes": 1985
+    },
+    "tests/fixtures/native-fx-projection.ts": {
+      "sha256": "700c2673e82be52964568dad7270779c48ff4c43e59dff473f992110b01da95f",
+      "bytes": 1193
     },
     "tests/fixtures/providers/README.md": {
       "sha256": "1f029975448bdf90350fa116b95b9a036a55e146166cf0a56c5f2924c0c831ce",
@@ -632,13 +590,17 @@
       "sha256": "7d0ccec1ff6e302f0a102e4f537e8c0bc98bef20a95cc35ed15995b39c85d392",
       "bytes": 4946
     },
+    "tests/launch.test.ts": {
+      "sha256": "89c19179d0e3f34fec3ed851a66e52b5c8b55185addb8d6b103590ec4fb2a102",
+      "bytes": 1062
+    },
     "tests/legacy-snapshot.json": {
       "sha256": "b82ea8d9fcc6b8a28dcb27425abf236fb6132c8892772eae54f9282871e62061",
       "bytes": 328114
     },
     "tests/market-cache.test.ts": {
-      "sha256": "6c78c5f0719864a827557acaa7abe36f46ce37df7167d487307d208ca5890c8a",
-      "bytes": 3385
+      "sha256": "39c017fbdd5ca5df1a85bd70f5a9694c98d19f796e685e4c6806e9d812b6d114",
+      "bytes": 4195
     },
     "tests/market-network.test.ts": {
       "sha256": "701f5626fc67d712f207d28438c1f70357db7d1e84669bf984864d467a761324",
@@ -647,6 +609,10 @@
     "tests/market-parsers.test.ts": {
       "sha256": "518e1d7adae8bd84dba8121364cb6d284456054d04f690b33a866ebd2ac21424",
       "bytes": 5465
+    },
+    "tests/market-presentation.test.ts": {
+      "sha256": "e6727ddb7ec9991b4014bf7bbe787ae69b40409dfb658b3e2e7eeb007687659d",
+      "bytes": 2002
     },
     "tests/official-fx-holiday-gaps.test.ts": {
       "sha256": "0500b9bed7d9c8f99d82e3903b6783e775c8e9bcc27ce4542b9f0f25919b1794",
@@ -660,9 +626,21 @@
       "sha256": "e55599644f1d6b0a401a6abe611b7d19adb618373aa1b8393f43188917a3d6c5",
       "bytes": 1274
     },
+    "tests/refresh-network.test.ts": {
+      "sha256": "870dade357b4e09a343dad44ab546d2939f799ae1782739129afc079f8bf59a4",
+      "bytes": 6868
+    },
+    "tests/release-import.test.ts": {
+      "sha256": "af10177b8d9f831c920f1492399bd8fce98496cfdaf12d9844ab7713ef25cd4c",
+      "bytes": 9005
+    },
     "tests/retrospective-fx-contract.test.ts": {
       "sha256": "3040c22b495c1965f201275d0df242cfbd281b1baeba2964e81602b453a53152",
       "bytes": 6680
+    },
+    "tests/risk-import.test.ts": {
+      "sha256": "a91bf24f0199e5b965058212444c37b2e9f837ec5afb9d9674d0f2c3ba1573a6",
+      "bytes": 4632
     },
     "tests/service-worker-security.test.ts": {
       "sha256": "2cdb0c05325b62dc9e3a64ea785a6adb288c7d6bf9b0459cb9dce18ffb91bb20",
@@ -673,8 +651,8 @@
       "bytes": 3349
     },
     "tests/synchronized-import.test.ts": {
-      "sha256": "9659376c6a1ab301c1432c756335fef409084ef108586dce091dd3b3bc37223b",
-      "bytes": 8818
+      "sha256": "822cd4fb18cd3868cb9acaed240408ef20db9ed54ccafe588cc453faf18adb27",
+      "bytes": 11904
     },
     "tests/synchronized-risk-boundary.test.ts": {
       "sha256": "9a4450fd2cfac8f524982d287d7beb226b774161c2405b2a0ec354cebac7e265",
@@ -685,11 +663,11 @@
       "bytes": 1750
     },
     "tests/tsm-final-dividend.test.ts": {
-      "sha256": "371a228308b5130c92c6848c34ab552749a7f8e59028afa745111974d4be6ad2",
-      "bytes": 1623
+      "sha256": "072b79b490d5e3535e2f07d82e557adbb123cba7d56f35603f6cb5a0d4773eae",
+      "bytes": 3371
     },
     "tests/ui-presentation.test.ts": {
-      "sha256": "f84a4d103faa75e66a539deb8380217a5d793281df8efb4e76359a2f5bc28c4e",
+      "sha256": "edeec2baaf1c78ac5909dee45d7dfb72a7ad81d277ef81cd29187500618a1d45",
       "bytes": 11218
     },
     "tsconfig.json": {
@@ -717,7 +695,7 @@
       "bytes": 1542626
     },
     "validation/closure-final-independent-reference.json": {
-      "sha256": "4518dd480808c06087cb2d45ceb30f55964ddc219ca3413fc7427e0fccff06ce",
+      "sha256": "290db4c08ac4990e6b92a4caa6d748bb34a2bbade8db115385eeeb01b8b57f9c",
       "bytes": 373
     },
     "validation/closure-final-package-guards.json": {
@@ -737,7 +715,7 @@
       "bytes": 3040
     },
     "validation/closure-final-synchronized.json": {
-      "sha256": "e420c5ceebd1f26e2e9fd24f5c06bda78b7bf07ab6019caa6efd670c7b4670c5",
+      "sha256": "ef984bb50f81eafc4404def52b142948223dc93283e1c72fd66af968f3c74cb6",
       "bytes": 1137671
     },
     "validation/closure-final-tsm.json": {
@@ -824,6 +802,42 @@
       "sha256": "af0aa619e902bfb8116cea206353c6acb1844f9a438003a82c8561b456013360",
       "bytes": 14958
     },
+    "validation/v1.3-builds.json": {
+      "sha256": "34fc0a52f22bd4016756ce6976957d5caff4af5c73cb9ac16836a86a550e901a",
+      "bytes": 9297
+    },
+    "validation/v1.3-checks.json": {
+      "sha256": "33dd74295171970b0c7c8f522a4a236235dd3d27f5a48397042caefad2d9421a",
+      "bytes": 20814
+    },
+    "validation/v1.3-credential-scan.json": {
+      "sha256": "b6fbbd6f97b7d8beb903be179cc50c48903bb71386829e2f3dc39750abdf5759",
+      "bytes": 333
+    },
+    "validation/v1.3-frozen-audit.json": {
+      "sha256": "46eb523f872ee209f668b4b0dd9766d64ccb0a73652d2322df6497c5e4efdedd",
+      "bytes": 7234
+    },
+    "validation/v1.3-snapshot-replay.json": {
+      "sha256": "0624c41d4642a30cd25b4b0086372a8c2ac38179f28cdbd1347bc3024ca80ba3",
+      "bytes": 1541
+    },
+    "validation/v1.3-static-review.json": {
+      "sha256": "92812ec5043152439008e09f4e9a8dea5965aca4714114b4b0ee770246443ea6",
+      "bytes": 1214
+    },
+    "validation/v1.3-tsm-evidence-renewal.json": {
+      "sha256": "bb3c687825b9810c8f48ccc6263624ebbe1920158359037857a8b816e5d91840",
+      "bytes": 2974
+    },
+    "validation/v1.3-tsm-renewal-checks.json": {
+      "sha256": "19505a4805330a34ec9ba2704618ba899a54586379b14c831d1d9109b6a78d5c",
+      "bytes": 23205
+    },
+    "validation/v1.3-tsm-validation-incident.json": {
+      "sha256": "59f34b90c8b8b3c46fdb7a6e68ade4d0c78ad087f4f3e74e341ee04898bf504f",
+      "bytes": 3213
+    },
     "vite.config.ts": {
       "sha256": "9ef20eb4880a4bac7dfbbc5f2938cc1e29883ac450a0c5179078a175bdd726b1",
       "bytes": 167
@@ -833,5 +847,31 @@
       "bytes": 119
     }
   },
-  "releaseCandidate": "browser-hardening-rc1"
+  "repositoryInfrastructure": {
+    "policy": "PRESERVE_EXISTING_UPLOAD_SEPARATELY",
+    "scope": "Hashes of delivered workflow bytes only; importer intentionally preserves repository-owned workflows. Upload these separately.",
+    "files": {
+      ".github/workflows/import-release.yml": {
+        "sha256": "b25cbe375a4919f02734ecc16b1fcb91001981a814a199f3c760f8fcf3f3bd07",
+        "bytes": 9265
+      },
+      ".github/workflows/pages.yml": {
+        "sha256": "b2929cf2b0387579d561441b93fb0aa84cc57ae05abb71d4cee6a2a4d5d6ffd2",
+        "bytes": 3586
+      }
+    }
+  },
+  "evidence": [
+    "validation/v1.3-checks.json",
+    "validation/v1.3-frozen-audit.json",
+    "validation/v1.3-snapshot-replay.json",
+    "validation/v1.3-builds.json",
+    "validation/v1.3-credential-scan.json",
+    "validation/v1.3-tsm-evidence-renewal.json",
+    "validation/v1.3-tsm-renewal-checks.json"
+  ],
+  "browserRuntime": "NOT TESTED in this environment; actual GitHub browser gates required",
+  "physicalIPhone": "PENDING",
+  "hostedDeployment": "PENDING",
+  "currentRiskRefresh": "TSM evidence renewed through 2026-10-08 only; later/wider history FAIL CLOSED. Real authenticated refresh NOT TESTED."
 }

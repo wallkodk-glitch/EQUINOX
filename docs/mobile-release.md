@@ -1,22 +1,21 @@
-# Release fra iPhone — ingen lokal Node eller PC
+# EQUINOX v1.3 — release fra iPhone
 
-Denne alternative vej er for et **nyt EQUINOX-repository**. Brug ikke Logic-Core eller et andet projekts repository. Den kræver din normale GitHub-adgang og rettigheder til Actions/Pages. Et hosted run er endnu ikke udført; workflowet skal være grønt, før deploy kan kaldes PASS.
+Brug det eksisterende EQUINOX-repository og main. Intet nyt repository, PAT, backend eller API-secret i GitHub. Eksportér først finansiel backup i den installerede app; gem den privat, aldrig i repositoryet.
 
-## Engangsopsætning i Safari
+## Filer og rækkefølge
 
-1. Gem `EQUINOX-v1.2.0.zip` i Filer. Opret et GitHub-repository med navnet **EQUINOX**, branch **main**. Brug ikke private finansielle oplysninger i repositoryet.
-2. I repositoryets webinterface vælges **Add file → Upload files**. Upload selve `EQUINOX-v1.2.0.zip` til roden; den skal **ikke** udpakkes i repositoryet.
-3. I Filer kan en separat kopi af ZIP'en udpakkes, så du kan læse `EQUINOX/release/mobile-pages.yml`. Kopiér hele denne tekst.
-4. I GitHub: **Add file → Create new file**. Navn: `.github/workflows/mobile-pages.yml`. Indsæt den kopierede tekst og commit til **main**. Brug eventuelt Safari-visningen til skrivebordssite, hvis kontrollerne ikke vises.
-5. Under repositoryets **Settings → Pages** vælges **GitHub Actions** som source. Dette er en repository-indstilling, ikke noget ZIP'en kan ændre uden din adgang.
-6. Under **Actions** åbnes **EQUINOX mobile ZIP release**, vælg **Run workflow** fra main. Workflowet kontrollerer alle filhashes, bygger fra kildekode, kører matematik-, reference- og browsertests og deployer kun efter bestået verifikation.
-7. Når både verify og deploy/smoke er grønne, åbn den konkrete URL fra deployment. Først her findes en faktisk iPhone-åbningsadresse. I Safari: **Del → Føj til hjemmeskærm**.
-8. Følg `docs/ui-v1/device-release-gate.md` og `docs/iphone-checklist.md`. Demo eller Equal Weight med manuelle priser kan afprøves. En grøn deployment er ikke fysisk iPhone-evidens eller provider-CORS-verifikation.
+1. Gem de fem leverancefiler i Filer. Erstat `.github/workflows/import-release.yml` med hele den leverede `import-release.yml` og commit til main. Den gamle Pages-workflow må fortsat validere den gamle app; dette er ikke v1.3-evidens.
+2. Upload **EQUINOX-v1.3-GitHub-ready.zip** uudpakket til repositoryets rod. Upload ikke backups eller credentials.
+3. Actions → **EQUINOX mobile release import** → Run workflow → main. Indtast det eksakte filnavn ovenfor. Blank input må kun bruges, hvis roden indeholder præcis én EQUINOX*.zip. Flere kandidater bliver afvist; intet stiltiende valg.
+4. Vent på grønt import-job og kontrollér den nye produktcommit. Importeren verificerer CRC, struktur og alle manifesthashes før ændring, bevarer repository-workflows, force-tracker validation/ og fjerner upload-ZIP'en. En samtidig main-opdatering kan kræve et nyt almindeligt run; ingen force-push.
+5. Erstat nu `.github/workflows/pages.yml` med hele den leverede `pages.yml` og commit til main. Dette almindelige bruger-push starter **EQUINOX validated release**. Hvis intet run starter, vælg Actions → samme workflow → Run workflow → main. Importens GITHUB_TOKEN-push starter ikke selv push-triggeret CI.
+6. Deploy kræver alle verify-gates grønne, inklusive Chromium og WebKit. Hosted HTML, korrekt scoped manifest og service-worker smoke skal også være grønne. Pages source skal fortsat være GitHub Actions. Brug run/deployment-adressens faktiske URL; ingen hosted PASS før evidens.
+7. På fysisk iPhone følges [device release gate](v1.3/device-gate.md). Eksisterende app viser en godkendt opdatering; vent på lokale saves/netværksjobs og brug Opdatér app. Samme origin og path bevarer lokale data; ændring af origin/path kan adskille browserlagringen.
 
-Der kræves ikke en API key. GitHub kan kræve sædvanlige kontobekræftelser, tilladelser eller en plan med Pages-understøttelse; disse er ikke omgået eller testet her. Der oprettes ikke automatisk en betalt konto eller service.
+De to workflowfiler skal opdateres separat: produktimport bevarer bevidst .github/workflows/. ZIP'ens manifest adskiller payload og repositoryInfrastructure; sidstnævnte beskriver leverede bytes, ikke en påstand om, at bevarede repo-workflows allerede matcher. Hashkontrol er integritet/completeness, ikke en digital issuer-signatur.
 
-## Senere ZIP-opdateringer
+## To trin, ingen ekstra privilege
 
-Eksportér først en backup i EQUINOX. Ved en ny release uploades den nye versionerede ZIP, og `release/mobile-pages.yml` fra samme ZIP kopieres til workflowet, så filnavn og manifestversion passer sammen. Kør workflowet igen. ZIP med source, lockfile og manifest er kodegrundlaget; deploy bygger den. Efter hosted smoke tilbydes opdateringen i PWA'en.
+GitHub understøtter eksplicit workflow_dispatch med GITHUB_TOKEN; automatisk dispatch ville kræve Actions-write-tilladelse og faktisk repository-policy-test. Denne release beholder bevidst to-trins-forløbet med contents-only import, ingen ny secret og ingen recursion. Det er ikke en platformbegrænsning eller et løfte om automatisk release.
 
-Den normale filbaserede Git-workflow er stadig tilgængelig i `.github/workflows/pages.yml` inde i ZIP'en. Vælg enten filbaseret kildekode eller denne ZIP-baserede struktur for et repository; bland dem ikke utilsigtet.
+Gamle release/mobile-pages.yml og UI/data-statusrapporter i source er historiske; brug kun de to aktuelle workflows og docs/v1.3. En grøn import er ikke test/build/deploy PASS. En grøn deploy er ikke fysisk iPhone- eller live provider-CORS-evidens.

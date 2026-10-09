@@ -1,12 +1,12 @@
-# EQUINOX v1.2.0 — UI v1
+# EQUINOX v1.3.1 — Mineral Instrument
 
 Matematisk buy-only kapitalallokering i DKK, med en lokal React/TypeScript PWA. EQUINOX Engine er uafhængig af React. EQUINOX App viser portefølje, targets, ordrer, risiko og det immutable beregningsgrundlag.
 
-**UI v1 — PASS WITH LIMITATIONS. BROWSER / SAFARI / IPHONE — NOT TESTED.** App er **1.2.0**; Engine forbliver **1.0.1**, MarketDataModel **1.1.2**, og snapshot schema 1/2 er uændret. Overview, Allocate, Risk og Settings har et fælles mineral-design, Balance Rail, Equilibrium Axis og en restrained infinity-loader. Kildelaget, matematik, kalender, credentials, persistence og data gates er bevaret. Automatisk risk-refresh er fortsat ikke aktiveret i UI. Se [aktuel UI-release-status](docs/ui-v1/release-status.md), [designsystem](docs/ui-v1/design-system.md) og [research/strategi](docs/ui-v1/visual-strategy.md).
+**v1.3 er en release candidate, ikke hosted/device PASS.** App er **1.3.1**; Engine forbliver **1.0.1**, MarketDataModel **1.1.2**, og snapshot schema 1/2 er uændret. De fire tabs, Balance Rail, Equilibrium Axis og infinity-loader bevares i et roligere Mineral Instrument-design med kort launch-intro. Settings aktiverer manuel synkroniseret risikohistorik gennem den eksisterende pipeline og atomisk accept. Holdings/manuelle DKK-priser opdateres aldrig automatisk. Se [v1.3-validering](docs/v1.3/EQUINOX-v1.3-VALIDATION.md), [ændringer](docs/v1.3/EQUINOX-v1.3-CHANGELOG.md), [audit](docs/v1.3/audit.md) og [strategi](docs/v1.3/strategy.md).
 
 Den accepterede **DATA-INTEGRATION PASS** fra v1.1.2 er bevaret for det verificerede historiske vindue. Faktiske Massive-observationer, officiel Nationalbank-FX og endelig TSM ADR-dividend er genafspillet gennem gate og Engine uden ændrede hashes. Dette UI-arbejde er ikke en ny live provider-verifikation. Native browser/local-key transport og deployed-origin CORS er stadig NOT TESTED.
 
-Den verificerede historik er **2025-10-03–2026-10-06**, 253 observationer og 252 returns. TSM issuer-evidens er afgrænset til **2025-01-01–2026-10-07**; senere og bredere ikke-dokumenterede perioder afvises. FX og final ADR-konvertering er eksplicit **retrospective**, ikke point-in-time backtest-evidens. Dokumenterne under `docs/v1.1`, `docs/blocker-closure`, `docs/final-data-closure` og den gamle rod-releaseaudit er historisk evidens; denne releases aktuelle status findes under `docs/ui-v1`.
+Den tidligere verificerede faktiske historik er **2025-10-03–2026-10-06**, 253 observationer og 252 returns. Efter separat brugeraccept og fornyet primærkilde-review dækker TSM issuer-evidensen **2025-01-01–2026-10-08**; 9. oktober og bredere ikke-dokumenterede perioder afvises fortsat. Dette er ikke ny autentificeret market acquisition eller CORS-evidens. De syv gross-beløb, ex-datoer og return-semantik er uændrede; betalingsdatoen 8. oktober giver ikke endnu et dividend-return. FX og final ADR-konvertering er eksplicit **retrospective**, ikke point-in-time backtest-evidens. Ældre release-/UI-/data-rapporter og scripts er historisk evidens; aktuel status findes under `docs/v1.3`.
 
 ## Brug appen
 
@@ -32,7 +32,7 @@ npm run verify
 npm run preview -- --host 127.0.0.1 --port 4173
 ```
 
-Åbn `http://127.0.0.1:4173/EQUINOX/`. `verify` kører lint, typecheck, uafhængig Python-reference, unit tests, produktion build og browserflows. Den gemmer faktisk kommandooutput i `validation/release-checks.json`. Unit tests genererer det syntetiske Node-snapshot til browser-replay. Den aktuelle UI-kontrol med **172/172 tests**, begge Python-referencer og build findes i `validation/ui-release-checks.json`. Et nyt UI-browserforsøg stoppede ved **EACCES**, før nogen app-assertion eller providerrequest; se `validation/ui-browser-evidence.json`. De 24 browsercases per projekt er klar, men er ikke udført her.
+Åbn `http://127.0.0.1:4173/EQUINOX/`. `verify` kører de generelle gates; de nye v1.3-kommandoresultater findes separat i `validation/v1.3-checks.json`. Unit tests genererer det syntetiske Node-snapshot til browser-replay. Begge Python-referencer og immutable Node-replay er separate gates. Browserforsøg må ikke omklassificeres til PASS, når executable/systeminstallationsrettigheder mangler. Dette miljø kunne ikke starte Chromium/WebKit; ingen nye browser-assertions eller live providerrequests blev udført.
 
 Den medfølgende faktiske, offentlige og credential-frie risikohistorik kan genkontrolleres uden provider-key:
 
@@ -41,7 +41,7 @@ node scripts/check-final-risk.mjs
 python3 reference/final-risk.py
 ```
 
-Det er et replay af de gemte observationer ved deres oprindelige acquisition-clock. Det historiske `verify-final-closure.mjs`/`package-release.py` er specifikt for den tidligere data-release og er ikke UI-release-gates. UI-kildeaudit kan køres med `node scripts/audit-ui-release.mjs /sti/til/original-v1.1.2/EQUINOX`; `verify-ui-release.mjs` bruger samme baselineargument. På en fungerende browser-runner bruges fortsat `npm run verify`; launch-fejlen må ikke bruges til at springe browser-verifikation over.
+Det er et replay af gemte observationer ved deres oprindelige acquisition-clock. Historiske UI/data-packagere er ikke v1.3-gates. Den nye kildeaudit er `node scripts/audit-v13.mjs /sti/til/verificeret-GitHub-baseline`; v1.3-validering er `node scripts/validate-v13.mjs /sti/til/verificeret-GitHub-baseline`. På en fungerende browser-runner skal både Chromium og WebKit faktisk bestå. Manglende browser-runtime giver NOT TESTED, ikke deploy-godkendelse.
 
 `EQUINOX_CHROMIUM_EXECUTABLE` kan pege på en lokalt installeret Chromium-binary i et begrænset testmiljø. I den situation kører `verify` kun Chromium og registrerer afgrænsningen; det er ikke Safari-test. Standard CI kører både Chromium og WebKit.
 
@@ -55,7 +55,7 @@ Det er et replay af de gemte observationer ved deres oprindelige acquisition-clo
 4. Workflowet bygger automatisk med `/<repository-name>/`, eller `/` for et `*.github.io`-repository. Efter deploy kontrolleres HTML, manifest og service worker via HTTPS.
 5. Åbn den returnerede Pages-adresse i Safari. Vælg **Del → Føj til hjemmeskærm**. Følg [iPhone-checklisten](docs/iphone-checklist.md), før det kaldes iPhone-godkendt.
 
-Det medfølgende `dist/` er bygget til **`/EQUINOX/`**. Åbn ikke `index.html` via `file://`; service workers og persistence kræver en korrekt origin. Ved et andet repository-navn skal der rebuildes:
+GitHub-ready ZIP'en indeholder kildekode, ikke en stale `dist/` eller `node_modules/`. Production build er valideret separat og genbygges af Pages-workflowet. Åbn ikke `index.html` via `file://`; service workers og persistence kræver en korrekt origin. Ved et andet repository-navn bruges:
 
 ```sh
 BASE_PATH=/mit-repository/ npm run build
@@ -77,7 +77,8 @@ Skift af origin eller repository-path kan adskille appens lokale data. Eksporté
 - [Uafhængig referenceaudit](docs/reference-audit.md)
 - [Provider-research og begrænsninger](docs/data-provider-research.md)
 - [Importkontrakt og prissemantik](docs/data-contract.md)
-- [Aktuel UI v1 release-status](docs/ui-v1/release-status.md)
+- [Aktuel v1.3-validering](docs/v1.3/EQUINOX-v1.3-VALIDATION.md)
+- [v1.3-research og visuel strategi](docs/v1.3/strategy.md)
 - [UI-designsystem, numerics og symbolske ankere](docs/ui-v1/design-system.md)
 - [Research og visuel strategi](docs/ui-v1/visual-strategy.md)
 - [UI-review, ændringer og testafgrænsninger](docs/ui-v1/review.md)

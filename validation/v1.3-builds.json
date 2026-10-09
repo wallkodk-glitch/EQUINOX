@@ -1,0 +1,275 @@
+{
+  "checkedAt": "2026-10-09T15:19:31.459Z",
+  "builds": [
+    {
+      "base": "/EQUINOX/",
+      "status": "PASS",
+      "scope": "Static compiled paths/manifest/asset availability, NOT hosted runtime",
+      "artifacts": [
+        {
+          "path": "dist/.nojekyll",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "dist/apple-touch-icon.png",
+          "bytes": 3314,
+          "sha256": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37"
+        },
+        {
+          "path": "dist/icon-192.png",
+          "bytes": 3615,
+          "sha256": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07"
+        },
+        {
+          "path": "dist/icon-512.png",
+          "bytes": 13687,
+          "sha256": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4"
+        },
+        {
+          "path": "dist/icon.svg",
+          "bytes": 378,
+          "sha256": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b"
+        },
+        {
+          "path": "dist/index.html",
+          "bytes": 952,
+          "sha256": "2b68ce262410ba3a524fd708bbb7f747b0db54923eb2327ba8377a89396f06da"
+        },
+        {
+          "path": "dist/manifest.webmanifest",
+          "bytes": 379,
+          "sha256": "1f809c7e2800661ac5b26480021fcce3e30205486ec5ea8f688c65104ff4fe57"
+        },
+        {
+          "path": "dist/sw.js",
+          "bytes": 1370,
+          "sha256": "9e3955fc813965ce23c420cddcb46790eaeff5e9095199cf914babb6b4e33d4d"
+        },
+        {
+          "path": "dist/brand/equinox-primary.jpeg",
+          "bytes": 130188,
+          "sha256": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551"
+        },
+        {
+          "path": "dist/assets/index-CjlICM75.js",
+          "bytes": 501724,
+          "sha256": "4fba343e5ec7b928dfacbef16b4532a33532a0b2798687051fb9b0b42a4f339f"
+        },
+        {
+          "path": "dist/assets/index-CjlICM75.js.map",
+          "bytes": 2038233,
+          "sha256": "64523053f2c2f892663b73d1a2155e3157af076dcf924959a144d1ab78803533"
+        },
+        {
+          "path": "dist/assets/index-Cn0XyK9b.css",
+          "bytes": 28060,
+          "sha256": "6b66330d12cb00ccbe2af92dc9adaf9305bd3e15e4da75b85ba00255aa44508d"
+        }
+      ]
+    },
+    {
+      "base": "/",
+      "status": "PASS",
+      "scope": "Static compiled paths/manifest/asset availability, NOT hosted runtime",
+      "artifacts": [
+        {
+          "path": "dist/.nojekyll",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "dist/apple-touch-icon.png",
+          "bytes": 3314,
+          "sha256": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37"
+        },
+        {
+          "path": "dist/icon-192.png",
+          "bytes": 3615,
+          "sha256": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07"
+        },
+        {
+          "path": "dist/icon-512.png",
+          "bytes": 13687,
+          "sha256": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4"
+        },
+        {
+          "path": "dist/icon.svg",
+          "bytes": 378,
+          "sha256": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b"
+        },
+        {
+          "path": "dist/index.html",
+          "bytes": 912,
+          "sha256": "909f8d0d65faebae1932610299bb20969b5037533ed6c5f8a15d7072adf8dbc3"
+        },
+        {
+          "path": "dist/manifest.webmanifest",
+          "bytes": 339,
+          "sha256": "fa32c4fbd7108ff62469df32ddf885f88e75d48e6506bab09bec46c1016017c7"
+        },
+        {
+          "path": "dist/sw.js",
+          "bytes": 1274,
+          "sha256": "cfe802b6d4a8402d1fb13fdc65300d8d06a2f09c3cd3bf30bb34bd2bbe23d95a"
+        },
+        {
+          "path": "dist/brand/equinox-primary.jpeg",
+          "bytes": 130188,
+          "sha256": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551"
+        },
+        {
+          "path": "dist/assets/index-Cn0XyK9b.css",
+          "bytes": 28060,
+          "sha256": "6b66330d12cb00ccbe2af92dc9adaf9305bd3e15e4da75b85ba00255aa44508d"
+        },
+        {
+          "path": "dist/assets/index-D9LoiTDU.js",
+          "bytes": 501700,
+          "sha256": "f285a7fd93ffa4282f2ad3ad116f9cd90a9e4374f965e8379ef9ce61c3eac99b"
+        },
+        {
+          "path": "dist/assets/index-D9LoiTDU.js.map",
+          "bytes": 2038232,
+          "sha256": "dc005062fc85f8fd33b9f2d070e4eb72e94a9accd9fde7e42b9f46e771e32b6b"
+        }
+      ]
+    },
+    {
+      "base": "/equinox-v13-path-check/",
+      "status": "PASS",
+      "scope": "Static compiled paths/manifest/asset availability, NOT hosted runtime",
+      "artifacts": [
+        {
+          "path": "dist/.nojekyll",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "dist/apple-touch-icon.png",
+          "bytes": 3314,
+          "sha256": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37"
+        },
+        {
+          "path": "dist/icon-192.png",
+          "bytes": 3615,
+          "sha256": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07"
+        },
+        {
+          "path": "dist/icon-512.png",
+          "bytes": 13687,
+          "sha256": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4"
+        },
+        {
+          "path": "dist/icon.svg",
+          "bytes": 378,
+          "sha256": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b"
+        },
+        {
+          "path": "dist/index.html",
+          "bytes": 1027,
+          "sha256": "93bb76bbdccdb50afbfedcf5fce7fa5d2f5ea19409ac66a1d105626cd8375be9"
+        },
+        {
+          "path": "dist/manifest.webmanifest",
+          "bytes": 454,
+          "sha256": "bef7d82ea3bcd7dddd5875107cdc3ff1794299c9322da7d4940b4697066bcb84"
+        },
+        {
+          "path": "dist/sw.js",
+          "bytes": 1550,
+          "sha256": "4afd69be7a1133f0a7c8a944d6c3a916f8783b05dc05abb1a1e01641d97609bc"
+        },
+        {
+          "path": "dist/brand/equinox-primary.jpeg",
+          "bytes": 130188,
+          "sha256": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551"
+        },
+        {
+          "path": "dist/assets/index-Cn0XyK9b.css",
+          "bytes": 28060,
+          "sha256": "6b66330d12cb00ccbe2af92dc9adaf9305bd3e15e4da75b85ba00255aa44508d"
+        },
+        {
+          "path": "dist/assets/index-Dw9fDoGl.js",
+          "bytes": 501769,
+          "sha256": "e4dcc38d2af264b34cacaa814a3c0334f740d196c70f1a2e69b39d251e6fd4f7"
+        },
+        {
+          "path": "dist/assets/index-Dw9fDoGl.js.map",
+          "bytes": 2038234,
+          "sha256": "02db1c9d4e6375ebb1bcfeb774398141016b36698b0c84d9e6bbd526392809bb"
+        }
+      ]
+    }
+  ],
+  "defaultBuild": {
+    "base": "/EQUINOX/",
+    "status": "PASS",
+    "scope": "Static compiled paths/manifest/asset availability, NOT hosted runtime",
+    "artifacts": [
+      {
+        "path": "dist/.nojekyll",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "dist/apple-touch-icon.png",
+        "bytes": 3314,
+        "sha256": "799c31f59f9e5c51b5e6de4d937aca5368d48d91d9dd974c6f632c92936d3e37"
+      },
+      {
+        "path": "dist/icon-192.png",
+        "bytes": 3615,
+        "sha256": "b7e50069b8eb30c7bb6e70372cabe2c3157cff0bdd69dad4558e20241b821f07"
+      },
+      {
+        "path": "dist/icon-512.png",
+        "bytes": 13687,
+        "sha256": "cc2da9114bd1e3e50436adbb662c0e1c29841d419e81ce2ff3440e4424b978f4"
+      },
+      {
+        "path": "dist/icon.svg",
+        "bytes": 378,
+        "sha256": "e5a6bb589bab4da98040838fcb693547a8b79dac25e18e14abeac6fe21ce4e9b"
+      },
+      {
+        "path": "dist/index.html",
+        "bytes": 952,
+        "sha256": "2b68ce262410ba3a524fd708bbb7f747b0db54923eb2327ba8377a89396f06da"
+      },
+      {
+        "path": "dist/manifest.webmanifest",
+        "bytes": 379,
+        "sha256": "1f809c7e2800661ac5b26480021fcce3e30205486ec5ea8f688c65104ff4fe57"
+      },
+      {
+        "path": "dist/sw.js",
+        "bytes": 1370,
+        "sha256": "9e3955fc813965ce23c420cddcb46790eaeff5e9095199cf914babb6b4e33d4d"
+      },
+      {
+        "path": "dist/brand/equinox-primary.jpeg",
+        "bytes": 130188,
+        "sha256": "38a25d27acef97382fd287033869f4fbff82f35abec0870bc417649cd43c4551"
+      },
+      {
+        "path": "dist/assets/index-CjlICM75.js",
+        "bytes": 501724,
+        "sha256": "4fba343e5ec7b928dfacbef16b4532a33532a0b2798687051fb9b0b42a4f339f"
+      },
+      {
+        "path": "dist/assets/index-CjlICM75.js.map",
+        "bytes": 2038233,
+        "sha256": "64523053f2c2f892663b73d1a2155e3157af076dcf924959a144d1ab78803533"
+      },
+      {
+        "path": "dist/assets/index-Cn0XyK9b.css",
+        "bytes": 28060,
+        "sha256": "6b66330d12cb00ccbe2af92dc9adaf9305bd3e15e4da75b85ba00255aa44508d"
+      }
+    ]
+  },
+  "runtimePerformance": "NOT TESTED",
+  "note": "Vite single-chunk warning is retained, not hidden by changing the warning threshold."
+}

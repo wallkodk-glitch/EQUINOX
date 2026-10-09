@@ -11,13 +11,16 @@ import { validateRiskActions, type RiskActionEvidence } from './risk-actions';
 import { MarketError } from './network';
 
 type Instrument=(typeof ASSETS)[number];
+export type RiskRefreshPhase='acquiring'|'synchronizing'|'validating';
+export interface RiskRefreshProgress {phase:RiskRefreshPhase;completedAssets:number;}
 export interface SynchronizedInputs {
   now:string;lookback:number;observations:Record<Instrument,Observation[]>;
   corporateActions:RiskActionEvidence[];fx:Observation[];cacheUsed?:boolean;
 }
 // No partial output, overrides, guessed publication times or CoinGecko prices.
 // This constructs data only; it does not write financial state or run allocation.
-export function buildSynchronizedRisk(input:SynchronizedInputs):RetrospectiveDataset {
+export function buildSynchronizedRisk(input:SynchronizedInputs,onPhase?:(phase:RiskRefreshPhase)=>void):RetrospectiveDataset {
+  onPhase?.('synchronizing');
   const grid=sessionWindow(input.now,input.lookback),from=grid[0].date,to=grid.at(-1)!.date;
   const market:Observation[]=[];
   for(const instrument of ASSETS){
@@ -48,6 +51,7 @@ export function buildSynchronizedRisk(input:SynchronizedInputs):RetrospectiveDat
       cryptoBucketStart:new Date(Date.parse(s.close)-60000).toISOString(),cryptoBucketEnd:s.close,
       fx:{observationDate:selected.observationDate,rate:selected.rate}};
   });
+  onPhase?.('validating');
   const dataset=retrospectiveDatasetSchema.parse({schemaVersion:2,classification:'user-supplied',assetOrder:[...ASSETS],
     provider:'MASSIVE_NATIONALBANK_SYNCHRONIZED_RETROSPECTIVE_V1',sourceURLs:[SOURCES.massive,NATIONALBANK_HISTORY_SOURCE,...new Set(actions.flatMap(a=>a.sourceURLs))],
     symbols:['GOOGL','ISRG','TSM','X:BTCUSD','X:ETHUSD'],acquiredAt:input.now,equitySemantics:EQUITY_SEMANTICS,
@@ -61,13 +65,14 @@ export function buildSynchronizedRisk(input:SynchronizedInputs):RetrospectiveDat
 }
 
 let importing=false;
-export async function refreshSynchronizedRisk(options:{key:string;lookback:252|504|756;cache?:MarketCache;signal?:AbortSignal}):Promise<RetrospectiveDataset> {
+export async function refreshSynchronizedRisk(options:{key:string;lookback:252|504|756;cache?:MarketCache;signal?:AbortSignal;onProgress?:(progress:RiskRefreshProgress)=>void}):Promise<RetrospectiveDataset> {
   if(!options.key)throw new MarketError('MISSING_CREDENTIAL');
   if(!/^[\x21-\x7e]{1,512}$/.test(options.key))throw new MarketError('INVALID_CREDENTIAL');
   if(options.signal?.aborted)throw new MarketError('ABORTED');
   if(importing)throw new MarketError('REQUEST_IN_PROGRESS');
   importing=true;
   try {
+    options.onProgress?.({phase:'acquiring',completedAssets:0});
     const now=new Date().toISOString(),grid=sessionWindow(now,options.lookback),adapter=new MassiveAdapter(options.key);
     const cached=options.cache?await options.cache.all():[],observations={} as Record<Instrument,Observation[]>;
     let cacheUsed=false;
@@ -76,14 +81,16 @@ export async function refreshSynchronizedRisk(options:{key:string;lookback:252|5
       const missing=grid.filter(s=>!valid.some(q=>q.observationDate===s.date));
       cacheUsed ||= valid.length>0;
       observations[instrument]=[...valid,...(missing.length?await adapter.canonicalCloses(instrument,missing,options.signal):[])];
+      options.onProgress?.({phase:'acquiring',completedAssets:ASSETS.indexOf(instrument)+1});
     }
     const from=grid[0].date,to=grid.at(-1)!.date,corporateActions:RiskActionEvidence[]=[];
     for(const ticker of ['GOOGL','ISRG','TSM'] as const)corporateActions.push(await adapter.riskActions(ticker,from,to,options.signal));
     const fx=await historicalFX(new Date(Date.parse(from)-FX_MAX_CALENDAR_DAYS*86400000).toISOString().slice(0,10),to,options.signal);
     if(options.signal?.aborted)throw new MarketError('ABORTED');
-    const dataset=buildSynchronizedRisk({now:new Date().toISOString(),lookback:options.lookback,observations,corporateActions,fx,cacheUsed});
+    const dataset=buildSynchronizedRisk({now:new Date().toISOString(),lookback:options.lookback,observations,corporateActions,fx,cacheUsed},phase=>options.onProgress?.({phase,completedAssets:5}));
     // Persist normalized cache only AFTER every provider/calendar/data gate passes.
     if(options.cache)await options.cache.put([...dataset.provenance!.marketObservations,...fx]);
+    if(options.signal?.aborted)throw new MarketError('ABORTED');
     return dataset;
   } catch(e) {
     if(e instanceof MarketError)throw e;

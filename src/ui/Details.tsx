@@ -50,7 +50,7 @@ export function Details({ sealed }: { sealed: SealedSnapshot | null }) {
   return (
     <>
       <div className="section-title">
-        <div className="eyebrow">D · PROOF</div>
+        <div className="eyebrow">Beregning · dokumentation</div>
         <h1 data-page-title tabIndex={-1}>Calculation Details</h1>
         <p>{time(s.timestamp)} · historisk snapshot</p>
       </div>
@@ -102,7 +102,7 @@ export function Details({ sealed }: { sealed: SealedSnapshot | null }) {
         <p className="small">
           Dette immutable snapshot bruger kun sine gemte input. Market Data-referencepriser
           fra Settings indgår ikke i beregningen og ændrer ikke dette snapshots resultater.
-          Automatisk risk-refresh er ikke aktiveret i denne UI. Den accepterede datakontrakt er uændret.
+          Manuel opdatering af risikohistorik findes i Settings. Dette snapshot ændres aldrig ved refresh.
         </p>
         {ri?.sourceURLs.map((u) => (
           <p key={u} className="small break">
