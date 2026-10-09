@@ -13,7 +13,7 @@ export function Overview({ state, sealed, sameInput, isDemo, online, clock, capi
   capitalForm: ReactNode; history: SealedSnapshot[]; onPortfolio: () => void; onRisk: () => void; onDetails: () => void;
   onSnapshot: (sealed: SealedSnapshot) => void; onDemo: () => void;
 }) {
-  const valuation = valuationPresentation(state.holdings, clock);
+  const valuation = valuationPresentation(state.holdings, Math.max(clock, Date.now()));
   const freshness = isDemo ? "Syntetisk demo" : !online ? "Offline · manuelle priser" : valuation.state === "confirmed" ? "Manuelle priser · bekræftet" : valuation.state === "stale" ? "Priser udløbet · bekræft igen" : "Priser ikke bekræftet";
   return <>
     <div className="overview-heading"><h1 data-page-title tabIndex={-1}>Overview</h1><span className={`freshness ${!online || valuation.state === "stale" ? "attention" : ""}`}>{freshness}</span></div>

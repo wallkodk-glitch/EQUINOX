@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { readdir, readFile } from 'node:fs/promises';
+
+// Playwright routing does not intercept page requests handled by a service worker.
+// These tests validate provider/UI behavior, not the PWA shell, so block SW here.
+test.use({ serviceWorkers: 'block' });
 async function downloadedText(d:import('@playwright/test').Download){
  const stream=await d.createReadStream(),chunks:Buffer[]=[];
  for await(const c of stream!)chunks.push(c);return Buffer.concat(chunks).toString();
@@ -8,7 +12,7 @@ async function backupText(page:import('@playwright/test').Page){
  const wait=page.waitForEvent('download');await page.getByRole('button',{name:'Eksportér backup',exact:true}).click();return downloadedText(await wait);
 }
 async function settings(page:import('@playwright/test').Page){
- await page.getByRole('button',{name:'Settings',exact:true}).click();
+ await page.getByRole('navigation',{name:'Hovednavigation'}).getByRole('button',{name:'Settings',exact:true}).click();
  for(const row of await page.locator('.provider-row').all()) if(await row.getAttribute('open')===null) await row.locator('summary').click();
  const backup=page.locator('.settings-group').filter({has:page.getByText('Backup og historik',{exact:true})});if(await backup.getAttribute('open')===null)await backup.locator('summary').first().click();
 }
@@ -44,7 +48,7 @@ test('saved auth is header-only and excluded from logs, snapshot, cache and bund
  });
  await page.goto('');await settings(page);await page.getByRole('button',{name:'Connect CoinGecko',exact:true}).click();await page.getByLabel('API key').fill(key);await page.getByRole('button',{name:'Save locally'}).click();await page.reload();await settings(page);await expect(page.locator('.provider-row').filter({hasText:'CoinGecko'})).toContainText('Saved locally · not tested');
  await page.getByRole('button',{name:'Test connection CoinGecko',exact:true}).click();await expect(page.getByText('Connected ✓',{exact:true})).toBeVisible();expect(await backupText(page)).not.toContain(key);
- await page.getByRole('button',{name:'Allocate',exact:true}).click();await page.getByRole('button',{name:'Prøv med demodata'}).click();await page.getByRole('button',{name:'Beregn fordeling'}).click();await expect(page.getByRole('heading',{name:'Din købsplan'})).toBeVisible();await settings(page);
+ await page.getByRole('navigation',{name:'Hovednavigation'}).getByRole('button',{name:'Allocate',exact:true}).click();await page.getByRole('button',{name:'Prøv med demodata'}).click();await page.getByRole('button',{name:'Beregn fordeling'}).click();await expect(page.getByRole('heading',{name:'Din købsplan'})).toBeVisible();await settings(page);
  const wait=page.waitForEvent('download');await page.getByRole('button',{name:'Eksportér vist snapshot',exact:true}).click();expect(await downloadedText(await wait)).not.toContain(key);
  const stored=await page.evaluate(async()=>{
   const cached:unknown[]=[];

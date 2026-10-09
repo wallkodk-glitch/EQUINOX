@@ -1,0 +1,56 @@
+/* Browser/runtime hardening discovered by the GitHub Playwright gate.
+   Presentation only: no financial/model behavior lives here. */
+
+/* The document itself must never become a horizontal scroll surface. Financial
+   canvases that need width own their scrolling explicitly below. */
+.app {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+.balance-section,
+.risk-contribution,
+.correlation-section,
+.capital-form,
+.capital {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.balance-scroll,
+.matrix-scroll,
+.table-wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* rem-based minimums make these controls reflow naturally when the root text
+   size grows, while retaining the normal four-column iPhone layout. */
+.quick {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 4rem), 1fr));
+}
+.quick > * { min-width: 0; }
+
+/* At normal text size 8ch still fits four items. At 200% text the navigation
+   becomes two rows instead of creating oversized/overlapping touch targets. */
+.bottom-nav {
+  isolation: isolate;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8ch), 1fr));
+}
+.bottom-nav button {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+@media (max-width: 360px) {
+  /* Fixed em columns become wider than a 320px viewport at 200% text.
+     Fractional columns preserve all three values without document overflow. */
+  .contribution-row {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 2fr) minmax(0, 1.25fr);
+  }
+  .contribution-row > * { min-width: 0; }
+  .contribution-row strong,
+  .contribution-row span { overflow-wrap: anywhere; }
+}

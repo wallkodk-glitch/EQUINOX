@@ -8,44 +8,44 @@
     2
   ],
   "financialBackupSchemaVersion": 1,
-  "verdict": "UI v1 \u2014 PASS WITH LIMITATIONS",
+  "verdict": "BROWSER HARDENING RC1 — CI REQUIRED",
   "fullBrowserPWAReleaseAcceptance": false,
-  "implementation": "COMPLETE \u2014 requested presentation scope; browser visual polish review pending",
-  "mathematicalRegression": "PASS \u2014 frozen files, references and replay unchanged",
-  "dataLayerRegression": "PASS \u2014 byte-identical accepted data semantics and identical risk/snapshot outputs",
-  "acceptedDataIntegrationBaseline": "DATA-INTEGRATION PASS \u2014 v1.1.2 accepted historical window; no new live transport verification",
-  "lint": "PASS",
-  "typecheck": "PASS",
-  "tests": "172/172 PASS",
-  "pythonReferences": "PASS \u2014 both",
-  "snapshots": "PASS \u2014 5 exact baseline hashes/results replayed in Node",
-  "productionBuild": "PASS",
-  "cleanRebuild": "PASS \u2014 all 12 production files byte-identical",
-  "staticAccessibility": "PASS \u2014 declared colors/source contracts; no full WCAG claim",
-  "staticPWA": "PASS \u2014 manifest/icons and Node worker guards; no browser lifecycle claim",
-  "credentialExclusion": "PASS \u2014 existing deterministic tests and source/artifact scan; browser cases NOT TESTED",
+  "implementation": "PATCHED — browser/runtime failures addressed; GitHub CI rerun required",
+  "mathematicalRegression": "PASS — independent Python reference reproduced; frozen engine/data source files unchanged",
+  "dataLayerRegression": "FROZEN SOURCE UNCHANGED — full GitHub CI pending",
+  "acceptedDataIntegrationBaseline": "DATA-INTEGRATION PASS — v1.1.2 accepted historical window; no new live transport verification",
+  "lint": "PENDING GITHUB CI",
+  "typecheck": "PENDING GITHUB CI",
+  "tests": "PENDING GITHUB CI",
+  "pythonReferences": "PASS — reference/reproduce.py --check and reference/final-risk.py executed locally; generated evidence reverted",
+  "snapshots": "PASS — 5 exact baseline hashes/results replayed in Node",
+  "productionBuild": "PENDING GITHUB CI",
+  "cleanRebuild": "PENDING GITHUB CI",
+  "staticAccessibility": "PASS — declared colors/source contracts; no full WCAG claim",
+  "staticPWA": "PASS — manifest/icons and Node worker guards; no browser lifecycle claim",
+  "credentialExclusion": "PASS — existing deterministic tests and source/artifact scan; browser cases NOT TESTED",
   "credentialStorage": "Client-side local browser storage; not cryptographically secure secret storage",
   "dependencyChanges": "NONE",
   "browserCasesPrepared": 24,
-  "browserRuntime": "NOT TESTED",
+  "browserRuntime": "PENDING GITHUB CI",
   "browserCORS": "NOT TESTED",
-  "browserReason": "EACCES before app assertions or provider requests",
-  "safariWebKit": "NOT TESTED",
+  "browserReason": "Previous GitHub run: 37/48 PASS; RC1 addresses selector scope, freshness clock, 200% text containment, provider routing and known Playwright WebKit offline-emulation bug",
+  "safariWebKit": "PENDING GITHUB CI; Playwright WebKit offline emulation limitation documented in tests",
   "physicalIPhone": "NOT TESTED",
   "addToHomeScreen": "NOT TESTED",
   "standaloneSafeAreas": "NOT TESTED",
   "installedOfflineRuntime": "NOT TESTED",
   "installedServiceWorkerUpdate": "NOT TESTED",
-  "hostedDeployment": "NOT TESTED",
-  "automaticRiskRefreshUI": "NOT ACTIVATED \u2014 accepted baseline behavior preserved",
-  "performanceRuntime": "NOT TESTED \u2014 sizes and animation architecture documented only",
+  "hostedDeployment": "BLOCKED UNTIL CI PASS",
+  "automaticRiskRefreshUI": "NOT ACTIVATED — accepted baseline behavior preserved",
+  "performanceRuntime": "NOT TESTED — sizes and animation architecture documented only",
   "remainingLimits": [
-    "No rendered UI screenshot approval; run real mobile browser and device review.",
-    "Run all 24 cases in each configured Chromium/WebKit project on a working runner.",
-    "Verify deployed-origin provider auth/CORS using actual access; mocked UI tests are insufficient.",
-    "Retrospective FX/final ADR and bounded TSM evidence limitations remain those of accepted 1.1.2."
+    "GitHub lint/typecheck/unit/build/browser pipeline has not yet been rerun for this RC.",
+    "Playwright WebKit 1.63 cannot reliably emulate offline navigation with an active service worker (upstream microsoft/playwright#42775); Chromium retains the automated offline reload assertion.",
+    "Physical iPhone Safari/installed-PWA validation remains required after hosted deployment.",
+    "Deployed-origin provider CORS/auth still requires real-provider verification."
   ],
-  "exactNextStep": "Run version-matched GitHub Pages verification, then the physical iPhone/deployed-origin gate in docs/ui-v1/device-release-gate.md",
+  "exactNextStep": "Import this RC into main and run EQUINOX validated release. Deploy only after verify PASS.",
   "evidence": [
     "validation/ui-release-checks.json",
     "validation/ui-frozen-audit.json",
@@ -381,8 +381,8 @@
       "bytes": 8846
     },
     "src/main.tsx": {
-      "sha256": "4007a6fb3a5f5d8b157b6570616cb0a6443be12ef6508fac2a72b8de2de08cd8",
-      "bytes": 167
+      "sha256": "254050b0938f617b474e5a179a67186933f2dd546f6353eec844003fb87bdd15",
+      "bytes": 204
     },
     "src/market-data/calendar.ts": {
       "sha256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
@@ -509,12 +509,16 @@
       "bytes": 13417
     },
     "src/ui/Overview.tsx": {
-      "sha256": "015c8dac2bb7d3c0baee2cfa2b860920f9ba83f0a1d9dfda386f6d745d5932df",
-      "bytes": 4448
+      "sha256": "a09df05430071c13fddd37767e0c3644039c49529aa07c5f6fc6900f32e9c8b6",
+      "bytes": 4470
     },
     "src/ui/RiskView.tsx": {
       "sha256": "a4b6365fe47b5a29ce2d95b070bf175ba50e273607b86070d608f0fd63b09abb",
       "bytes": 6827
+    },
+    "src/ui/browser-hardening.css": {
+      "sha256": "138cc1587c190d0e8be65392af4f65fa829fe01237f600d9385f4fb2bc1ec035",
+      "bytes": 1579
     },
     "src/ui/calculation-job.ts": {
       "sha256": "49ead0c62b1636755e72920434037e48525dc5fff2c616ac0be7d4995ef3e092",
@@ -533,12 +537,12 @@
       "bytes": 28853
     },
     "tests/browser/app.spec.ts": {
-      "sha256": "17d15e4df1727265bb25d6346172a60ebb0a7b57cae9c6a35671fd12724130d7",
-      "bytes": 8736
+      "sha256": "960a589f2ebbacf07a6309785cb2dc0035ae4764cfe770258a178bb6cb26e1a8",
+      "bytes": 9282
     },
     "tests/browser/market-settings.spec.ts": {
-      "sha256": "975def81ffe104ba058b841f205ae1deb87b71a99d4634caa606784ab0946b4f",
-      "bytes": 8101
+      "sha256": "4da6b39b7a41a1865a03e1e3370975814ee23755f532f0c0d85f2255cc4e6e4e",
+      "bytes": 8406
     },
     "tests/browser/nationalbank.spec.ts": {
       "sha256": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
@@ -828,5 +832,6 @@
       "sha256": "a0f7c1e0fc8c4803cc4ac9bed783bee5f64b7c37adc0a3232fe4ed623e62c839",
       "bytes": 119
     }
-  }
+  },
+  "releaseCandidate": "browser-hardening-rc1"
 }
