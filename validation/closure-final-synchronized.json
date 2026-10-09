@@ -1,6 +1,6 @@
 {
   "format": "EQUINOX_REAL_SYNCHRONIZED_RISK_VALIDATION_V1",
-  "checkedAt": "2026-10-07T21:50:55.792Z",
+  "checkedAt": "2026-10-09T15:17:37.278Z",
   "validationAsOf": "2026-10-07T08:46:37.541Z",
   "status": "PASS",
   "providerTransport": "Authenticated configured connector; original numeric Float64 table projections. Not local-key Node HTTP or browser/CORS proof.",

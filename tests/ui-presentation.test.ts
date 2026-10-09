@@ -30,7 +30,7 @@ function overview(state = stateWithQuotes(), online = true) {
 
 describe("financial presentation and honest manual freshness", () => {
   it("separates app, engine and market-data versions", () => {
-    expect(UI_VERSION).toBe("1.2.0");
+    expect(UI_VERSION).toBe("1.3.1");
     expect(VERSIONS.engine).toBe("1.0.1");
     expect(MARKET_DATA_MODEL_VERSION).toBe("1.1.2");
   });

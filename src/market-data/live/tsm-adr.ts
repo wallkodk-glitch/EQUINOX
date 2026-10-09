@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { MarketError } from './network';
 import { validDate } from './timestamps';
 
-// Bounded issuer evidence, audited 2026-10-07. This is not a blanket certification
+// Bounded issuer evidence, audited 2026-10-09. This is not a blanket certification
 // of future events, splits, other stocks or corporate-action completeness.
 const finalIssuerEvents = [
   ['2025-03-18','2025-04-10',0.677693,'3q24'],
@@ -21,7 +21,7 @@ const dividend = z.object({ticker:z.literal('TSM'),currency:z.literal('USD'),
 });
 export function validateTSMADRDividends(raw: unknown, from: string, to: string) {
   const parsed = z.array(dividend).safeParse(raw);
-  if (!parsed.success || !validDate(from) || !validDate(to) || from > to || from < '2025-01-01' || to > '2026-10-07') throw new MarketError('CORPORATE_ACTION_UNVERIFIED');
+  if (!parsed.success || !validDate(from) || !validDate(to) || from > to || from < '2025-01-01' || to > '2026-10-08') throw new MarketError('CORPORATE_ACTION_UNVERIFIED');
   const expected = finalIssuerEvents.filter(([ex]) => ex >= from && ex <= to);
   if (parsed.data.length !== expected.length) throw new MarketError('CORPORATE_ACTION_UNVERIFIED');
   const seen = new Set<string>();
