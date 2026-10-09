@@ -1,0 +1,160 @@
+name: EQUINOX mobile release import
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_zip:
+        description: "Exact ZIP at repository root; leave blank ONLY when one EQUINOX*.zip exists"
+        type: string
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equinox-source-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Validate hashes, paths, structure and extract
+        id: extract
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ inputs.release_zip }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, re, stat, tempfile, zipfile
+          from pathlib import Path, PurePosixPath
+
+          def require(condition, message):
+              if not condition:
+                  raise SystemExit(message)
+
+          selected = os.environ.get('RELEASE_ZIP', '')
+          if not selected:
+              candidates = sorted(p.name for p in Path('.').glob('EQUINOX*.zip') if p.is_file() and not p.is_symlink())
+              require(len(candidates) == 1, 'Expected exactly one EQUINOX*.zip. Enter the exact filename when multiple exist: ' + ', '.join(candidates))
+              selected = candidates[0]
+          require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*\.zip', selected) is not None, 'ZIP must be a safe, exact root filename')
+          archive = Path(selected)
+          require(archive.is_file() and not archive.is_symlink(), 'Selected ZIP is missing or is a symlink')
+          require(archive.stat().st_size <= 100_000_000, 'ZIP exceeds 100 MB')
+
+          def unique_object(pairs):
+              result = {}
+              for key, value in pairs:
+                  require(key not in result, 'Duplicate JSON member')
+                  result[key] = value
+              return result
+
+          with zipfile.ZipFile(archive) as z:
+              infos = z.infolist()
+              require(0 < len(infos) <= 4096, 'Unexpected ZIP entry count')
+              require(sum(i.file_size for i in infos) <= 200_000_000, 'Expanded ZIP exceeds 200 MB')
+              names, regular = set(), {}
+              for info in infos:
+                  name = info.filename.rstrip('/') if info.is_dir() else info.filename
+                  p = PurePosixPath(name)
+                  require(name and '\\' not in name and ':' not in name and not any(ord(c) < 32 for c in name), 'Unsafe ZIP path')
+                  require(not p.is_absolute() and all(c not in ('', '.', '..') for c in name.split('/')), 'Unsafe ZIP path')
+                  require(name not in names, 'Duplicate ZIP path')
+                  names.add(name)
+                  require(not any(c in ('.git', 'node_modules') or c.startswith('.env') for c in p.parts), 'Reserved directory or credential file in ZIP')
+                  require(not name.lower().endswith('.zip'), 'Nested release ZIP is not product source')
+                  kind = stat.S_IFMT(info.external_attr >> 16)
+                  require(kind in ((0, stat.S_IFDIR) if info.is_dir() else (0, stat.S_IFREG)), 'ZIP contains symlink or special file')
+                  require(not info.flag_bits & 1 and info.file_size <= 64_000_000, 'Encrypted or oversized ZIP entry')
+                  require(not info.file_size or info.file_size / max(info.compress_size, 1) <= 1000, 'ZIP compression ratio exceeds limit')
+                  if not info.is_dir():
+                      regular[name] = info
+              for name in regular:
+                  require(not any(str(parent) in regular for parent in PurePosixPath(name).parents if str(parent) != '.'), 'ZIP file/directory collision')
+              roots = [prefix for prefix in ('', 'EQUINOX/') if prefix + 'package.json' in regular]
+              require(len(roots) == 1, 'Expected exactly one source root (root or EQUINOX/)')
+              prefix = roots[0]
+              require(all(name.startswith(prefix) for name in regular), 'Files outside source root')
+              files = {name[len(prefix):]: info for name, info in regular.items()}
+              required = ('package.json', 'package-lock.json', 'validation/node-snapshot.json', '.github/workflows/pages.yml', 'RELEASE-MANIFEST.json')
+              require(all(name in files for name in required), 'Required release file missing')
+              require(all(any(name.startswith(folder + '/') for name in files) for folder in ('src', 'tests', 'validation', 'docs')), 'Required source directory missing')
+              manifest = json.loads(z.read(files['RELEASE-MANIFEST.json']), object_pairs_hook=unique_object)
+              require(manifest.get('format') == 'EQUINOX_RELEASE_MANIFEST_V3', 'Unsupported release manifest; use a v1.3-compatible package')
+              require(manifest.get('engineVersion') == '1.0.1', 'Frozen Engine version mismatch')
+              infra = manifest.get('repositoryInfrastructure', {})
+              require(infra.get('policy') == 'PRESERVE_EXISTING_UPLOAD_SEPARATELY', 'Repository infrastructure policy missing')
+              payload, infrastructure = manifest.get('files'), infra.get('files')
+              require(isinstance(payload, dict) and isinstance(infrastructure, dict), 'Invalid manifest file maps')
+              require(not set(payload) & set(infrastructure), 'Manifest security domains overlap')
+              require(all(not name.startswith('.github/workflows/') for name in payload), 'Workflow is incorrectly hashed as product payload')
+              require(all(name.startswith('.github/workflows/') for name in infrastructure), 'Infrastructure hash outside workflow directory')
+              hashes = {**payload, **infrastructure}
+              require(set(hashes) == set(files) - {'RELEASE-MANIFEST.json'}, 'Manifest must cover every file exactly once')
+              for name, expected in hashes.items():
+                  require(isinstance(expected, dict) and type(expected.get('bytes')) is int and re.fullmatch(r'[a-f0-9]{64}', str(expected.get('sha256', ''))) is not None, 'Malformed manifest digest')
+                  body = z.read(files[name])
+                  require(len(body) == expected['bytes'] and hashlib.sha256(body).hexdigest() == expected['sha256'], 'Release hash mismatch: ' + name)
+              package = json.loads(z.read(files['package.json']), object_pairs_hook=unique_object)
+              lock = json.loads(z.read(files['package-lock.json']), object_pairs_hook=unique_object)
+              version = manifest.get('appVersion')
+              require(version == package.get('version') == lock.get('version') == lock.get('packages', {}).get('', {}).get('version'), 'Package/lock/manifest version mismatch')
+              require(z.testzip() is None, 'ZIP CRC mismatch')
+              # Never execute untrusted release code. Write only verified regular
+              # files to a unique, runner-owned temporary directory.
+              destination = Path(tempfile.mkdtemp(prefix='equinox-import-', dir=os.environ['RUNNER_TEMP']))
+              for name, info in files.items():
+                  target = destination / name
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(z.read(info))
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+                  output.write(f'src={destination}\nrelease_zip={selected}\n')
+          print('ZIP paths, structure, complete manifest hashes and CRC PASS')
+          PY
+
+      - name: Import product; preserve repository workflows
+        shell: bash
+        env:
+          SRC: ${{ steps.extract.outputs.src }}
+          RELEASE_ZIP: ${{ steps.extract.outputs.release_zip }}
+        run: |
+          set -euo pipefail
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/workflows/' \
+            "$SRC/" ./
+          # rsync normally removes the root upload; remove that exact file only.
+          rm -f -- "$RELEASE_ZIP"
+          git status --short
+
+      - name: Commit and push explicitly
+        shell: bash
+        env:
+          RELEASE_ZIP: ${{ steps.extract.outputs.release_zip }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git add -f validation/
+          if git diff --cached --quiet; then
+            echo "No product changes to commit."
+          else
+            git commit -m "Import EQUINOX release from ${RELEASE_ZIP}"
+            # Concurrent main changes cause a safe non-fast-forward failure.
+            # Never force-push or overwrite a newer repository state.
+            git push origin HEAD:main
+          fi
+          echo '### Next: run EQUINOX validated release on main' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Import preserves .github/workflows/. Upload reviewed workflow updates separately. A GITHUB_TOKEN push does not itself run push-triggered release validation.' >> "$GITHUB_STEP_SUMMARY"
