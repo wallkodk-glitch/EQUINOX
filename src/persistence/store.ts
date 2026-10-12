@@ -6,13 +6,19 @@ const req = <T>(r: IDBRequest<T>) =>
     r.onsuccess = () => resolve(r.result);
     r.onerror = () => reject(r.error ?? new Error("STORAGE_READ_FAILED"));
   });
-const completed = (t: IDBTransaction) =>
-  new Promise<void>((resolve, reject) => {
+const completed = (t: IDBTransaction) => {
+  const done = new Promise<void>((resolve, reject) => {
     t.oncomplete = () => resolve();
     t.onabort = () =>
       reject(t.error ?? new Error("STORAGE_TRANSACTION_ABORTED"));
     t.onerror = () => reject(t.error ?? new Error("STORAGE_WRITE_FAILED"));
   });
+  // A request may reject before control reaches `await done`. Observe the
+  // transaction rejection immediately; callers still receive the original
+  // rejection when awaiting it, and no failed operation is reported as saved.
+  void done.catch(() => {});
+  return done;
+};
 const revisionOf = (raw: unknown) =>
   raw &&
   typeof raw === "object" &&
@@ -67,32 +73,26 @@ export class Store {
     snapshot?: SealedSnapshot,
   ) {
     const parsed = migrateState(input);
-    if (snapshot) await validateSeal(snapshot);
-    const t = this.db.transaction(["state", "snapshots"], "readwrite"),
+    const validatedSnapshot = snapshot ? await validateSeal(snapshot) : undefined;
+    const t = this.db.transaction(["state", "snapshots"], "readwrite", { durability: "strict" }),
       done = completed(t);
-    done.catch(() => {});
-    const store = t.objectStore("state"),
-      raw = await req(store.get("current"));
-    let old: AppState;
     try {
-      old = raw === undefined ? initialState() : migrateState(raw);
-    } catch (e) {
-      t.abort();
+      const store = t.objectStore("state"), raw = await req(store.get("current"));
+      const old = raw === undefined ? initialState() : migrateState(raw);
+      if (old.revision !== expectedRevision)
+        throw new Error("STATE_CONFLICT: another tab saved newer data; reload before editing");
+      const state = { ...parsed, revision: old.revision + 1 };
+      store.put(state, "current");
+      if (validatedSnapshot) t.objectStore("snapshots").put(validatedSnapshot);
+      await done;
+      return state;
+    } catch (error) {
+      // Synchronous request-construction failures do NOT automatically abort IDB.
+      // Explicit rollback prevents an earlier put from committing on its own.
+      try { t.abort(); } catch { /* Transaction already completed/aborted. */ }
       await done.catch(() => {});
-      throw e;
+      throw error;
     }
-    if (old.revision !== expectedRevision) {
-      t.abort();
-      await done.catch(() => {});
-      throw new Error(
-        "STATE_CONFLICT: another tab saved newer data; reload before editing",
-      );
-    }
-    const state = { ...parsed, revision: old.revision + 1 };
-    store.put(state, "current");
-    if (snapshot) t.objectStore("snapshots").put(snapshot);
-    await done;
-    return state;
   }
   async backup() {
     const data = await this.load();
@@ -157,28 +157,28 @@ export class Store {
     const t = this.db.transaction(
         ["state", "snapshots", "recovery"],
         "readwrite",
+        { durability: "strict" },
       ),
       done = completed(t);
-    done.catch(() => {});
-    const raw = await req(t.objectStore("state").get("current"));
-    const revision = revisionOf(raw);
-    if (revision !== expectedRevision) {
-      t.abort();
+    try {
+      const raw = await req(t.objectStore("state").get("current"));
+      const revision = revisionOf(raw);
+      if (revision !== expectedRevision) throw new Error("STATE_CONFLICT");
+      const oldSnapshots = await req(t.objectStore("snapshots").getAll());
+      t.objectStore("recovery").add({
+        savedAt: new Date().toISOString(), state: raw, snapshots: oldSnapshots,
+      });
+      const restored = { ...state, revision: expectedRevision + 1 };
+      t.objectStore("state").put(restored, "current");
+      const ss = t.objectStore("snapshots");
+      ss.clear();
+      snapshots.forEach((s) => ss.add(s));
+      await done;
+      return restored;
+    } catch (error) {
+      try { t.abort(); } catch { /* Transaction already completed/aborted. */ }
       await done.catch(() => {});
-      throw new Error("STATE_CONFLICT");
+      throw error;
     }
-    const oldSnapshots = await req(t.objectStore("snapshots").getAll());
-    t.objectStore("recovery").add({
-      savedAt: new Date().toISOString(),
-      state: raw,
-      snapshots: oldSnapshots,
-    });
-    const restored = { ...state, revision: expectedRevision + 1 };
-    t.objectStore("state").put(restored, "current");
-    const ss = t.objectStore("snapshots");
-    ss.clear();
-    snapshots.forEach((s) => ss.add(s));
-    await done;
-    return restored;
   }
 }

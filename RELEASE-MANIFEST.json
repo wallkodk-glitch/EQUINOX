@@ -1,26 +1,28 @@
 {
   "format": "EQUINOX_RELEASE_MANIFEST_V3",
-  "appVersion": "1.3.1",
+  "appVersion": "1.3.2",
   "engineVersion": "1.0.1",
   "marketDataModelVersion": "1.1.2",
   "snapshotSchemaVersions": [
     1,
     2
   ],
-  "releaseStatus": "RELEASE CANDIDATE \u2014 PASS WITH LIMITATIONS",
+  "releaseStatus": "BLOCKED",
   "authoritativeBaseline": {
-    "head": "9deaef0e207615cded6fb2f961133ee3f11bbd2a",
-    "tree": "8f46a030b6058800601566509dd833778c3c6897"
+    "archive": "EQUINOX-v1.3.1-GitHub-ready(3).zip",
+    "sha256": "c3965e1d93224fab1d23e68c0c9fdd7207c5b9598c63940d811e195639028231",
+    "appVersion": "1.3.1"
   },
-  "scope": "Complete archive product payload; excludes this manifest itself and infrastructure. No dist/node_modules/traces/financial backups/secrets.",
+  "entryCount": 231,
+  "scope": "Every archived regular file except this manifest; workflows hashed separately. No dist, dependencies, traces or financial exports.",
   "files": {
     ".gitignore": {
       "sha256": "57740b56d8e6d449a0008018c8440f0de638d08d46d4052d8b32035c6dd1e58d",
       "bytes": 87
     },
     "README.md": {
-      "sha256": "1253d32218171f8c145ebc6019f24160bdf132fe4ab96784a5d994f85459b94b",
-      "bytes": 9173
+      "sha256": "cd87730dbb5b34ec5d0a0fd4b9309064725d4012d8b2f580ef15db8b78a03358",
+      "bytes": 9266
     },
     "docs/audit.md": {
       "sha256": "f25143ba79a1c0e23c577ccbb64a0a50eab323217cd958e0cbd7599db2804984",
@@ -66,25 +68,41 @@
       "sha256": "c48db776679f0f587fe2da7b3251f9138dac890daf4494dadb195520b503ae10",
       "bytes": 8306
     },
+    "docs/final-hardening/CHANGELOG.md": {
+      "sha256": "cf46077e6dec265fb8c44e7a5d4d8ded51999f82998cc722de65e81f8d3afbdf",
+      "bytes": 1582
+    },
+    "docs/final-hardening/engineering-ledger.md": {
+      "sha256": "463cdc25fc72643a134978aa1afa3399cb4d1ea580f0678f71a768950d45422e",
+      "bytes": 5602
+    },
+    "docs/final-hardening/report.md": {
+      "sha256": "3a3c899e1ec205f93863d0e4bed66ee47142f21ebe5a6c4a31df1ab9ad213790",
+      "bytes": 23922
+    },
     "docs/iphone-checklist.md": {
-      "sha256": "8342d71a4cede0e1e9e6f17e3ed4d8df4ee625e2edccf2a24c29492c2c95b71c",
-      "bytes": 2111
+      "sha256": "6f9a88ac9f6f910b223ca52f247c21f5a858c71c516d491682b0d507974523e9",
+      "bytes": 3402
     },
     "docs/mobile-release.md": {
-      "sha256": "4e4dc86aab2302cfd20ce4cbfd8dea8e34c8dbdd4df414728990ea822ee414af",
-      "bytes": 3027
+      "sha256": "869282fa35f095e844119c0ae1164af1486af191eacc48de6ec98f2a3d2c35c3",
+      "bytes": 3016
     },
     "docs/reference-audit.md": {
       "sha256": "ac7eae88302885d65f0e3d2b623225529ac3ac7e7967a73a7174acf9b43c4f15",
       "bytes": 13657
     },
     "docs/release-status.md": {
-      "sha256": "7053c70439aa4272b09c65f0f9cdf9dbd1811617a61fba7f53818e084dfcc1fc",
-      "bytes": 13980
+      "sha256": "3b05a0a4e8eba09c8e4a118c77034a4c330106a1ea9ddfcefd8be517f034e176",
+      "bytes": 13978
     },
     "docs/superpowers/plans/2026-10-02-equinox-v1.md": {
       "sha256": "caa4b68259689931def49cd2c8d534a1af0a59b54839384da4a720a742950605",
       "bytes": 2789
+    },
+    "docs/superpowers/plans/2026-10-11-final-hardening.md": {
+      "sha256": "7f76b7b882f7ca19c1213d34febef75718480a71b95a4646292fa5a4f94176ba",
+      "bytes": 4887
     },
     "docs/ui-v1/design-system.md": {
       "sha256": "ab0f4c2b3136b9e1b7623d5554de48c7cb8bb4249f677e855d5c2b1496bee379",
@@ -155,11 +173,11 @@
       "bytes": 841
     },
     "package-lock.json": {
-      "sha256": "ba97bda244e2d1d2e67e8c7443d836420a6aedb7f521ba539cad232db4a9b4c8",
+      "sha256": "7eaba239767d9564b432435b6b60468e1e70fd72f114f387fea6b0e66d8af352",
       "bytes": 84932
     },
     "package.json": {
-      "sha256": "48c1f4cc5966da9360ef56e78bfa415bd53aeba1a34a55cfe265c2bb90f0198c",
+      "sha256": "1be2990cf14a0bb4b22c8c3c55168701556c09ad115f281d48c3e450689f9d3f",
       "bytes": 959
     },
     "playwright.config.ts": {
@@ -219,20 +237,28 @@
       "bytes": 2682
     },
     "scripts/audit-v13.mjs": {
-      "sha256": "9c69450f596cca18cc4c610f0a5a1a774e3d5224d433f76eef96933101906004",
-      "bytes": 4075
+      "sha256": "ffdb6a5266c489b5fbbcddd10cc8a8c37ae0697935e237ecf54fb10e10e0499a",
+      "bytes": 2645
     },
     "scripts/build-pwa.mjs": {
-      "sha256": "53991497cd298a50834726bd7e22989485c372abb1f0d3c2badfdef5d23cd2c1",
-      "bytes": 2783
+      "sha256": "151fb7c6b7316d43ca45eb8ac9eabce22ac6dfcb054b00e11578aadc55414163",
+      "bytes": 3593
     },
     "scripts/calendar.py": {
       "sha256": "c5a68897ab9bc8f17d46fe1655ac38972ef6992e3db7351f55575c44bc4903bc",
       "bytes": 1258
     },
+    "scripts/check-browser-runtime.mjs": {
+      "sha256": "5eaad02adcbec51a77e218bf177ec3ef1599a5b64b00a0a8e31ccfcfdcc538d6",
+      "bytes": 860
+    },
     "scripts/check-final-risk.mjs": {
       "sha256": "a1305eec41fe4ebafd867278b03f91ffee256296bbcdff0d3a01e9f700180ed1",
       "bytes": 6284
+    },
+    "scripts/check-release-source.py": {
+      "sha256": "b0780eb1070573fe202b65406ad25bdebd72a5863ae94cc96cd6fb52ef73a822",
+      "bytes": 3740
     },
     "scripts/check-reproducibility.mjs": {
       "sha256": "f535bd9d8331840a42e4ea0f5582e877c974a4668bd03beb5d74bf24c36afbea",
@@ -247,8 +273,8 @@
       "bytes": 1796
     },
     "scripts/check-ui-pwa.mjs": {
-      "sha256": "32f0e2ec20777f892f434b01112a8a57367579faf6ff231eabd43ac8bfee69b7",
-      "bytes": 5235
+      "sha256": "aeedcbe9e5569c566debc38a6a8f3a0d01c1d317619786f40f9ad21d6fbfd20b",
+      "bytes": 5424
     },
     "scripts/check-ui-snapshots.mjs": {
       "sha256": "65eded31ad0f892dc489d0ed5f463c5b3827b4c8da96048cea81159ab459ec6a",
@@ -263,8 +289,8 @@
       "bytes": 10892
     },
     "scripts/package-v13.py": {
-      "sha256": "8a6009fc39fad4f1ea27fc915592f982f0cf0b3d8167a21d99c6461fd69a53b5",
-      "bytes": 5314
+      "sha256": "05d12775293f3e4959e20da36ee729f28f9ac26527f1acd0f48495d9cdbdbea3",
+      "bytes": 8534
     },
     "scripts/probe-cors.mjs": {
       "sha256": "93d99b6fdc8a168ca66000c0413a09ea3a438e6f9427a5fcbb3da5aa01bc52df",
@@ -283,16 +309,16 @@
       "bytes": 2297
     },
     "scripts/scan-release-secrets.mjs": {
-      "sha256": "7721c6a89a61d5d84def11b2cafc18908e6c80e434a3febc73b3e4d46866c89f",
-      "bytes": 3245
+      "sha256": "79b9f38bbc8fbbde55a8b4985253116ce82498a96616361aa59b8c0a9d616d52",
+      "bytes": 3269
     },
     "scripts/scan-ui-release.mjs": {
       "sha256": "48431eeb11c6bc17155d1136407900bcdd97186ecc441dc4010fe121f2ad6cef",
       "bytes": 1857
     },
     "scripts/validate-v13.mjs": {
-      "sha256": "10cc1e2b8f1bc46c52075ea79e2b2338fec875291d2a6cbf610ba5b386228707",
-      "bytes": 5731
+      "sha256": "314291c1f36ddb85351138673b8780bdd6ebd8856ebdd0dd49d4efbe4247e968",
+      "bytes": 5248
     },
     "scripts/verify-final-closure.mjs": {
       "sha256": "c4e704173c8f714ef49b93e0125f165754f68a113a2a6b4af3f8cb9342eaa36c",
@@ -303,8 +329,8 @@
       "bytes": 2404
     },
     "scripts/verify.mjs": {
-      "sha256": "c0ab4af45a64d16cf96f7649b8189febdb553c3dd71cbb023d9172e490b34b82",
-      "bytes": 1603
+      "sha256": "d76b665a10e0e5c395f6b61bc6f7d11900bb65b3a0003b6fc31a6c15c8e3d228",
+      "bytes": 110
     },
     "src/domain/core.ts": {
       "sha256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
@@ -327,8 +353,8 @@
       "bytes": 1647
     },
     "src/market-data/live/cache.ts": {
-      "sha256": "d820dfcf32a36f3d4d2144689babc6be506f53d0c702705817d311e17faa7ce8",
-      "bytes": 5708
+      "sha256": "dbecaf7673aa28da05594cd9ccb71d08454a0b297f9f381380b3a39656a46703",
+      "bytes": 5939
     },
     "src/market-data/live/coingecko.ts": {
       "sha256": "cc18737f4da4dadc1e43317014dcecd5d03bec98081be6aa343cbc98079e9885",
@@ -355,8 +381,8 @@
       "bytes": 4323
     },
     "src/market-data/live/network.ts": {
-      "sha256": "81fa1db1e7c2ca1b0d356c283d6532744979386de7dcb437da81f28b37fd92c8",
-      "bytes": 5680
+      "sha256": "629b34a671242959229555c53501a1df1b8fd58933cf825855b440f6f2e23e38",
+      "bytes": 6265
     },
     "src/market-data/live/risk-actions.ts": {
       "sha256": "0a862518845a6cb355f991a8559418b4286a7d33e481c6552600843801455fa2",
@@ -399,8 +425,8 @@
       "bytes": 2437
     },
     "src/persistence/store.ts": {
-      "sha256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
-      "bytes": 5780
+      "sha256": "416b298569aa68895f82b071ba6565da62cb90b463626db4a3b43b6dee3f7602",
+      "bytes": 6404
     },
     "src/portfolio/accounting.ts": {
       "sha256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
@@ -419,8 +445,8 @@
       "bytes": 1276
     },
     "src/ui/App.tsx": {
-      "sha256": "11bf63d70cf7b3f89eab62dee8c7163d9a7c74de6619ff28f78095d5a860e3a1",
-      "bytes": 40801
+      "sha256": "f1d95eadee5b1b286af89e5052132381fc147205cd71ac87e85643155db8002c",
+      "bytes": 42672
     },
     "src/ui/BalanceRail.tsx": {
       "sha256": "797f0fb5fb7acecee433bebc1269a9a3b171089cf064aeca21b3e94c72586924",
@@ -483,28 +509,36 @@
       "bytes": 31405
     },
     "tests/browser/app.spec.ts": {
-      "sha256": "86cc7592eb2f8670f43e226de8599db5f4a4c267c3c7cac2ab05df5ebac86b89",
-      "bytes": 10829
+      "sha256": "afa21ef77eb26c968e738998f4f914ed19d101b1be10b4911a99e37f05e30125",
+      "bytes": 10909
+    },
+    "tests/browser/hardening.spec.ts": {
+      "sha256": "a7b8b3a14efbf143e4d2f32fbf612f8d2a7253ce5240a2bb1b87614db97cd743",
+      "bytes": 5631
+    },
+    "tests/browser/helpers.ts": {
+      "sha256": "a2b4b1f342e482b9eef33ec38998e2310589e70a458965e954ac8005d649ff2d",
+      "bytes": 379
     },
     "tests/browser/launch.spec.ts": {
       "sha256": "fd9dbe6ecefa625588cdea80da06f046553c5fb2f70c040b5c40e3f8763986f7",
       "bytes": 2758
     },
     "tests/browser/market-settings.spec.ts": {
-      "sha256": "b22d15727bcf3e8d08b4dd6577c1f7759e9fb87bd6805dc441aa75d5262fa84d",
-      "bytes": 8411
+      "sha256": "d5dabd695ab63848148d6b292b92d8dbd0bffa48a2be92cb6cb5fe6f591a2478",
+      "bytes": 8715
     },
     "tests/browser/nationalbank.spec.ts": {
       "sha256": "b6c41a47c404e4a59a584d2a1b5bdeaf5164a1d873acc7e25a9aaf497d0d0074",
       "bytes": 3209
     },
     "tests/browser/risk-refresh.spec.ts": {
-      "sha256": "3da443f872118c52b239305d08af21a1b9aa9fb423622eebfa03350ea3f02d01",
-      "bytes": 11132
+      "sha256": "adea48fa7d08807f6c71f9ea6a633864511c71ae030d6a46e263d2dff05a8cea",
+      "bytes": 11164
     },
     "tests/browser/ui.spec.ts": {
-      "sha256": "4c94593d6a7c5c00a74e464e0da99f235bcb9b270e582a192da172b94a73bb09",
-      "bytes": 7612
+      "sha256": "f37a92c8825d5b1eee0534d1700da2fa0b15f4c10fd9bf1e1af01b146596df48",
+      "bytes": 9293
     },
     "tests/browser-fixture.test.ts": {
       "sha256": "e8743472ba771b4ded25a153f3ee1cc4ec07b0ba2f84ae0146dbca6b37a38cbd",
@@ -590,6 +624,10 @@
       "sha256": "7d0ccec1ff6e302f0a102e4f537e8c0bc98bef20a95cc35ed15995b39c85d392",
       "bytes": 4946
     },
+    "tests/hosted-release.test.ts": {
+      "sha256": "a2bcd36be92e7491bed51f126ea93dabc134de1e246620667f4cf18c172cc369",
+      "bytes": 2778
+    },
     "tests/launch.test.ts": {
       "sha256": "89c19179d0e3f34fec3ed851a66e52b5c8b55185addb8d6b103590ec4fb2a102",
       "bytes": 1062
@@ -599,12 +637,12 @@
       "bytes": 328114
     },
     "tests/market-cache.test.ts": {
-      "sha256": "39c017fbdd5ca5df1a85bd70f5a9694c98d19f796e685e4c6806e9d812b6d114",
-      "bytes": 4195
+      "sha256": "135ff3e21d3805bc93b98abeb915e013af37af624b9f2f1e56e064f2173e0207",
+      "bytes": 4746
     },
     "tests/market-network.test.ts": {
-      "sha256": "701f5626fc67d712f207d28438c1f70357db7d1e84669bf984864d467a761324",
-      "bytes": 3716
+      "sha256": "5c2cb340e4d4774dfcecf87d0b9fe8887af507a16e9d406e7c6d2b8252531dc0",
+      "bytes": 4328
     },
     "tests/market-parsers.test.ts": {
       "sha256": "518e1d7adae8bd84dba8121364cb6d284456054d04f690b33a866ebd2ac21424",
@@ -619,8 +657,8 @@
       "bytes": 2086
     },
     "tests/persistence.test.ts": {
-      "sha256": "baf8bdb01c7cc301cb68c462e900399b6f8e96a1c465b1386f2871c3b562f0ac",
-      "bytes": 3643
+      "sha256": "49ec292ba8aaad4e047690e0db26c5e44357e55e69e631c56187828cd1abc187",
+      "bytes": 7877
     },
     "tests/reference.test.ts": {
       "sha256": "e55599644f1d6b0a401a6abe611b7d19adb618373aa1b8393f43188917a3d6c5",
@@ -631,8 +669,12 @@
       "bytes": 6868
     },
     "tests/release-import.test.ts": {
-      "sha256": "af10177b8d9f831c920f1492399bd8fce98496cfdaf12d9844ab7713ef25cd4c",
-      "bytes": 9005
+      "sha256": "ff714296487c6b011ea21c925443bfa325176e9801b9cad9c58e2404a792c4cd",
+      "bytes": 14006
+    },
+    "tests/release-source.test.ts": {
+      "sha256": "81f4c97f3508b9f47dd8e6094693240ca0f3a1101b2084c3c55846390aa6393f",
+      "bytes": 2839
     },
     "tests/retrospective-fx-contract.test.ts": {
       "sha256": "3040c22b495c1965f201275d0df242cfbd281b1baeba2964e81602b453a53152",
@@ -643,8 +685,8 @@
       "bytes": 4632
     },
     "tests/service-worker-security.test.ts": {
-      "sha256": "2cdb0c05325b62dc9e3a64ea785a6adb288c7d6bf9b0459cb9dce18ffb91bb20",
-      "bytes": 1598
+      "sha256": "b70ab51a69827486b6de3170c3745970464f5ba646eeb73de65fe423422815a6",
+      "bytes": 4722
     },
     "tests/snapshots.test.ts": {
       "sha256": "1f922ed62f3a8dd9834f08844d3ef376a03cb664b79c84265bf099fbf2bcbcb5",
@@ -667,7 +709,7 @@
       "bytes": 3371
     },
     "tests/ui-presentation.test.ts": {
-      "sha256": "edeec2baaf1c78ac5909dee45d7dfb72a7ad81d277ef81cd29187500618a1d45",
+      "sha256": "34f6e67ef47186e7c160d3a4fc16e13294f7ee81a3f1d09f1c94fdec2f7e7272",
       "bytes": 11218
     },
     "tsconfig.json": {
@@ -695,7 +737,7 @@
       "bytes": 1542626
     },
     "validation/closure-final-independent-reference.json": {
-      "sha256": "290db4c08ac4990e6b92a4caa6d748bb34a2bbade8db115385eeeb01b8b57f9c",
+      "sha256": "9e64905663aa7c5265c0ccbd77e9b25bdfeddf184dde22d0306de27c74441697",
       "bytes": 373
     },
     "validation/closure-final-package-guards.json": {
@@ -715,7 +757,7 @@
       "bytes": 3040
     },
     "validation/closure-final-synchronized.json": {
-      "sha256": "ef984bb50f81eafc4404def52b142948223dc93283e1c72fd66af968f3c74cb6",
+      "sha256": "c3affa6242ea42979a0fd0955a7320d819e00e53a443e6bbaa3ee6b2bc952358",
       "bytes": 1137671
     },
     "validation/closure-final-tsm.json": {
@@ -749,6 +791,46 @@
     "validation/critical-audit.json": {
       "sha256": "f9dbe92c0d80e552be347201a3471cab12d2807860a53558a63d189569e19c02",
       "bytes": 7027
+    },
+    "validation/final-adversarial-closure.json": {
+      "sha256": "687bff392afcc6b8e15f6937c9bb4ab2d9e45564156fd5d632744674581f52be",
+      "bytes": 2777
+    },
+    "validation/final-adversarial-review.json": {
+      "sha256": "6d59387ad3fcae7402438232ca55787e2e0b61033f5deaea81691a394c0a0186",
+      "bytes": 6578
+    },
+    "validation/final-baseline.json": {
+      "sha256": "f8d29037cc33472ddbca161c2231128dc7ef68064c8c1217da058591c659fdbf",
+      "bytes": 3567
+    },
+    "validation/final-builds.json": {
+      "sha256": "91e99b4282e1f425e15d5433d86029303cf1d64184b0c6de7498582c47186533",
+      "bytes": 7539
+    },
+    "validation/final-checks.json": {
+      "sha256": "71234bfab6e2f3e1c71fdebae22b0045a3f5dbf11df5099d3f6852262d15ff7d",
+      "bytes": 26731
+    },
+    "validation/final-credential-scan.json": {
+      "sha256": "a758c550cf3acb329b28665d5ef42654b6955ca3922e47589f74dd51cc096c90",
+      "bytes": 333
+    },
+    "validation/final-frozen-audit.json": {
+      "sha256": "06044c263bd144b4c0b9ad5a822b41f4cefe2a796152af15b37fd8c5a1b3e3bb",
+      "bytes": 5898
+    },
+    "validation/final-pwa.json": {
+      "sha256": "dd16a17e65db71afb110e363ada837fe52ecd6391fd4a32843eb18775de5588c",
+      "bytes": 2387
+    },
+    "validation/final-snapshot-replay.json": {
+      "sha256": "859db1842ebe65bf54546cb471957e4dbb8ed6b3b78fcc729516b26c5cf7a91c",
+      "bytes": 1541
+    },
+    "validation/final-workflow-static.json": {
+      "sha256": "f63c81b41b43f04563e5f173f337efdcead39ebb9edc2e905c7166d58af8254b",
+      "bytes": 1073
     },
     "validation/node-snapshot.json": {
       "sha256": "33539e44fc0c0e87b8d32778ca1392157b847f0acc1fec76e2dc70f9332db4cc",
@@ -849,29 +931,27 @@
   },
   "repositoryInfrastructure": {
     "policy": "PRESERVE_EXISTING_UPLOAD_SEPARATELY",
-    "scope": "Hashes of delivered workflow bytes only; importer intentionally preserves repository-owned workflows. Upload these separately.",
+    "scope": "Delivered workflow bytes must be uploaded separately before import. The source importer preserves repository workflows.",
     "files": {
       ".github/workflows/import-release.yml": {
-        "sha256": "b25cbe375a4919f02734ecc16b1fcb91001981a814a199f3c760f8fcf3f3bd07",
-        "bytes": 9265
+        "sha256": "f88916a53a8ab892ce33ecaecf42ad52f45c0d553d93b074dd3fc1bf86d49cbf",
+        "bytes": 10847
       },
       ".github/workflows/pages.yml": {
-        "sha256": "b2929cf2b0387579d561441b93fb0aa84cc57ae05abb71d4cee6a2a4d5d6ffd2",
-        "bytes": 3586
+        "sha256": "2e33ef26444d318328366f5395e3740444f6d697e54e72829871540f31498c9f",
+        "bytes": 7778
       }
     }
   },
   "evidence": [
-    "validation/v1.3-checks.json",
-    "validation/v1.3-frozen-audit.json",
-    "validation/v1.3-snapshot-replay.json",
-    "validation/v1.3-builds.json",
-    "validation/v1.3-credential-scan.json",
-    "validation/v1.3-tsm-evidence-renewal.json",
-    "validation/v1.3-tsm-renewal-checks.json"
+    "validation/final-checks.json",
+    "validation/final-frozen-audit.json",
+    "validation/final-snapshot-replay.json",
+    "validation/final-pwa.json",
+    "validation/final-builds.json",
+    "validation/final-credential-scan.json"
   ],
-  "browserRuntime": "NOT TESTED in this environment; actual GitHub browser gates required",
-  "physicalIPhone": "PENDING",
-  "hostedDeployment": "PENDING",
-  "currentRiskRefresh": "TSM evidence renewed through 2026-10-08 only; later/wider history FAIL CLOSED. Real authenticated refresh NOT TESTED."
+  "physicalIPhone": "NOT TESTED",
+  "hostedDeployment": "NOT TESTED",
+  "currentRiskRefresh": "TSM coverage through 2026-10-08 only; subsequent dates remain rejected. No live authenticated connectivity claim."
 }

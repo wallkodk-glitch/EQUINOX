@@ -21,15 +21,17 @@ for (const [file, dimension] of [['icon-192.png', 192], ['icon-512.png', 512], [
 assert((await readFile('public/brand/equinox-primary.jpeg')).equals(await readFile('dist/brand/equinox-primary.jpeg')));
 const worker = await readFile('dist/sw.js', 'utf8'), handlers = new Map(), calls = [], registrations = [];
 runInNewContext(worker, {
-  URL,
+  URL, Request,
   self: { location: { origin: 'https://example.test' }, addEventListener: (name, handler) => handlers.set(name, handler), skipWaiting: () => {}, clients: { claim: async () => {} } },
   caches: { open: async () => ({ match: async () => 'SHELL', addAll: async urls => registrations.push(...urls) }), keys: async () => [], delete: async () => {} },
   fetch: async () => 'FETCH',
 });
 await new Promise(resolve => handlers.get('install')({ waitUntil: promise => promise.then(resolve) }));
-assert(registrations.includes(base + 'index.html'));
-assert(registrations.includes(base + 'brand/equinox-primary.jpeg'));
-assert(registrations.every(url => url.startsWith(base) && !url.includes('?') && !url.endsWith('.map')));
+assert(registrations.every(request => request.cache === 'reload' && request.integrity.startsWith('sha256-')));
+const urls = registrations.map(request => new URL(request.url).pathname);
+assert(urls.includes(base + 'index.html'));
+assert(urls.includes(base + 'brand/equinox-primary.jpeg'));
+assert(urls.every(url => url.startsWith(base) && !url.includes('?') && !url.endsWith('.map')));
 function request(name, url, { method = 'GET', mode = 'cors', header = null } = {}) {
   let intercepted = false;
   handlers.get('fetch')({ request: { url, method, mode, headers: { has: key => key === header } }, respondWith: promise => { intercepted = true; calls.push(Promise.resolve(promise)); } });
@@ -60,5 +62,5 @@ const report = { format: 'EQUINOX_UI_PWA_STATIC_V1', checkedAt: new Date().toISO
   performanceScope: 'Artifact sizes and static animation architecture only. Frame time, energy use, scrolling and keyboard NOT TESTED.',
   browserOffline: 'NOT TESTED', installedPWA: 'NOT TESTED', actualSafeAreas: 'NOT TESTED', serviceWorkerUpdateRuntime: 'NOT TESTED',
 };
-await writeFile('validation/ui-pwa.json', JSON.stringify(report, null, 2));
+await writeFile(process.argv[2] ?? 'validation/final-pwa.json', JSON.stringify(report, null, 2));
 console.log(JSON.stringify({ status: report.status, shellAssets: registrations.length, protectedRequestGuards: guards.length, assets, primaryBrandBytes: image.length }, null, 2));

@@ -1,3 +1,4 @@
+import { waitForInteractive } from "./helpers";
 import { test, expect, type Page } from "@playwright/test";
 
 async function navigate(page: Page, name: string) {
@@ -13,7 +14,7 @@ async function noDocumentOverflow(page: Page) {
 }
 
 test("primary navigation, title focus and drill-down return preserve the active tab", async ({ page }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await expect(page.getByRole("heading", { name: "Overview", exact: true })).toBeVisible();
   const nav = page.getByRole("navigation", { name: "Hovednavigation" });
   await expect(nav.getByRole("button")).toHaveCount(4);
@@ -33,7 +34,7 @@ for (const width of [320, 390, 430]) {
   test(`financial views and touch targets at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await page.emulateMedia({ colorScheme: "dark" });
-    await page.goto("./");
+    await page.goto("./"); await waitForInteractive(page);
     await demoPlan(page);
     await expect(page.getByRole("heading", { name: "Balance Rail", exact: true })).toBeVisible();
     await noDocumentOverflow(page);
@@ -50,7 +51,7 @@ for (const width of [320, 390, 430]) {
 
 test("200 percent text keeps financial charts in bounded scroll regions", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await demoPlan(page);
   await page.addStyleTag({ content: ":root { font-size: 200% !important; }" });
   await expect(page.getByRole("region", { name: "Balance Rail, aktivernes vægte" })).toBeVisible();
@@ -69,7 +70,7 @@ test("200 percent text keeps financial charts in bounded scroll regions", async 
 
 test("credential sheet focus, small viewport and cancellation retain local-only key behavior", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 500 });
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await navigate(page, "Settings");
   await page.getByRole("button", { name: "Configure", exact: true }).click();
@@ -83,7 +84,7 @@ test("credential sheet focus, small viewport and cancellation retain local-only 
   await expect(sheet).toHaveCount(0);
   await expect(connect).toBeFocused();
   await expect(page.locator('input[type="password"]')).toHaveCount(0);
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect(page.getByRole("dialog")).toHaveCount(0);
 });
 
@@ -98,7 +99,7 @@ test("Infinity Motion belongs to an actual request and stops under reduced motio
       ethereum: { usd: 4000, last_updated_at: Math.floor(Date.now() / 1000) - 5 },
     }) });
   });
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await navigate(page, "Settings");
   await page.locator(".provider-row").filter({ hasText: "CoinGecko" }).locator("summary").click();
   await page.getByRole("button", { name: "Test public access CoinGecko", exact: true }).click();
@@ -110,7 +111,7 @@ test("Infinity Motion belongs to an actual request and stops under reduced motio
 });
 
 test("invalid numeric draft is described and does not overwrite saved capital", async ({ page }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   const input = page.getByLabel("Ny kapital i DKK");
   await input.fill("1234");
   await input.blur();
@@ -118,17 +119,42 @@ test("invalid numeric draft is described and does not overwrite saved capital", 
   await input.fill("");
   await expect(input).toHaveAttribute("aria-invalid", "true");
   await expect(input).toHaveAccessibleDescription(/Ændringen er ikke gemt/);
+  await expect(page.locator('.statusline')).toContainText('Ugyldigt input · ikke gemt');
+  await expect(page.locator('.statusline')).not.toContainText('Gemt lokalt');
   await input.blur();
   await expect(input).toHaveValue("1234");
   await expect(input).toHaveAttribute("aria-invalid", "false");
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect(page.getByLabel("Ny kapital i DKK")).toHaveValue("1234");
+});
+
+test('numeric boundaries, rapid edits and focused external changes retain the actual saved value', async ({ page }) => {
+  await page.goto('./'); await waitForInteractive(page);
+  const input = page.getByLabel('Ny kapital i DKK');
+  for (const text of ['-1', '1000000000001', '1e309']) {
+    await input.fill(text);
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await input.blur();
+    await expect(input).toHaveValue('2500');
+  }
+  for (const text of ['0', '1', '12', '123', '1234.56']) await input.fill(text);
+  await expect(page.locator('.statusline')).toContainText('Gemt lokalt');
+  await page.reload(); await waitForInteractive(page);
+  await expect(input).toHaveValue('1234.56');
+  await input.focus();
+  // A parent update while focused must reconcile on blur (e.g. assistive input).
+  await page.getByRole('button', { name: '500', exact: true }).evaluate(button => (button as HTMLButtonElement).click());
+  await input.blur();
+  await expect(input).toHaveValue('500');
+  await expect(page.locator('.statusline')).toContainText('Gemt lokalt');
+  await page.reload(); await waitForInteractive(page);
+  await expect(input).toHaveValue('500');
 });
 
 test("manual freshness expires visibly and offline does not imply live valuation", async ({ page, context }) => {
   const now = new Date("2026-10-07T12:00:00Z");
   await page.clock.install({ time: now });
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await page.getByRole("button", { name: "Redigér portefølje", exact: true }).click();
   for (const asset of ["GOOGL", "ISRG", "TSM", "BTC", "ETH"]) await page.getByLabel(`${asset} pris i DKK`).fill("100");
   await page.getByRole("button", { name: "Bekræft priser som aktuelle" }).click();

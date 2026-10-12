@@ -50,9 +50,15 @@ const key = (q: Observation) => `${q.provider}|${q.instrument}|${q.kind}|${q.obs
 const read = <T>(r: IDBRequest<T>) => new Promise<T>((resolve, reject) => {
   r.onsuccess = () => resolve(r.result); r.onerror = () => reject(new MarketError('CACHE_UNAVAILABLE'));
 });
-const complete = (t: IDBTransaction) => new Promise<void>((resolve, reject) => {
-  t.oncomplete = () => resolve(); t.onerror = t.onabort = () => reject(new MarketError('CACHE_UNAVAILABLE'));
-});
+const complete = (t: IDBTransaction) => {
+  const done = new Promise<void>((resolve, reject) => {
+    t.oncomplete = () => resolve(); t.onerror = t.onabort = () => reject(new MarketError('CACHE_UNAVAILABLE'));
+  });
+  // The request and transaction can both reject. Observe the latter immediately
+  // even when the awaited request exits the method first; keep rejection intact.
+  void done.catch(() => {});
+  return done;
+};
 export class MarketCache {
   private constructor(private db: IDBDatabase) {}
   static async open(name = 'EQUINOX_MARKET_DATA_V1'): Promise<MarketCache> {

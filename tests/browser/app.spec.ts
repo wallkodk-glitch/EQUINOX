@@ -1,3 +1,4 @@
+import { waitForInteractive } from "./helpers";
 import { test, expect, type Page } from "@playwright/test";
 async function navigate(page: Page, name: string) {
   await page.getByRole("navigation", { name: "Hovednavigation" }).getByRole("button", { name, exact: true }).click();
@@ -8,18 +9,22 @@ async function settings(page: Page, section = "Backup og historik") {
   if (await group.getAttribute("open") === null) await group.locator("summary").first().click();
 }
 import { readFile, writeFile } from "node:fs/promises";
+const runtimeErrors = new WeakMap<Page, string[]>();
 test.beforeEach(async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => {
     if (m.type() === "error") errors.push(m.text());
   });
-  page.on("close", () => expect(errors).toEqual([]));
+  runtimeErrors.set(page, errors);
+});
+test.afterEach(async ({ page }) => {
+  expect(runtimeErrors.get(page) ?? []).toEqual([]);
 });
 test("demo isolation, plan details, mobile layout and reload persistence", async ({
   page,
 }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await expect(page.getByRole("heading", { name: "Ny kapital" })).toBeVisible();
   await page.getByLabel("Ny kapital i DKK").fill("1234");
   await page.getByLabel("Ny kapital i DKK").blur();
@@ -28,6 +33,7 @@ test("demo isolation, plan details, mobile layout and reload persistence", async
   await expect(
     page.getByText("DEMO · SYNTETISKE DATA", { exact: true }),
   ).toBeVisible();
+  await page.getByLabel("Ny kapital i DKK").fill("9876");
   await page.getByRole("button", { name: "Beregn fordeling" }).click();
   await expect(
     page.getByRole("heading", { name: "Din købsplan" }),
@@ -56,13 +62,13 @@ test("demo isolation, plan details, mobile layout and reload persistence", async
   await page.getByRole("button", { name: "Afslut demo" }).click();
   await navigate(page, "Allocate");
   await expect(page.getByLabel("Ny kapital i DKK")).toHaveValue("1234");
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect(page.getByLabel("Ny kapital i DKK")).toHaveValue("1234");
 });
 test("a Node-generated ERC snapshot is verified and regenerated in the browser", async ({
   page,
 }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await settings(page);
   await page
     .getByText("Verificér snapshot", { exact: true })
@@ -81,13 +87,12 @@ test("a Node-generated ERC snapshot is verified and regenerated in the browser",
 test("manifest, service worker and offline shell", async ({
   page,
   context,
-  browserName,
 }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect
     .poll(() => page.evaluate(() => !!navigator.serviceWorker.controller))
     .toBe(true);
@@ -96,13 +101,8 @@ test("manifest, service worker and offline shell", async ({
   );
   expect(manifest.scope).toBe("/EQUINOX/");
   expect(manifest.display).toBe("standalone");
-  // Playwright WebKit 1.63 has an upstream bug where setOffline(true) breaks
-  // service-worker-controlled navigation (microsoft/playwright#42775).
-  // Chromium retains the full offline reload assertion; WebKit still proves
-  // manifest + registration + active controller here.
-  if (browserName === "webkit") return;
   await context.setOffline(true);
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect(page.getByRole("heading", { name: "Ny kapital" })).toBeVisible();
   await expect(page.getByText("Offline", { exact: true })).toBeVisible();
   await context.setOffline(false);
@@ -110,9 +110,8 @@ test("manifest, service worker and offline shell", async ({
 test("manual equal weight needs no history, input edits invalidate displayed plan, backup downloads", async ({
   page,
   context,
-  browserName,
 }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await page.getByRole("button", { name: "Redigér portefølje", exact: true }).click();
   for (const s of ["GOOGL", "ISRG", "TSM", "BTC", "ETH"]) {
     await page.getByLabel(`${s} pris i DKK`).fill("100");
@@ -149,24 +148,19 @@ test("manual equal weight needs no history, input edits invalidate displayed pla
       { exact: true },
     ),
   ).toBeVisible();
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await expect(page.getByLabel("Ny kapital i DKK")).toHaveValue("999");
   await settings(page);
   await expect(page.locator(".history-row")).toHaveCount(1);
   await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
-  if (browserName === 'webkit') {
-    await page.locator('.history-row').click();
-    await expect(page.getByRole('heading',{name:'Calculation Details'})).toBeVisible();
-    return;
-  }
-  await context.setOffline(true);await page.reload();
+  await context.setOffline(true);await page.reload(); await waitForInteractive(page);
   await expect(page.getByText('Offline',{exact:true})).toBeVisible();
   await settings(page);await page.locator('.history-row').click();
   await expect(page.getByRole('heading',{name:'Calculation Details'})).toBeVisible();
   await context.setOffline(false);
 });
 test('light/dark appearance and clear input error at narrow mobile width',async({page})=>{
- await page.setViewportSize({width:320,height:740});await page.goto('./');
+ await page.setViewportSize({width:320,height:740});await page.goto('./'); await waitForInteractive(page);
  await page.getByRole('button',{name:'Beregn fordeling'}).click();await expect(page.getByRole('alert')).toContainText('MANUAL_CURRENT_PRICE_REQUIRED');
  await settings(page, 'Udseende og installation');await page.getByRole('combobox',{name:'Tema',exact:true}).selectOption('dark');
  expect(await page.evaluate(()=>document.documentElement.dataset.theme)).toBe('dark');
@@ -178,11 +172,11 @@ test('light/dark appearance and clear input error at narrow mobile width',async(
 test("service worker waits for approval and preserves local state through update", async ({
   page,
 }) => {
-  await page.goto("./");
+  await page.goto("./"); await waitForInteractive(page);
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });
-  await page.reload();
+  await page.reload(); await waitForInteractive(page);
   await page.getByLabel("Ny kapital i DKK").fill("4321");
   await page.getByLabel("Ny kapital i DKK").blur();
   await expect(page.getByText("Gemt lokalt", { exact: true })).toBeVisible();

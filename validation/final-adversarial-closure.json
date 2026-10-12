@@ -1,0 +1,43 @@
+{
+  "format": "EQUINOX_FINAL_REVIEW_CLOSURE_V1",
+  "status": "PASS",
+  "scope": "Closure verification of concrete review findings; not browser/GitHub/physical release approval",
+  "initialIndependentReview": "validation/final-adversarial-review.json",
+  "independentFollowup": "Reviewer confirmed R02/SW code looked sound, then reproduced nested public/dist inventory bypass. Follow-up did not complete; final closure below performed by primary agent. No second complete independent review is claimed.",
+  "findings": [
+    {
+      "id": "R01",
+      "status": "CLOSED",
+      "correction": "Complete source inventory. Root-only generated-output exclusions in both source validator and packager; extra repository-owned workflows explicitly preserved.",
+      "redEvidence": "Three initial unlisted-source cases failed before first fix; then public/dist/stale.js and public/test-results/stale.js both reproduced bypass before final root-only correction.",
+      "greenEvidence": "6 source-gate tests PASS, including valid control and five unlisted-source rejections."
+    },
+    {
+      "id": "R02",
+      "status": "CLOSED",
+      "correction": "Final Pages build hashes carried by separate artifact to deploy; hosted shell bytes match exact expected SHA256/size and release identity.",
+      "evidence": "4 fixture tests PASS: exact bytes accepted; stale HTML/worker/JS rejected despite current identity."
+    },
+    {
+      "id": "SW_INSTALL_ORPHAN",
+      "status": "CLOSED",
+      "correction": "Failed installation deletes only newly created cache; already existing same-name cache survives.",
+      "evidence": "One cleanup test RED before patch; 4 worker tests PASS including both failure cleanup cases."
+    }
+  ],
+  "targetedCommand": "npx vitest run tests/release-source.test.ts tests/hosted-release.test.ts tests/service-worker-security.test.ts",
+  "targetedTests": 14,
+  "runtimeLimits": [
+    "Chromium/WebKit runtime unavailable locally",
+    "No actual hosted/GitHub/provider-CORS/physical iPhone run"
+  ],
+  "closedFileSHA256": {
+    "scripts/check-release-source.py": "b0780eb1070573fe202b65406ad25bdebd72a5863ae94cc96cd6fb52ef73a822",
+    "scripts/package-v13.py": "05d12775293f3e4959e20da36ee729f28f9ac26527f1acd0f48495d9cdbdbea3",
+    ".github/workflows/pages.yml": "2e33ef26444d318328366f5395e3740444f6d697e54e72829871540f31498c9f",
+    "scripts/build-pwa.mjs": "151fb7c6b7316d43ca45eb8ac9eabce22ac6dfcb054b00e11578aadc55414163",
+    "tests/release-source.test.ts": "81f4c97f3508b9f47dd8e6094693240ca0f3a1101b2084c3c55846390aa6393f",
+    "tests/hosted-release.test.ts": "a2bcd36be92e7491bed51f126ea93dabc134de1e246620667f4cf18c172cc369",
+    "tests/service-worker-security.test.ts": "b70ab51a69827486b6de3170c3745970464f5ba646eeb73de65fe423422815a6"
+  }
+}

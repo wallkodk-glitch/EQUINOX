@@ -54,8 +54,23 @@ export async function request(url:string, options:RequestOptions):Promise<unknow
   try {
     const response=await (options.fetcher??fetch)(url,{headers,signal:controller.signal,cache:'no-store',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer'});
     if(!response.ok) throw new MarketError(response.status===401?'AUTH_FAILED':response.status===403?'ENTITLEMENT_DENIED':response.status===429?'RATE_LIMITED':'PROVIDER_UNAVAILABLE');
-    const raw=await response.text();
-    if(raw.length>16*1024*1024) throw new MarketError('MALFORMED_PAYLOAD');
+    // Bound acquisition itself; checking response.text() afterwards permits an
+    // unbounded provider body to exhaust memory before validation can reject it.
+    const reader=response.body?.getReader(), decoder=new TextDecoder();
+    let raw='', bytes=0;
+    if(reader) try {
+      for(;;) {
+        const {done,value}=await reader.read();
+        if(done) break;
+        bytes+=value.byteLength;
+        if(bytes>16*1024*1024) {
+          try { await reader.cancel(); } finally { controller.abort(); }
+          throw new MarketError('MALFORMED_PAYLOAD');
+        }
+        raw+=decoder.decode(value,{stream:true});
+      }
+      raw+=decoder.decode();
+    } finally { reader.releaseLock(); }
     if(options.format==='text') return raw;
     try { return JSON.parse(raw); } catch { throw new MarketError('MALFORMED_PAYLOAD'); }
   } catch(e) {

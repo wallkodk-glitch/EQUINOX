@@ -1,0 +1,71 @@
+{
+  "format": "EQUINOX_FRESH_ADVERSARIAL_REVIEW_V1",
+  "reviewedAt": "2026-10-12T04:45:17.615924+00:00",
+  "status": "CHANGES_REQUESTED",
+  "reviewer": "fresh independent whole-change subagent",
+  "scope": "All patch1.3.2 code, browser regression changes, workflows, current validation/packaging scripts and immediate dependencies against committed 1.3.1 baseline; frozen financial contracts preserved.",
+  "findings": [
+    {
+      "id": "R01",
+      "severity": "P2",
+      "file": "scripts/check-release-source.py",
+      "lines": "26-32",
+      "title": "Source gate accepts unmanifested build inputs",
+      "counterexample": "Executed delivered checker in a temporary valid manifest fixture, then added an unlisted root vite.config.js. The checker exited 0 and reported PASS/fileCount 7. Installed Vite resolves vite.config.js before vite.config.ts, so this extra file can change build behavior while listed bytes stay unchanged.",
+      "evidence": "Deterministic local fixture, not a hypothesis. The checker only iterates files formed from manifest maps; it never compares that set with the actual releasable source inventory.",
+      "minimalCorrection": "Enumerate actual releasable files before checks and require exact equality with manifest entries plus RELEASE-MANIFEST.json. Use an explicit exclusion list for .git, dependencies, generated build/test artifacts; preserve the repository-workflow policy explicitly if extra existing workflows are intentionally exempt.",
+      "regressionExpectation": "A valid release passes; adding vite.config.js, a public asset, or an unlisted source file fails; approved local output directories remain excluded."
+    },
+    {
+      "id": "R02",
+      "severity": "P2",
+      "file": ".github/workflows/pages.yml",
+      "lines": "122-130",
+      "title": "Hosted identity is not bound to the returned application bytes",
+      "counterexample": "Executed the exact delivered hosted-smoke Bash with deterministic curl responses: a 1.3.1 HTML page referencing old.js, a 1.3.1 worker containing EQUINOX/ACTIVATE_UPDATE, a valid scoped manifest, and current 1.3.2 release.json with the expected SHA. Script exited 0.",
+      "evidence": "The gate checks exact identity only in release.json. HTML and worker checks are generic string matches and cannot establish that those returned bytes belong to the tested revision. This demonstrates a gate false-positive, not an actual stale deployment.",
+      "minimalCorrection": "Generate expected hashes from the final repository-path build, carry them from verify to deploy, and compare downloaded HTML, manifest, worker and application entry assets against those expected bytes. Keep commit/app identity as an additional assertion.",
+      "regressionExpectation": "Exact deployed artifact passes; a current release.json paired with old HTML, worker, JS or CSS fails."
+    }
+  ],
+  "independentTests": [
+    {
+      "command": "npx vitest run tests/persistence.test.ts tests/market-cache.test.ts tests/market-network.test.ts tests/service-worker-security.test.ts tests/release-import.test.ts tests/calculation-job.test.ts tests/risk-import.test.ts",
+      "status": "PASS",
+      "testFiles": 7,
+      "tests": 85,
+      "durationSeconds": 2.88
+    }
+  ],
+  "subsystemsReviewed": [
+    "IndexedDB transaction rollback on synchronous and asynchronous failures, immediate rejection observation, sealed snapshot sanitization, strict durability and revision conflicts",
+    "NumberField local draft/parent value lifecycle and invalid status reporting; immediate calculation/file-operation guards; demo identity, recovery actions and queued edits",
+    "Bounded streamed provider bodies, timeout/abort/error mapping and credential isolation",
+    "Generated service-worker shell integrity, cache reload, waitUntil update approval, request guards and existing-cache lifecycle",
+    "Browser readiness helper, preserved financial assertions, no WebKit offline early returns, added concurrency/storage/browser regressions",
+    "GitHub independent Chromium/WebKit conditions, failure-only diagnostics, deploy blocking, repository-path rebuild and hosted source identity",
+    "Importer paths, NUL names, metadata/CRC/hash coverage/version consistency, complete safe extraction and rsync checksum/workflow-preservation/non-force push",
+    "Baseline frozen audit, unchanged financial inputs/results, final validation BLOCKED handling, no-clobber package/reopen/import verification"
+  ],
+  "financialAssessment": "No demonstrated regression in the reviewed financial, persistence, network or calculation contracts. Frozen engine/model code and financial assertions are not weakened.",
+  "environmentLimits": [
+    "Chromium unavailable executable; WebKit missing host libraries; no browser assertions executed by reviewer.",
+    "GitHub workflow execution, hosted origin, provider CORS and physical iPhone remain unverified.",
+    "The added browser tests were reviewed and typecheck/discovery evidence inspected; that is not runtime PASS."
+  ],
+  "additionalCaution": "Any new SW install-failure cleanup must preserve an already-existing cache of the same name. The shell hash excludes sw.js, so code-only worker changes may share the active cache name; unconditional deletion on install failure would erase the working offline shell.",
+  "reviewedFileSHA256": {
+    "src/ui/App.tsx": "f1d95eadee5b1b286af89e5052132381fc147205cd71ac87e85643155db8002c",
+    "src/persistence/store.ts": "416b298569aa68895f82b071ba6565da62cb90b463626db4a3b43b6dee3f7602",
+    "src/market-data/live/cache.ts": "dbecaf7673aa28da05594cd9ccb71d08454a0b297f9f381380b3a39656a46703",
+    "src/market-data/live/network.ts": "629b34a671242959229555c53501a1df1b8fd58933cf825855b440f6f2e23e38",
+    "scripts/build-pwa.mjs": "4744d299e9d4d5e8e8d4b92a082cd48270a79b2d6d6b4eb9983d1715014df02b",
+    "scripts/check-release-source.py": "207238839cb580f53aaa082e5f47672e57a473126a5b89cc7cedfbec2c21bd8b",
+    ".github/workflows/pages.yml": "424b3ff5bf8848feb663f7be31a0285dd520ccb2e0082577e6d46bda44218756",
+    ".github/workflows/import-release.yml": "f88916a53a8ab892ce33ecaecf42ad52f45c0d553d93b074dd3fc1bf86d49cbf",
+    "scripts/package-v13.py": "4d48782d28bd5b56767015a5c6ef1a55856ca2ccff5151c9ea52a7c130b60f94",
+    "scripts/validate-v13.mjs": "314291c1f36ddb85351138673b8780bdd6ebd8856ebdd0dd49d4efbe4247e968",
+    "tests/browser/hardening.spec.ts": "a7b8b3a14efbf143e4d2f32fbf612f8d2a7253ce5240a2bb1b87614db97cd743",
+    "tests/browser/ui.spec.ts": "f37a92c8825d5b1eee0534d1700da2fa0b15f4c10fd9bf1e1af01b146596df48"
+  }
+}

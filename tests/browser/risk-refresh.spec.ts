@@ -1,3 +1,4 @@
+import { waitForInteractive } from "./helpers";
 import { test, expect, type Page } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { fxPayload, nativeFXResponse } from '../fixtures/native-fx-projection';
@@ -20,7 +21,7 @@ async function backup(page: Page) {
 }
 async function setup(page: Page, previous = true) {
   await page.clock.install({ time: new Date(accepted.validationAsOf) });
-  await page.goto('./'); await page.clock.fastForward(1601);
+  await page.goto('./'); await waitForInteractive(page);
   await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
   const history = page.locator('.settings-group').filter({ has: page.getByText('Historiske markedsdata', { exact: true }) });
   await history.locator('summary').first().click();
@@ -84,7 +85,7 @@ test('manual refresh accepts a fully gated synchronized dataset only; reload pre
   expect(after.state.holdings).toEqual(before.state.holdings); expect(after.snapshots).toEqual(before.snapshots);
   expect(after.state.acknowledgeUserData).toBe(before.state.acknowledgeUserData);
   expect(JSON.stringify(after)).not.toContain(key);
-  await page.reload(); await page.clock.fastForward(1601);
+  await page.reload(); await waitForInteractive(page);
   await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
   expect((await backup(page)).state).toEqual(after.state);
   await expect(page.getByTestId('accepted-risk-status')).toContainText('ikke live');
@@ -99,7 +100,7 @@ test('partial ETH history cannot replace previous accepted data or modify financ
   await context.setOffline(true); await expect(page.getByTestId('accepted-risk-status')).toContainText('Offline');
   await expect(page.getByRole('button', { name: 'Opdatér risikohistorik', exact: true })).toBeDisabled();
   await context.setOffline(false); await expect(page.getByRole('button', { name: 'Opdatér risikohistorik', exact: true })).toBeEnabled();
-  await page.reload(); await page.clock.fastForward(1601);
+  await page.reload(); await waitForInteractive(page);
   await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
   expect((await backup(page)).state).toEqual(before.state);
 });
@@ -143,7 +144,7 @@ test('explicit corrupt-cache recovery preserves financial state, calculations an
     await new Promise<void>((resolve, reject) => { const transaction = db.transaction('normalized', 'readwrite'); transaction.objectStore('normalized').put({ price: 'broken' }, 'invalid'); transaction.oncomplete = () => resolve(); transaction.onerror = () => reject(transaction.error); });
     db.close();
   });
-  await page.reload(); await page.clock.fastForward(1601);
+  await page.reload(); await waitForInteractive(page);
   await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
   const recover = page.getByRole('button', { name: 'Slet kun market-cache', exact: true });
   await expect(recover).toBeVisible();

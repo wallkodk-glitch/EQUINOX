@@ -1,6 +1,17 @@
 import { it, expect, vi } from 'vitest';
 import { request, MarketError, safeError, massivePages } from '../src/market-data/live/network';
 const url = 'https://api.massive.com/stocks/v1/splits?ticker=GOOGL';
+it('oversized streamed responses are cancelled at the byte budget without buffering the entire response', async () => {
+  let pulled = 0, cancelled = false;
+  const body = new ReadableStream<Uint8Array>({
+    pull(controller) { if (++pulled <= 32) controller.enqueue(new Uint8Array(1024 * 1024)); else controller.close(); },
+    cancel() { cancelled = true; },
+  }, { highWaterMark: 0 });
+  await expect(request(url, { provider: 'massive', key: crypto.randomUUID(), fetcher: async () => new Response(body) })).rejects.toThrow('MALFORMED_PAYLOAD');
+  expect(pulled).toBe(17);
+  expect(cancelled).toBe(true);
+});
+
 it('authenticated requests use headers, omit browser credentials, and bypass HTTP cache', async () => {
   const key = crypto.randomUUID(); let captured: RequestInit | undefined;
   const result = await request(url,{provider:'massive',key,fetcher:async (u,init)=>{

@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Static review only, not GitHub Actions execution",
+  "checks": [
+    "Both YAML documents parsed with PyYAML 6.0.3",
+    "Every embedded shell run block passed bash -n",
+    "Importer embedded Python passed ast.parse",
+    "Chromium and WebKit use !cancelled() and browser_install success, independently",
+    "No continue-on-error; product build/artifact and deploy retain success gates",
+    "Source/manifest identity checked before mutable test evidence",
+    "Hosted smoke compares app version and GITHUB_SHA",
+    "Import checksum, complete hashes and non-force push retained",
+    "Final hosted artifact binding tested with current identity + stale HTML/worker/JS fixtures",
+    "download-artifact v8.0.0 tag SHA and action.yml inputs/runtime read from official repository"
+  ],
+  "githubExecution": "NOT TESTED",
+  "shellBlocks": 19,
+  "workflowSHA256": {
+    "pages": "2e33ef26444d318328366f5395e3740444f6d697e54e72829871540f31498c9f",
+    "import-release": "f88916a53a8ab892ce33ecaecf42ad52f45c0d553d93b074dd3fc1bf86d49cbf"
+  }
+}

@@ -1,13 +1,20 @@
-# Fysisk iPhone-acceptance — IKKE UDFØRT
+# EQUINOX 1.3.2 — fysisk iPhone-gate
 
-Udfyld device, iOS-version, Safari-version, HTTPS-URL, release-hash, dato og faktiske resultater. Chromium med iPhone-viewport er ikke en iPhone eller Safari. Playwright WebKit er heller ikke en fysisk iPhone-test.
+Forudsætning: begge browserprojekter og hosted smoke er grønne på den samme commit. Notér iPhone-model, iOS-version, URL, commit og dato. Brug kun syntetisk testkapital/holdings; gem en privat backup først. Hvert punkt registreres **PASS** eller **FAIL** med en kort observation. Et ikke udført punkt er ikke bestået.
 
-1. **Safari / installation:** åbn HTTPS-URL, kontrollér manifest/icons, installér via Føj til hjemmeskærm. Start fra hjemmeskærm; kontrollér standalone og korrekt scope.
-2. **Input / layout:** bekræft decimalindtastning på dansk tastatur; prøv 0, 2500 og små BTC/ETH-antal. Kontrollér store trykflader, safe areas, portrait/landscape og at bottom navigation ikke dækker sidste indhold.
-3. **Historik / matricer:** kør isoleret demo, gennemse current/raw/constrained/projected, scroll covariance/correlation horisontalt uden at hele siden bliver bred. Prøv lyst/mørkt/systemtema.
-4. **Persistence:** gem manuelle beholdninger og priser, genstart app og telefon; kontrollér værdierne. Eksportér backup til Filer, ændr kapital, gendan backup og kontrollér beholdninger og snapshots. Den tidligere database skal være bevaret som recovery-kopi.
-5. **Offline:** efter online-opstart slås flytilstand til. Luk/genåbn PWA; shell og gemte snapshots skal åbne. Status skal vise Offline. Cached/manuelle priser må ikke fremstå live. Gamle priser/data skal blokere en ny beregning.
-6. **Opdatering:** eksportér backup, deploy en ny shell-version uden modelændring. Den eksisterende app skal tilbyde Opdatér app og bevare holdings, settings, historik og data efter godkendelse. Før en modelændring skal kompatibilitet og backup/recovery prøves særskilt.
-7. **Fejl:** stale pris, ufuldstændig import, umulig policy og NewCapital=0 skal give de dokumenterede resultater/fejl, ikke en anden model. Demo må aldrig blive personlige holdings, heller ikke hvis man afslutter den under beregning.
+| Gate | Handling og konkret PASS-kriterium | Resultat |
+|---|---|---|
+| Fresh Safari + PWA | Åbn den verificerede URL i Safari, installér via Føj til hjemmeskærm, åbn fra ikonet. Intro slutter, ingen hvid flash, felter kan først ændres efter intro, appen vises standalone. | PASS / FAIL |
+| Reduced motion + lifecycle | Aktivér Reducer bevægelse; genåbn appen. Ingen blokerende animation. Skift til anden app under intro og tilbage; intro fuldføres og navigation virker. | PASS / FAIL |
+| Safe areas + scroll | På alle fire tabs og Calculation Details: scroll til sidste element i portræt. Navigation/home-indikator overlapper ingen nødvendige kontroller; intet utilsigtet vandret dokumentscroll. | PASS / FAIL |
+| Keyboard + numbers | Sæt kapital 1234, tøm feltet, luk keyboard. Fejl beskrives mens tomt; tomt input siger ikke gemt; blur gendanner 1234. Indtast decimal, skift felt, kontrollér præcis gemt værdi efter reopen. | PASS / FAIL |
+| 200% text + themes | Sæt stor tekst/200% og gennemgå tabs/dialoger i lyst og mørkt tema. Alle primære knapper kan nås; tal beskæres ikke uden en tilgængelig scrollregion. | PASS / FAIL |
+| Force-close persistence | Gem testkapital 1234, manuelle priser og én beregning; vent på Gemt lokalt. Tvangsluk PWA og genåbn. Værdier og snapshot er uændrede. | PASS / FAIL |
+| Demo isolation | Notér reel state/snapshot. Start demo, ændr kapital, beregn, navigér og afslut. Reel state er identisk; gentag med force-close i demo. Ingen demo-snapshot i reel historik. | PASS / FAIL |
+| Credential lifecycle | Gem egen nøgle lokalt uden at dele den; genåbn, replace, annullér én ændring og remove. Rigtig status i hvert trin. Finansiel backup/snapshots indeholder ingen nøgle. | PASS / FAIL |
+| Provider/CORS + fail closed | Fra den deployede origin udfør relevant provider-test. Gyldig entitlement virker; utilgængelig provider giver eksplicit safe fejl. Risikorefresh uden dækket TSM-vindue afvises og bevarer tidligere dataset. | PASS / FAIL |
+| Offline reopen + reconnect | Efter online shell-installation: flytilstand, force-close, genåbn. Shell, gemt historik og manuel Equal Weight virker; offline er synligt. Reconnect fjerner offline-status uden falsk live/prisbekræftelse. | PASS / FAIL |
+| Restore/recovery | Eksportér syntetisk backup til Filer, ændr state, restore den. Gammel state kan recovery-eksporteres. Forsøg ugyldig backup: tydelig fejl, eksisterende state/snapshots uændrede. | PASS / FAIL |
+| Approved worker update | Med gemt kapital, snapshot og lokal key: deploy en verificeret efterfølgende shell. Opdatering venter på godkendelse; aktive jobs skal afsluttes/annulleres. Godkend én gang: én reload, korrekt ny version, uændret state/key, efterfølgende offline reopen virker. | PASS / FAIL |
 
-Resultatfelter: Safari PASS/FAIL; standalone PASS/FAIL; offline PASS/FAIL; reload PASS/FAIL; update PASS/FAIL; backup/restore PASS/FAIL; device/iOS; evidence. Indtil dette er faktisk gennemført: **IPHONE PHYSICAL TEST — NOT TESTED**.
+Den sidste gate kræver to faktiske deployments på samme origin/path. Browseremulering og et VM-workercheck kan ikke erstatte denne device-gate. En iPhone kan heller ikke bruges til at kalde alle andre iOS-versioner validerede.

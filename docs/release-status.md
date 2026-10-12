@@ -1,6 +1,6 @@
 # EQUINOX v1 — release evidence, 2026-10-02
 
-> Historical baseline evidence. Current release status: [v1.1.2 final data closure](final-data-closure/release-status.md). Prior PASS does not certify the current provider/runtime integration.
+> Historical baseline evidence. Current release status: [v1.3.2 final hardening — BLOCKED](final-hardening/report.md). Prior PASS does not certify the current provider/runtime integration.
 
 > **Critical audit patch — 2026-10-03, Engine 1.0.1.** One HIGH Data Truth defect is fixed: a reused published FX observation could carry contradictory rates and change a buy plan while validation passed. Acquisition predating included observations is now also rejected. Numerical allocation/risk models are unchanged; an actual valid sealed 1.0.0 snapshot replays with its original hash and output. Current patch evidence: 69 tests (including 1,000 L2 KKT cases, 500 literal-greedy comparisons, ERC acceptance/refusal and data/replay regressions), independent references, lint, typecheck and production build pass. See `validation/critical-audit.json` for counterexamples, root causes and actual command results. The sections below, including the 59-test/6-browser-flow and clean-install reproducibility records, are evidence for the submitted 1.0.0 baseline, not new runs of those full release gates. Live-data authenticity, hosted deployment and physical iPhone acceptance remain unverified.
 

@@ -1,0 +1,162 @@
+{
+  "format": "EQUINOX_FINAL_FROZEN_AUDIT_V1",
+  "checkedAt": "2026-10-12T12:43:16.390Z",
+  "status": "PASS",
+  "inputSHA256": "c3965e1d93224fab1d23e68c0c9fdd7207c5b9598c63940d811e195639028231",
+  "inputAppVersion": "1.3.1",
+  "finalAppVersion": "1.3.2",
+  "engineVersion": "1.0.1",
+  "marketDataModelVersion": "1.1.2",
+  "frozenFiles": [
+    {
+      "path": "src/domain/core.ts",
+      "sha256": "477e116dcf31c81869f3a6449275dc4d3ecb92ba66ba01876fef3ff2aec378f1",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/execution/allocator.ts",
+      "sha256": "7d5c29d1257e6c2d392255af852796adb9bfc87bcbd684a854a70d7ffba9ded8",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/calendar.ts",
+      "sha256": "7ed5edc7ba929e04d7be0f994ec032ec2a8b98cf9bebcab48ad25a132331815c",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/demo.ts",
+      "sha256": "ea43d20583474fb4619d0d85d9415437e19ee56094792a1a7a3520d057f60e09",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/coingecko.ts",
+      "sha256": "cc18737f4da4dadc1e43317014dcecd5d03bec98081be6aa343cbc98079e9885",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/credentials.ts",
+      "sha256": "090c40be20d8547f5d39fcd0a040261774595b34cd188bff9629fe58e83de2c4",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/massive.ts",
+      "sha256": "c8e2262a47bb1b11aa1ef0e1a19d6c87d2bf412c902671f9ffbfcda3fd380b22",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/model.ts",
+      "sha256": "c43db350efdcc2218a697fa9ab0c86013eeab98ed2847e1950fa1384e0f8614f",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/nationalbank-history.ts",
+      "sha256": "6d655088bff84addc0c7853af0677bab31eb1a6aef6a63d3acfc520e52787813",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/nationalbank.ts",
+      "sha256": "4f98f70ebc3b76a006014c3633e585128350601c65a3438dbd16b095785716dc",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/risk-actions.ts",
+      "sha256": "0a862518845a6cb355f991a8559418b4286a7d33e481c6552600843801455fa2",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/risk-provenance.ts",
+      "sha256": "a36050f94444489b1f57f49da0560671053c4b537bad2604ff47d5d29a44ac68",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/synchronized.ts",
+      "sha256": "8aadb93d4361adb5852adeef5edce3389c2bd59f8199d400639b32ca62f13d6e",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/timestamps.ts",
+      "sha256": "77ae8e81cf84470a560dec4db999b3b7b52a1d3e19ad7c8795ec794496567135",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/live/tsm-adr.ts",
+      "sha256": "1b121946882b7efbd025c9fcd188e6ef3b240851f325e10f0e0334153bbbb26e",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/provider.ts",
+      "sha256": "6c96ec17740ea92b0621797832481fa7e5534dfc3c3a4e060d03ac0d20bc780a",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/retrospective-fx.ts",
+      "sha256": "24536d8e31d6433072e99fb89faaf3898fb59aa27386ca8acc9fdeb502748fad",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/market-data/sessions.json",
+      "sha256": "fa3a619610636b29c02eacf04a5ce44be38a8ba8170f5530ac6e6d3695789b5f",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/optimization/targets.ts",
+      "sha256": "b0f53e1f659e0ffcdfaebe1cd76213ec31caffc3789350ba774abac2c0d72117",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/persistence/schema.ts",
+      "sha256": "165181e359b539516f38b1f764771b0b6143c08b456a69b18530d3c762d775a8",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/portfolio/accounting.ts",
+      "sha256": "1beb53c9629b076a52d4e746271b7af0c8d03d7bcc7ad22e546eb6542b354713",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/risk/math.ts",
+      "sha256": "192bc887a52a40a7410fce0d4703c3e17e3c995b681750b489c92ac032524d04",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/snapshots/calculate.ts",
+      "sha256": "ea0ccb9a55d6eb0dacd7a01a1d7780f88eeba01ea8669dc3df94ad9bbec2efbb",
+      "byteIdentical": true
+    },
+    {
+      "path": "src/snapshots/integrity.ts",
+      "sha256": "6affa51efe9a711b14729259d793b6fa4f368b419e99751d009d72107d60531a",
+      "byteIdentical": true
+    }
+  ],
+  "operationalFiles": [
+    {
+      "path": "src/market-data/live/cache.ts",
+      "beforeSHA256": "d820dfcf32a36f3d4d2144689babc6be506f53d0c702705817d311e17faa7ce8",
+      "sha256": "dbecaf7673aa28da05594cd9ccb71d08454a0b297f9f381380b3a39656a46703",
+      "reason": "Reproduced unhandled transaction abort; operation still rejects and preserves previous cache."
+    },
+    {
+      "path": "src/market-data/live/network.ts",
+      "beforeSHA256": "81fa1db1e7c2ca1b0d356c283d6532744979386de7dcb437da81f28b37fd92c8",
+      "sha256": "629b34a671242959229555c53501a1df1b8fd58933cf825855b440f6f2e23e38",
+      "reason": "Reproduced response-size limit applied only after unbounded buffering; bound streamed bytes and cancel excess."
+    },
+    {
+      "path": "src/persistence/store.ts",
+      "beforeSHA256": "f30df8bc35bc674dc5eeea4c67006b36fd8f22c1481a0e624b852d19817af640",
+      "sha256": "416b298569aa68895f82b071ba6565da62cb90b463626db4a3b43b6dee3f7602",
+      "reason": "Reproduced partial save/restore rollback, unhandled read abort, sanitized snapshot storage; strict financial durability."
+    }
+  ],
+  "financialMathByteIdentical": true,
+  "tsmEvidenceAndSemanticsByteIdentical": true,
+  "dependencyChanges": [
+    {
+      "name": "@playwright/test",
+      "before": "1.63.0",
+      "after": "1.64.0",
+      "scope": "Development only; upstream WebKit service-worker offline fix #42894."
+    }
+  ]
+}

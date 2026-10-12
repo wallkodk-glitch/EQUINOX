@@ -1,4 +1,4 @@
-import { it, expect } from 'vitest';
+import { it, expect, vi } from 'vitest';
 import 'fake-indexeddb/auto';
 import { MarketCache, freshness } from '../src/market-data/live/cache';
 import { parseCoinGecko } from '../src/market-data/live/coingecko';
@@ -6,6 +6,15 @@ import { parseMassiveBars } from '../src/market-data/live/massive';
 import stockFixture from './fixtures/providers/massive-stock.raw.json';
 const acquired = '2026-10-02T23:00:00.000Z';
 const fixture = () => parseCoinGecko({ bitcoin: { usd: 100000, last_updated_at: 1790981940 }, ethereum: { usd: 4000, last_updated_at: 1790981940 } }, acquired);
+it('aborted cache reads reject without leaving an unhandled transaction promise', async () => {
+ const cache = await MarketCache.open(crypto.randomUUID());
+ const original = IDBObjectStore.prototype.getAll;
+ const reads = vi.spyOn(IDBObjectStore.prototype, 'getAll').mockImplementation(function(this: IDBObjectStore, ...args) {
+  const request = original.apply(this, args); this.transaction.abort(); return request;
+ });
+ try { await expect(cache.all()).rejects.toThrow('CACHE_UNAVAILABLE'); }
+ finally { reads.mockRestore(); cache.close(); }
+});
 it('validated cache persists after reopen without contaminating financial database', async () => {
  const name=crypto.randomUUID(),cache=await MarketCache.open(name); await cache.put(fixture()); cache.close();
  const reopened=await MarketCache.open(name);

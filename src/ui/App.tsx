@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { ASSETS, NAMES, VERSIONS } from "../domain/core";
 import { Store } from "../persistence/store";
 import { initialState, type AppState } from "../persistence/schema";
@@ -26,12 +26,14 @@ function NumberField({
   onChange,
   large = false,
   max = 1e12,
+  onInvalidChange,
 }: {
   label: string;
   value: number;
   onChange: (v: number) => void;
   large?: boolean;
   max?: number;
+  onInvalidChange: (id: string, invalid: boolean) => void;
 }) {
   const errorId = useId();
   const [text, setText] = useState(String(value)),
@@ -41,6 +43,10 @@ function NumberField({
   useEffect(() => {
     if (!focused.current) setText(String(value));
   }, [value]);
+  useEffect(() => {
+    onInvalidChange(errorId, invalid);
+    return () => onInvalidChange(errorId, false);
+  }, [errorId, invalid, onInvalidChange]);
   return (
     <label className={large ? "number-field large" : "number-field"}>
       <span>{large ? "DKK" : label}</span>
@@ -69,10 +75,10 @@ function NumberField({
         }}
         onBlur={() => {
           focused.current = false;
-          if (invalid) {
-            setText(String(value));
-            setInvalid(false);
-          }
+          // Parent state may have changed while focused. After blur the field
+          // must show the actual value, even when its previous draft was valid.
+          setText(String(value));
+          setInvalid(false);
         }}
       />
       {invalid && (
@@ -100,6 +106,7 @@ export function App() {
     [fatal, setFatal] = useState(false),
     [loaded, setLoaded] = useState(false),
     [introComplete, setIntroComplete] = useState(false),
+    [invalidDrafts, setInvalidDrafts] = useState<Set<string>>(() => new Set()),
     [marketBusy, setMarketBusy] = useState(false),
     [riskCommitting, setRiskCommitting] = useState(false),
     [updating, setUpdating] = useState(false),
@@ -117,11 +124,20 @@ export function App() {
     alive = useRef(true),
     pending = useRef(0),
     committing = useRef(false),
+    calculating = useRef(false),
     updateApproved = useRef(false),
     filePending = useRef(false),
     stateRef = useRef(state),
     demoRef = useRef(demo);
   const data = demo ?? state;
+  const reportInvalidDraft = useCallback((id: string, invalid: boolean) => {
+    setInvalidDrafts(previous => {
+      if (previous.has(id) === invalid) return previous;
+      const next = new Set(previous);
+      if (invalid) next.add(id); else next.delete(id);
+      return next;
+    });
+  }, []);
   const valuation = valuationPresentation(data.holdings, clock);
   stateRef.current = state;
   demoRef.current = demo;
@@ -285,7 +301,8 @@ export function App() {
   }
   async function run(e: FormEvent) {
     e.preventDefault();
-    if (committing.current || updateApproved.current || filePending.current) return;
+    if (calculating.current || committing.current || updateApproved.current || filePending.current) return;
+    calculating.current = true;
     const wasDemo = demoRef.current !== null,
       source = structuredClone(demoRef.current ?? stateRef.current);
     setBusy(true);
@@ -304,6 +321,7 @@ export function App() {
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
     } finally {
+      calculating.current = false;
       setBusy(false);
     }
   }
@@ -312,6 +330,7 @@ export function App() {
       canonical(current.snapshot.input)
     : false;
   async function exportBackup() {
+    if (calculating.current || demoRef.current) return;
     try {
       await queue.current;
       download(
@@ -326,7 +345,7 @@ export function App() {
     file: File | undefined,
     type: "dataset" | "backup" | "snapshot",
   ) {
-    if (!file || committing.current || updateApproved.current || filePending.current) return;
+    if (!file || calculating.current || committing.current || updateApproved.current || filePending.current) return;
     filePending.current = true; setFileBusy(true);
     try {
       if (type !== "backup" && file.size > 50_000_000)
@@ -396,6 +415,7 @@ export function App() {
                   <fieldset disabled={riskCommitting || updating || fileBusy}>
                   <section className="capital">
                     <NumberField
+                      onInvalidChange={reportInvalidDraft}
                       label="Ny kapital i DKK"
                       value={data.capital}
                       large
@@ -472,7 +492,7 @@ export function App() {
       </header>
       <main id="main-content" ref={main} tabIndex={-1} data-view={tab}>
         <div className="statusline">
-          <span>{demo ? "Isoleret demo" : saved}</span>
+          <span>{invalidDrafts.size ? "Ugyldigt input · ikke gemt" : demo ? "Isoleret demo" : saved}</span>
           <span>Engine {VERSIONS.engine} · DKK</span>
         </div>
         {demo && (
@@ -499,7 +519,7 @@ export function App() {
               type="button"
               disabled={busy || marketBusy || riskCommitting || fileBusy || pending.current > 0 || fatal || updating}
               onClick={async () => {
-                if (busy || marketBusy || committing.current || filePending.current || pending.current > 0 || fatal || updateApproved.current || !update.waiting) return;
+                if (calculating.current || marketBusy || committing.current || filePending.current || pending.current > 0 || fatal || updateApproved.current || !update.waiting) return;
                 updateApproved.current = true; setUpdating(true);
                 try {
                   await queue.current;
@@ -536,9 +556,11 @@ export function App() {
             </p>
             <button
               type="button"
-              onClick={async () =>
-                download("EQUINOX-recovery.json", await db.current!.rawBackup())
-              }
+              disabled={!db.current || fileBusy || busy}
+              onClick={async () => {
+                try { download("EQUINOX-recovery.json", await db.current!.rawBackup()); }
+                catch (e) { setError(`Recovery kunne ikke eksporteres: ${String(e)}`); }
+              }}
             >
               Eksportér recovery-kopi
             </button>
@@ -547,6 +569,7 @@ export function App() {
               <input
                 type="file"
                 accept=".json,application/json"
+                disabled={!db.current || fileBusy || busy}
                 onChange={(e) => void fileAction(e.target.files?.[0], "backup")}
               />
             </label>
@@ -625,6 +648,7 @@ export function App() {
                     </div>
                     <div className="input-grid">
                       <NumberField
+                        onInvalidChange={reportInvalidDraft}
                         label={`${h.symbol} antal`}
                         value={h.units}
                         onChange={(v) =>
@@ -634,6 +658,7 @@ export function App() {
                         }
                       />
                       <NumberField
+                        onInvalidChange={reportInvalidDraft}
                         label={`${h.symbol} pris i DKK`}
                         value={h.priceDKK}
                         onChange={(v) =>
@@ -645,6 +670,7 @@ export function App() {
                       />
                     </div>
                     <NumberField
+                      onInvalidChange={reportInvalidDraft}
                       label={`${h.symbol} samlet cost basis i DKK`}
                       value={h.costBasisDKK}
                       onChange={(v) =>
@@ -658,6 +684,7 @@ export function App() {
                       <summary>Ordreprecision</summary>
                       <div className="input-grid">
                         <NumberField
+                          onInvalidChange={reportInvalidDraft}
                           label={`${h.symbol} quantity increment`}
                           value={data.executionRules[i].increment}
                           onChange={(v) =>
@@ -667,6 +694,7 @@ export function App() {
                           }
                         />
                         <NumberField
+                          onInvalidChange={reportInvalidDraft}
                           label={`${h.symbol} minimumskøb DKK`}
                           value={data.executionRules[i].minimumDKK}
                           onChange={(v) =>
@@ -752,6 +780,7 @@ export function App() {
                       type="file"
                       accept=".json,application/json"
                       aria-label="Importér historik"
+                      disabled={busy}
                       onChange={(e) =>
                         void fileAction(e.target.files?.[0], "dataset")
                       }
@@ -820,6 +849,7 @@ export function App() {
                     Dine grænser anvendes efter modellens raw target.
                   </p>
                   <NumberField
+                    onInvalidChange={reportInvalidDraft}
                     label="Samlet crypto cap (%)"
                     value={data.policy.cryptoCap * 100}
                     max={100}
@@ -834,6 +864,7 @@ export function App() {
                     {ASSETS.map((a, i) => (
                       <div className="input-grid" key={a}>
                         <NumberField
+                          onInvalidChange={reportInvalidDraft}
                           label={`${a} min. (%)`}
                           value={data.policy.lower[i] * 100}
                           max={100}
@@ -844,6 +875,7 @@ export function App() {
                           }
                         />
                         <NumberField
+                          onInvalidChange={reportInvalidDraft}
                           label={`${a} max. (%)`}
                           value={data.policy.upper[i] * 100}
                           max={100}
@@ -868,7 +900,7 @@ export function App() {
                   <div className="button-stack">
                     <button
                       type="button"
-                      disabled={!!demo}
+                      disabled={!!demo || busy}
                       onClick={() => void exportBackup()}
                     >
                       Eksportér backup
@@ -879,7 +911,7 @@ export function App() {
                         type="file"
                         accept=".json,application/json"
                         aria-label="Gendan backup"
-                        disabled={!!demo}
+                        disabled={!!demo || busy}
                         onChange={(e) =>
                           void fileAction(e.target.files?.[0], "backup")
                         }
@@ -890,6 +922,7 @@ export function App() {
                       <input
                         type="file"
                         accept=".json,application/json"
+                        disabled={busy}
                         onChange={(e) =>
                           void fileAction(e.target.files?.[0], "snapshot")
                         }
