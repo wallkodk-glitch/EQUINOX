@@ -60,15 +60,24 @@ jobs:
                   result[key] = value
               return result
 
+          def reject_constant(value):
+              raise SystemExit('Non-finite JSON constant')
+
+          def read_json(body):
+              value = json.loads(body, object_pairs_hook=unique_object, parse_constant=reject_constant)
+              require(isinstance(value, dict), 'Expected a JSON object')
+              return value
+
           with zipfile.ZipFile(archive) as z:
               infos = z.infolist()
               require(0 < len(infos) <= 4096, 'Unexpected ZIP entry count')
               require(sum(i.file_size for i in infos) <= 200_000_000, 'Expanded ZIP exceeds 200 MB')
               names, regular = set(), {}
               for info in infos:
+                  require(info.orig_filename == info.filename, 'Truncated ZIP path')
                   name = info.filename.rstrip('/') if info.is_dir() else info.filename
                   p = PurePosixPath(name)
-                  require(name and '\\' not in name and ':' not in name and not any(ord(c) < 32 for c in name), 'Unsafe ZIP path')
+                  require(name and '\\' not in name and ':' not in name and not any(ord(c) < 32 or ord(c) == 127 for c in name), 'Unsafe ZIP path')
                   require(not p.is_absolute() and all(c not in ('', '.', '..') for c in name.split('/')), 'Unsafe ZIP path')
                   require(name not in names, 'Duplicate ZIP path')
                   names.add(name)
@@ -87,13 +96,17 @@ jobs:
               prefix = roots[0]
               require(all(name.startswith(prefix) for name in regular), 'Files outside source root')
               files = {name[len(prefix):]: info for name, info in regular.items()}
-              required = ('package.json', 'package-lock.json', 'validation/node-snapshot.json', '.github/workflows/pages.yml', 'RELEASE-MANIFEST.json')
+              required = ('package.json', 'package-lock.json', 'src/domain/core.ts', 'src/market-data/live/model.ts', 'validation/node-snapshot.json', '.github/workflows/pages.yml', '.github/workflows/import-release.yml', 'RELEASE-MANIFEST.json')
               require(all(name in files for name in required), 'Required release file missing')
               require(all(any(name.startswith(folder + '/') for name in files) for folder in ('src', 'tests', 'validation', 'docs')), 'Required source directory missing')
-              manifest = json.loads(z.read(files['RELEASE-MANIFEST.json']), object_pairs_hook=unique_object)
+              manifest = read_json(z.read(files['RELEASE-MANIFEST.json']))
               require(manifest.get('format') == 'EQUINOX_RELEASE_MANIFEST_V3', 'Unsupported release manifest; use a v1.3-compatible package')
               require(manifest.get('engineVersion') == '1.0.1', 'Frozen Engine version mismatch')
+              require(manifest.get('marketDataModelVersion') == '1.1.2', 'Frozen MarketDataModel version mismatch')
+              if 'entryCount' in manifest:
+                  require(type(manifest['entryCount']) is int and manifest['entryCount'] == len(infos), 'Manifest entry count mismatch')
               infra = manifest.get('repositoryInfrastructure', {})
+              require(isinstance(infra, dict), 'Invalid infrastructure metadata')
               require(infra.get('policy') == 'PRESERVE_EXISTING_UPLOAD_SEPARATELY', 'Repository infrastructure policy missing')
               payload, infrastructure = manifest.get('files'), infra.get('files')
               require(isinstance(payload, dict) and isinstance(infrastructure, dict), 'Invalid manifest file maps')
@@ -106,10 +119,16 @@ jobs:
                   require(isinstance(expected, dict) and type(expected.get('bytes')) is int and re.fullmatch(r'[a-f0-9]{64}', str(expected.get('sha256', ''))) is not None, 'Malformed manifest digest')
                   body = z.read(files[name])
                   require(len(body) == expected['bytes'] and hashlib.sha256(body).hexdigest() == expected['sha256'], 'Release hash mismatch: ' + name)
-              package = json.loads(z.read(files['package.json']), object_pairs_hook=unique_object)
-              lock = json.loads(z.read(files['package-lock.json']), object_pairs_hook=unique_object)
+              package = read_json(z.read(files['package.json']))
+              lock = read_json(z.read(files['package-lock.json']))
               version = manifest.get('appVersion')
+              require(isinstance(version, str) and re.fullmatch(r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)', version), 'Invalid app version')
+              require(package.get('name') == lock.get('name') == 'equinox', 'Unexpected package identity')
               require(version == package.get('version') == lock.get('version') == lock.get('packages', {}).get('', {}).get('version'), 'Package/lock/manifest version mismatch')
+              engine = re.findall(r'\bengine\s*:\s*[\"\x27]([^\"\x27]+)[\"\x27]', z.read(files['src/domain/core.ts']).decode('utf-8'))
+              model = re.findall(r'\bMARKET_DATA_MODEL_VERSION\s*=\s*[\"\x27]([^\"\x27]+)[\"\x27]', z.read(files['src/market-data/live/model.ts']).decode('utf-8'))
+              require(engine == [manifest['engineVersion']], 'Source Engine version mismatch')
+              require(model == [manifest['marketDataModelVersion']], 'Source MarketDataModel version mismatch')
               require(z.testzip() is None, 'ZIP CRC mismatch')
               # Never execute untrusted release code. Write only verified regular
               # files to a unique, runner-owned temporary directory.
