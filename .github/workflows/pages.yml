@@ -17,21 +17,24 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
+    outputs:
+      app_version: ${{ steps.identity.outputs.app_version }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24.19.0
           cache: npm
-
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: reference/requirements.txt
-
+      - name: Verify released source and workflow bytes before generating evidence
+        id: identity
+        run: |
+          python scripts/check-release-source.py
+          node -e 'const fs=require("node:fs"); fs.appendFileSync(process.env.GITHUB_OUTPUT,"app_version="+require("./package.json").version+"\n")'
       - run: npm ci
       - run: python -m pip install -r reference/requirements.txt
       - run: npm run lint
@@ -42,68 +45,124 @@ jobs:
         run: |
           node scripts/check-final-risk.mjs
           python reference/final-risk.py
-      - name: Immutable snapshot replay
-        run: node scripts/check-ui-snapshots.mjs . validation/v1.3-snapshot-replay.json
+      - name: Immutable snapshot replay and frozen boundaries
+        run: |
+          node scripts/check-ui-snapshots.mjs . validation/ci-snapshot-replay.json
+          node scripts/audit-v13.mjs
       - run: npm run build
-      - run: npx playwright install --with-deps chromium webkit
+      - name: Install both browser runtimes
+        id: browser_install
+        run: npx playwright install --with-deps chromium webkit
       - name: Chromium mobile browser gate
         id: chromium
-        run: npm run test:browser -- --project=chromium-mobile
+        if: ${{ !cancelled() && steps.browser_install.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: validation/ci-browser-chromium.json
+        run: npm run test:browser -- --project=chromium-mobile --reporter=line,json --output=test-results/chromium
       - name: WebKit mobile browser gate
-        if: success() || failure() && steps.chromium.outcome == 'failure'
-        run: npm run test:browser -- --project=webkit-mobile
-
+        id: webkit
+        if: ${{ !cancelled() && steps.browser_install.outcome == 'success' }}
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: validation/ci-browser-webkit.json
+        run: npm run test:browser -- --project=webkit-mobile --reporter=line,json --output=test-results/webkit
+      - name: Preserve actual browser diagnostics, including failures
+        if: ${{ !cancelled() && steps.browser_install.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: equinox-browser-diagnostics
+          path: |
+            validation/ci-browser-*.json
+            test-results/
+          if-no-files-found: error
+          retention-days: 7
       - name: Build for this repository's Pages path
-        shell: bash
         env:
           REPO_NAME: ${{ github.event.repository.name }}
         run: |
+          set -euo pipefail
           if [[ "$REPO_NAME" == *.github.io ]]; then
             BASE_PATH=/ npm run build
           else
             BASE_PATH="/$REPO_NAME/" npm run build
           fi
-
+      - name: Record exact hosted shell bytes from the verified build
+        run: |
+          python - <<'PYCODE'
+          import hashlib, json
+          from pathlib import Path
+          release = json.loads(Path('dist/release.json').read_bytes())
+          files = {p.relative_to('dist').as_posix(): {'sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'bytes': p.stat().st_size}
+                   for p in sorted(Path('dist').rglob('*')) if p.is_file() and p.suffix != '.map' and p.name != '.nojekyll'}
+          Path('validation/ci-hosted-manifest.json').write_text(json.dumps({'release': release, 'files': files}))
+          PYCODE
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: equinox-hosted-proof
+          path: validation/ci-hosted-manifest.json
+          if-no-files-found: error
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: equinox-static-build
           path: dist
           include-hidden-files: true
-
-      - uses: actions/upload-pages-artifact@v5.0.0
-        if: github.event_name != 'pull_request'
+          if-no-files-found: error
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        if: ${{ success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
         with:
           path: dist
           include-hidden-files: true
 
   deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: ${{ success() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     permissions:
       pages: write
       id-token: write
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
-
-      - name: Hosted smoke
+      - name: Download hashes from this run's verified build
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          name: equinox-hosted-proof
+          path: expected-release
+      - name: Hosted smoke of the exact deployed revision
         env:
           DEPLOY_URL: ${{ steps.deployment.outputs.page_url }}
+          EXPECTED_SHA: ${{ github.sha }}
+          EXPECTED_VERSION: ${{ needs.verify.outputs.app_version }}
         run: |
           set -euo pipefail
-          curl --fail --location --retry 6 --retry-delay 10 "$DEPLOY_URL" -o page.html
-          grep -q EQUINOX page.html
-          curl --fail --location --retry 3 "${DEPLOY_URL}manifest.webmanifest" -o manifest.json
-          python3 -c 'import json,os,urllib.parse; m=json.load(open("manifest.json")); base=urllib.parse.urlsplit(os.environ["DEPLOY_URL"]).path.rstrip("/")+"/"; assert m["name"] == "EQUINOX" and m["display"] == "standalone" and m["start_url"] == base and m["scope"] == base'
-          curl --fail --location --retry 3 "${DEPLOY_URL}sw.js" -o sw.js
-          grep -q 'ACTIVATE_UPDATE' sw.js
-          grep -q 'EQUINOX' sw.js
+          python3 - <<'PYCODE'
+          import hashlib, json, os, subprocess
+          from pathlib import Path, PurePosixPath
+          from urllib.parse import urlsplit, quote
+          expected = json.loads(Path('expected-release/ci-hosted-manifest.json').read_bytes())
+          release = {'appVersion': os.environ['EXPECTED_VERSION'], 'sourceRevision': os.environ['EXPECTED_SHA']}
+          assert expected['release'] == release, 'Proof artifact has wrong release identity'
+          base_url = os.environ['DEPLOY_URL'].rstrip('/') + '/'
+          location = urlsplit(base_url)
+          assert location.scheme == 'https' and not location.query and not location.fragment
+          required = {'index.html', 'manifest.webmanifest', 'sw.js', 'release.json'}
+          assert required <= expected['files'].keys()
+          downloaded = {}
+          for name, metadata in expected['files'].items():
+              path = PurePosixPath(name)
+              assert name and not path.is_absolute() and all(p not in ('', '.', '..') for p in name.split('/'))
+              url = base_url + quote(name, safe='/') + '?revision=' + release['sourceRevision']
+              response = subprocess.run(['curl', '--fail', '--location', '--retry', '3', '--connect-timeout', '10', '--max-time', '60', '--silent', '--show-error', url], check=True, capture_output=True).stdout
+              assert len(response) == metadata['bytes'] and hashlib.sha256(response).hexdigest() == metadata['sha256'], 'Hosted bytes mismatch: ' + name
+              if name in required: downloaded[name] = response
+          assert json.loads(downloaded['release.json']) == release
+          manifest = json.loads(downloaded['manifest.webmanifest'])
+          assert manifest['name'] == 'EQUINOX' and manifest['display'] == 'standalone'
+          assert manifest['id'] == manifest['scope'] == manifest['start_url'] == location.path
+          assert b'ACTIVATE_UPDATE' in downloaded['sw.js'] and b'EQUINOX' in downloaded['index.html']
+          print('Exact hosted shell, assets, release identity and scope: PASS')
+          PYCODE
