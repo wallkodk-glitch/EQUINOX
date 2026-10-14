@@ -47,9 +47,9 @@ test('a late response for a key replaced in another tab cannot publish status or
  await other.getByRole('button', { name: 'Replace key CoinGecko', exact: true }).click();
  await other.getByLabel('API key').fill(crypto.randomUUID());
  await other.getByRole('button', { name: 'Save locally' }).click();
- await expect(page.locator('.provider-row').filter({ hasText: 'CoinGecko' })).toContainText('Credential state changed');
  await page.evaluate(() => (window as unknown as { releaseOldCredentialRequest: () => void }).releaseOldCredentialRequest());
  await expect(page.getByRole('button', { name: 'Test connection CoinGecko', exact: true })).toBeEnabled();
+ await expect(page.locator('.provider-row').filter({ hasText: 'CoinGecko' })).toContainText('Credential state changed');
  await expect(page.getByText('Connected ✓', { exact: true })).toHaveCount(0);
  await expect(page.getByTestId('market-references')).toHaveCount(0);
  const after = JSON.parse(await backupText(page));

@@ -13,7 +13,7 @@
     "sha256": "f481df7c1fa7d6ba404dddf406c6e2f3d10269309038833999b7dd7d273994db",
     "appVersion": "1.3.3"
   },
-  "entryCount": 260,
+  "entryCount": 261,
   "scope": "Every archived regular file except this manifest; workflows hashed separately. No dist, dependencies, traces or financial exports.",
   "files": {
     ".gitignore": {
@@ -569,7 +569,7 @@
       "bytes": 10909
     },
     "tests/browser/hardening.spec.ts": {
-      "sha256": "90b10aadf66f0604cce72dde524e1cc2a911beee55b44d194466a941a1249a2b",
+      "sha256": "2ce0e9b3c3f2e8cb17faaf017321b7a05be79ce336eb6bcc09e815ee780cc5f1",
       "bytes": 11316
     },
     "tests/browser/helpers.ts": {
@@ -581,7 +581,7 @@
       "bytes": 2758
     },
     "tests/browser/market-settings.spec.ts": {
-      "sha256": "8a1892baa0e5cb795163e37bb039dde00098a0ac2caaea981d275a8f284ec694",
+      "sha256": "ce901dc3871e58198a5379994e0373e6e7011a5f9cea69d91eb2fe0f5db32f8b",
       "bytes": 11579
     },
     "tests/browser/nationalbank.spec.ts": {
@@ -907,6 +907,10 @@
     "validation/final-workflow-static.json": {
       "sha256": "f63c81b41b43f04563e5f173f337efdcead39ebb9edc2e905c7166d58af8254b",
       "bytes": 1073
+    },
+    "validation/github-browser-harness-correction.json": {
+      "sha256": "f22ef1f4c49bbc7856000e263e117f352e0cce1ad8625bc33c98fd4c0db09a95",
+      "bytes": 1741
     },
     "validation/node-snapshot.json": {
       "sha256": "33539e44fc0c0e87b8d32778ca1392157b847f0acc1fec76e2dc70f9332db4cc",

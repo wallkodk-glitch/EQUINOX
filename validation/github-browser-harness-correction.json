@@ -1,0 +1,40 @@
+{
+  "format": "EQUINOX_GITHUB_BROWSER_HARNESS_CORRECTION_V1",
+  "appVersion": "1.3.4",
+  "releaseStatus": "BLOCKED",
+  "githubRunId": 38626030958,
+  "githubCommit": "3f7fbe6025a2d7bcc2791632e83420e29d7e1a03",
+  "observedBrowserResults": {
+    "chromium-mobile": {
+      "passed": 45,
+      "failed": 2,
+      "total": 47
+    },
+    "webkit-mobile": {
+      "passed": 45,
+      "failed": 2,
+      "total": 47
+    }
+  },
+  "rootCause": [
+    {
+      "test": "tests/browser/hardening.spec.ts :: a demo history file held across exit cannot alter the personal database",
+      "classification": "TEST_HARNESS_DEFECT",
+      "evidence": "Both engines timed out waiting for getByLabel(Importér datasæt); production input aria-label is Importér historik.",
+      "correction": "Use the actual Importér historik label before and after the held File.text() race."
+    },
+    {
+      "test": "tests/browser/market-settings.spec.ts :: a late response for a key replaced in another tab cannot publish status or reference cache",
+      "classification": "TEST_HARNESS_ORDERING_DEFECT",
+      "evidence": "Both engines observed Tester… while the deliberately held request was still running; the status assertion ran before releasing that request.",
+      "correction": "Release the held response, wait for the test button to re-enable, then assert Credential state changed and the no-publication invariants."
+    }
+  ],
+  "productionFilesChanged": [],
+  "testFilesChanged": [
+    "tests/browser/hardening.spec.ts",
+    "tests/browser/market-settings.spec.ts"
+  ],
+  "runtimeRevalidation": "REQUIRED",
+  "note": "This artifact records diagnosis and harness correction only. It does not claim the corrected browser tests have executed successfully."
+}

@@ -39,13 +39,13 @@ test('a demo history file held across exit cannot alter the personal database', 
       return text.call(this);
     };
   });
-  await page.getByLabel('Importér datasæt', { exact: true }).setInputFiles({
+  await page.getByLabel('Importér historik', { exact: true }).setInputFiles({
     name: 'held-history.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(fixture.normalizedInput)),
   });
   await page.waitForFunction(() => (window as unknown as { demoFileHeld: boolean }).demoFileHeld);
   await page.getByRole('button', { name: 'Afslut demo' }).click();
   await page.evaluate(() => (window as unknown as { releaseDemoFile: () => void }).releaseDemoFile());
-  await expect(page.getByLabel('Importér datasæt', { exact: true })).toBeEnabled();
+  await expect(page.getByLabel('Importér historik', { exact: true })).toBeEnabled();
   expect(await readState()).toEqual(before);
   await expect(page.getByText('Historik importeret.', { exact: false })).toHaveCount(0);
   await page.reload(); await waitForInteractive(page);
