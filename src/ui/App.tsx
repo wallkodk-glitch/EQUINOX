@@ -125,6 +125,7 @@ export function App() {
     pending = useRef(0),
     committing = useRef(false),
     calculating = useRef(false),
+    calculationContext = useRef(0),
     updateApproved = useRef(false),
     filePending = useRef(false),
     stateRef = useRef(state),
@@ -213,6 +214,7 @@ export function App() {
     let reload = false;
     const change = () => {
       if (reload) location.reload();
+      else setUpdate(registration => registration?.waiting ? registration : null);
     };
     navigator.serviceWorker.addEventListener("controllerchange", change);
     navigator.serviceWorker
@@ -281,6 +283,7 @@ export function App() {
     }
   }
   function startDemo() {
+    calculationContext.current++;
     const d = initialState(),
       now = new Date().toISOString();
     d.capital = 2500;
@@ -303,7 +306,8 @@ export function App() {
     e.preventDefault();
     if (calculating.current || committing.current || updateApproved.current || filePending.current) return;
     calculating.current = true;
-    const wasDemo = demoRef.current !== null,
+    const context = calculationContext.current,
+      wasDemo = demoRef.current !== null,
       source = structuredClone(demoRef.current ?? stateRef.current);
     setBusy(true);
     setError("");
@@ -317,7 +321,8 @@ export function App() {
         persist,
       );
       if (!wasDemo) setHistory((h) => [s, ...h.filter((x) => x.id !== s.id)]);
-      if (wasDemo === (demoRef.current !== null)) setCurrent(s);
+      // Returning to the same mode does not return to the same editing session.
+      if (context === calculationContext.current) setCurrent(s);
     } catch (e) {
       setError(String(e instanceof Error ? e.message : e));
     } finally {
@@ -346,6 +351,7 @@ export function App() {
     type: "dataset" | "backup" | "snapshot",
   ) {
     if (!file || calculating.current || committing.current || updateApproved.current || filePending.current) return;
+    const context = calculationContext.current;
     filePending.current = true; setFileBusy(true);
     try {
       if (type !== "backup" && file.size > 50_000_000)
@@ -355,6 +361,9 @@ export function App() {
           "Stor backup: validering kan tage tid og kræver ledig hukommelse. Eksisterende data ændres først efter fuld validering.",
         );
       const text = await file.text();
+      // A demo file belongs to the session that selected it, not whichever
+      // real/demo editor happens to be active after asynchronous completion.
+      if (context !== calculationContext.current) return;
       if (committing.current || updateApproved.current) throw new Error("REQUEST_IN_PROGRESS");
       if (type === "dataset") {
         const d = new ImportProvider().readHistory(JSON.parse(text));
@@ -371,12 +380,14 @@ export function App() {
         );
       } else if (type === "snapshot") {
         const s = await validateSeal(JSON.parse(text));
+        if (context !== calculationContext.current) return;
         setCurrent(s);
         openDetails("data");
         setNotice("Historisk snapshot genberegnet og hash verificeret.");
       } else {
         await queue.current.catch(() => {});
         const revisionNow = await db.current!.currentRevision();
+        if (context !== calculationContext.current) return;
         const restored = await db.current!.restore(text, revisionNow);
         revision.current = restored.revision;
         const r = await db.current!.load();
@@ -394,7 +405,8 @@ export function App() {
         );
       }
     } catch (e) {
-      setError(String(e instanceof Error ? e.message : e));
+      if (context === calculationContext.current)
+        setError(String(e instanceof Error ? e.message : e));
     } finally { filePending.current = false; setFileBusy(false); }
   }
   async function acceptRiskDataset(dataset: RetrospectiveDataset, signal: AbortSignal) {
@@ -501,6 +513,7 @@ export function App() {
             <button
               type="button"
               onClick={() => {
+                calculationContext.current++;
                 setDemo(null);
                 demoRef.current = null;
                 setCurrent(null);

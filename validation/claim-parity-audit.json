@@ -1,0 +1,111 @@
+{
+  "format": "EQUINOX_CLAIM_PARITY_AUDIT_V1",
+  "input": {
+    "archive": "EQUINOX-v1.3.2-hardened-96fee561cdd34a92.zip",
+    "sha256": "30e5ba825b00e1f16f531c945d668148ecca3ca1864559fb40f10f0f991eba3d",
+    "bytes": 1294165,
+    "appVersion": "1.3.2",
+    "engineVersion": "1.0.1",
+    "marketDataModelVersion": "1.1.2",
+    "fileCount": 240,
+    "productFiles": 237,
+    "infrastructureFiles": 2,
+    "crc": "PASS",
+    "sourceGate": "PASS",
+    "baselineUnitTests": {
+      "passed": 276,
+      "failed": 0
+    }
+  },
+  "finalAppVersion": "1.3.3",
+  "finalReleaseStatus": "BLOCKED",
+  "redReproductions": [
+    {
+      "run": "raw-recovery-red",
+      "purpose": "Expected pre-fix reproduction, not final release gate",
+      "passed": 15,
+      "failed": 7,
+      "failedCases": [
+        {
+          "test": "raw recovery refuses lossy JSON export of NaN while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of Infinity while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of negative zero while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of Date while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of Map while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of undefined field while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        },
+        {
+          "test": "raw recovery refuses lossy JSON export of sparse array while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        }
+      ]
+    },
+    {
+      "run": "raw-alias-red",
+      "purpose": "Expected pre-fix reproduction, not final release gate",
+      "passed": 0,
+      "failed": 1,
+      "failedCases": [
+        {
+          "test": "raw recovery refuses lossy JSON export of shared object identity while retaining the original in recovery",
+          "observed": "Error: promise resolved \"'{\\n  \"format\": \"EQUINOX_RAW_RECOVERY\"…'\" instead of rejecting"
+        }
+      ]
+    }
+  ],
+  "runtimeGateScope": "Both local browser launch probes exit2; no application browser assertions ran. 45 tests per browser discovered/typechecked only.",
+  "browserInstallation": {
+    "chromium": "Download archive invalid/truncated on all attempted mirrors; executable unavailable",
+    "webkit": "Engine downloaded, host libraries unavailable; dependency installer blocked by setgroups/setegid/seteuid permissions",
+    "scope": "Current-session attempts; no environment protections bypassed"
+  },
+  "financialSource": "All 27 non-UI source files other than persistence/store.ts are byte-identical to working baseline, including main.tsx and calendar data. Original frozen audit additionally verifies24 files against1.3.1 ancestry.",
+  "productFixes": [
+    "P1 raw JSON recovery fail-closed preservation",
+    "P2 editing-session calculation publication guard"
+  ],
+  "supportFixes": [
+    "R1 actual working-baseline manifest identity, retaining frozen ancestry"
+  ],
+  "documentationFixes": [
+    "D1 raw corrupt recovery is not a credential-redaction guarantee",
+    "D2 update guards are per approving App instance",
+    "D3 canonical README accounting/orchestration ownership",
+    "D4 canonical README legacy/current document and release routes"
+  ],
+  "checksArtifact": "validation/final-checks.json",
+  "claimsArtifact": "validation/claim-parity.json",
+  "pathsArtifact": "validation/claim-parity-paths.json",
+  "notExecuted": [
+    "Chromium application tests",
+    "WebKit application tests",
+    "GitHub Actions run",
+    "Actual GitHub import/push",
+    "Deployment",
+    "Actual hosted HTTPS smoke",
+    "Live provider authentication/CORS",
+    "Physical iPhone",
+    "Installed physical PWA"
+  ],
+  "finalCheckRun": {
+    "startedAt": "2026-10-13T17:36:15.194Z",
+    "finishedAt": "2026-10-13T17:37:09.210Z",
+    "status": "BLOCKED"
+  }
+}

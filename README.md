@@ -1,22 +1,22 @@
-# EQUINOX v1.3.2 — Mineral Instrument
+# EQUINOX v1.3.4 — Mineral Instrument
 
 Matematisk buy-only kapitalallokering i DKK, med en lokal React/TypeScript PWA. EQUINOX Engine er uafhængig af React. EQUINOX App viser portefølje, targets, ordrer, risiko og det immutable beregningsgrundlag.
 
-**Aktuel status: BLOCKED.** App **1.3.2**, Engine **1.0.1**, MarketDataModel **1.1.2**; snapshot schema 1/2 er uændret. Denne patch retter reproducerede persistence-/netværksfejl og hærder input, service worker, browser-tests, import og releasevalidering. Mineral Instrument-designet og de finansielle modeller er bevaret. Lokale browser-runtimes kan ikke starte; fulde Chromium- og WebKit-gates i GitHub skal bestå, derefter fysisk iPhone. Se [aktuel rapport og changelog](docs/final-hardening/report.md) og [device-gates](docs/iphone-checklist.md). Ingen browser-/device-PASS er udledt af unit tests.
+**Aktuel status: BLOCKED.** App **1.3.4**, Engine **1.0.1**, MarketDataModel **1.1.2**; financial schema 1 og snapshot schemas 1/2 er uændrede. Det uafhængige red team reproducerede fire problemer: en eksisterende undefined-state-record blev behandlet som fravær, en demo-filimport kunne ramme reel state efter demo-exit, et stale update-banner blev stående efter anden klients worker-activation, og unsafe/exhausted revisioner kunne producere state, som det eksisterende schema afviser. Kun `store.ts` og `App.tsx` ændrer produktkode. **314/314** unit/integration-tests og runnable non-browser gates består; Chromium/WebKit er miljøblokeret, hosted og fysisk iPhone er NOT TESTED. Se [aktuel red-team-rapport](docs/claim-parity/report.md), [claim-overlay](docs/claim-parity/claim-matrix.csv), [changelog](docs/claim-parity/CHANGELOG.md) og [device-gates](docs/iphone-checklist.md). Original Astra-evidence er bevaret som historisk v1.3.3-materiale, ikke som nye v1.3.4-runtime-PASS.
 
 Den accepterede **DATA-INTEGRATION PASS** fra v1.1.2 er bevaret for det verificerede historiske vindue. Faktiske Massive-observationer, officiel Nationalbank-FX og endelig TSM ADR-dividend er genafspillet gennem gate og Engine uden ændrede hashes. Dette UI-arbejde er ikke en ny live provider-verifikation. Native browser/local-key transport og deployed-origin CORS er stadig NOT TESTED.
 
-Den tidligere verificerede faktiske historik er **2025-10-03–2026-10-06**, 253 observationer og 252 returns. Efter separat brugeraccept og fornyet primærkilde-review dækker TSM issuer-evidensen **2025-01-01–2026-10-08**; 9. oktober og bredere ikke-dokumenterede perioder afvises fortsat. Dette er ikke ny autentificeret market acquisition eller CORS-evidens. De syv gross-beløb, ex-datoer og return-semantik er uændrede; betalingsdatoen 8. oktober giver ikke endnu et dividend-return. FX og final ADR-konvertering er eksplicit **retrospective**, ikke point-in-time backtest-evidens. Ældre release-/UI-/data-rapporter og scripts er historisk evidens; aktuel status findes under `docs/final-hardening`.
+Den tidligere verificerede faktiske historik er **2025-10-03–2026-10-06**, 253 observationer og 252 returns. Efter separat brugeraccept og fornyet primærkilde-review dækker TSM issuer-evidensen **2025-01-01–2026-10-08**; 9. oktober og bredere ikke-dokumenterede perioder afvises fortsat. Dette er ikke ny autentificeret market acquisition eller CORS-evidens. De syv gross-beløb, ex-datoer og return-semantik er uændrede; betalingsdatoen 8. oktober giver ikke endnu et dividend-return. FX og final ADR-konvertering er eksplicit **retrospective**, ikke point-in-time backtest-evidens. Ældre release-/UI-/data-rapporter og scripts er historisk evidens; aktuel status findes under `docs/claim-parity`.
 
 ## Brug appen
 
 1. Åbn den deployede HTTPS-adresse. Der er ingen konto, backend, cloud sync, telemetry eller brokerforbindelse.
 2. Fra **Overview → Redigér portefølje** indtastes antal, samlet cost basis og aktuel pris **i DKK** for alle fem aktiver. Cost basis er ikke markedsværdi. Bekræft kun priser, som faktisk er aktuelle; de udløber efter 24 timer. Overview viser manuelle værdier separat fra providerreferencer og historisk beregnet risiko.
 3. Indstil quantity increments og minimumskøb efter din platforms faktiske regler. Defaults er hele aktier og 0,00000001 BTC/ETH. Dette er antagelser, ikke verificerede brokerregler.
-4. Under **Overview / Allocate** indtastes ny kapital og vælges model. Equal Weight kræver ingen historik. Inverse Volatility/ERC kræver historik efter [datakontrakten](docs/data-contract.md). **Risk** viser tallene fra det valgte snapshot; ændrede input er tydeligt mærket.
+4. Under **Overview / Allocate** indtastes ny kapital og vælges model. Equal Weight kræver ingen historik. Inverse Volatility/ERC kræver accepteret historik efter den relevante kontrakt: [aktuel schema 2](docs/final-data-closure/data-semantics.md) eller [legacy schema 1](docs/data-contract.md). **Risk** viser tallene fra det valgte snapshot; ændrede input er tydeligt mærket.
 5. Egne importerede data er **ikke uafhængigt verificerede**. Appen kræver eksplicit accept af denne begrænsning. Syntetisk demo er tydeligt mærket og ændrer ikke den personlige portefølje.
 6. **Calculation Details** åbnes fra købsplan, Risk eller snapshot-historik. Det viser datagrundlag, full-precision targets, solver, covariance/correlation, execution, risiko, advarsler og hash. Købsplanen er afledt af snapshot; intet handles automatisk.
-7. Under **Settings → Backup og historik** eksporteres backup til Filer. Ved restore valideres alt før en atomisk ændring; den gamle database bevares som recovery-kopi. Credentials er et separat storage-domæne og indgår ikke i finansiel backup eller snapshots.
+7. Under **Settings → Backup og historik** eksporteres backup til Filer. Ved restore valideres alt før en atomisk ændring; den gamle database bevares som recovery-kopi. Credentials er et separat storage-domæne og indgår ikke i normal finansiel backup eller nye validerede snapshots. Raw recovery bevarer ukendte gamle felter og kan derfor være følsom. Kan en rå record ikke repræsenteres tabsfrit som JSON, stopper eksporten med `RAW_RECOVERY_NOT_JSON_SAFE`; de lagrede records og recovery-kopier bevares.
 
 Fees er eksplicit **0**. Spread, slippage, valutavekslingsomkostninger, skat og ADR-gebyrer er ikke modelleret. Beløb er indikative; restkontanter er legitime. Browserlagring er ikke en erstatning for backup og er ikke krypteret af EQUINOX.
 
@@ -41,7 +41,7 @@ node scripts/check-final-risk.mjs
 python3 reference/final-risk.py
 ```
 
-Det er et replay af gemte observationer ved deres oprindelige acquisition-clock. `node scripts/audit-v13.mjs` kontrollerer frosne kildefiler mod hashes fra den faktisk leverede 1.3.1-ZIP. `node scripts/validate-v13.mjs /sti/til/udpakket-baseline/EQUINOX` kan desuden sammenligne snapshots direkte med den oprindelige ZIP. Uden argument bruges de medleverede immutable fixtures. Historiske rapporter og andre ældre UI/data-packagere er arkivevidens, ikke de aktuelle gates.
+Det er et replay af gemte observationer ved deres oprindelige acquisition-clock. `node scripts/audit-v13.mjs` kontrollerer frosne kildefiler mod de bevarede hashes fra den oprindelige 1.3.1-ZIP. `validation/final-baseline.json` identificerer den aktuelle 1.3.3 working ZIP separat og bevarer dens 1.3.2-parent; ingen af dem erstatter frozen-referencehashes. `node scripts/validate-v13.mjs /sti/til/udpakket-baseline/EQUINOX` kan desuden sammenligne snapshots direkte med en udpakket baseline. Uden argument bruges de medleverede immutable fixtures. Historiske rapporter og andre ældre UI/data-packagere er arkivevidens, ikke de aktuelle gates.
 
 Aktuel pakning: `python3 scripts/package-v13.py /sti/udenfor/source`. Ved miljøblokerede browsere kræver en tydeligt BLOCKED handoff eksplicit `--allow-blocked`; et FAIL i correctness-gates afvises altid. Pakkeren skaber et nyt content-baseret filnavn med no-clobber, komplet manifest og efterfølgende ZIP/import-verifikation. Genpak efter kildeændringer: CI afviser ændrede bytes i manifest-dækkede filer.
 ## GitHub Pages
@@ -66,17 +66,19 @@ Skift af origin eller repository-path kan adskille appens lokale data. Eksporté
 
 | Boundary | Kode | Ansvar |
 |---|---|---|
-| A · Data Truth | `domain/`, `market-data/`, `portfolio/` | Asset order, provenance, calendar, FX, corporate actions, kvalitetsgate, beholdninger |
-| B · Mathematical Target | `risk/`, `optimization/` | Sample covariance, diagnostik, EW/IV/ERC, separat policy og constrained target |
-| C · Executable Target | `execution/` | Eksakt kontinuerlig L2-projektion, deterministiske increments, fees=0 og residual |
-| D · Proof | `snapshots/`, `persistence/` | Genberegning, tolerancer, invariants, immutable snapshots, SHA-256 og atomisk lagring |
-| App | `ui/`, PWA build-script | Kun input/præsentation, lokal navigation, offline shell og godkendte opdateringer |
+| A · Data Truth | `src/domain/`, `src/market-data/` | Asset order, provenance, calendar, FX, corporate actions og kvalitetsgate |
+| B · Accounting / Mathematical Target | `src/portfolio/`, `src/risk/`, `src/optimization/` | Markedsværdi, cost basis, P/L, current weights, sample covariance, diagnostik, EW/IV/ERC og separat policy |
+| C · Executable Target | `src/execution/` | Eksakt kontinuerlig L2-projektion, deterministiske increments, fees=0 og residual |
+| D · Proof | `src/snapshots/`, `src/persistence/` | Genberegning, tolerancer, invariants, immutable snapshots, SHA-256 og atomisk lagring |
+| App | `src/ui/`, PWA build-script | Input/præsentation og workflow-orkestrering; lokal navigation, offline shell og godkendte opdateringer uden at eje domænereglerne |
 
 - [Matematisk audit og eksplicitte designvalg](docs/audit.md)
 - [Uafhængig referenceaudit](docs/reference-audit.md)
-- [Provider-research og begrænsninger](docs/data-provider-research.md)
-- [Importkontrakt og prissemantik](docs/data-contract.md)
-- [Aktuel v1.3.2-validering](docs/final-hardening/report.md)
+- [Historisk provider-research](docs/data-provider-research.md)
+- [Legacy schema-1-importkontrakt](docs/data-contract.md)
+- [Aktuel v1.3.4 red-team-validering](docs/claim-parity/report.md)
+- [Historisk Astra v1.3.3 parity-audit](docs/claim-parity/ASTRA-REPORT-v1.3.3.md)
+- [Historisk v1.3.2-hardening](docs/final-hardening/report.md)
 - [v1.3-research og visuel strategi](docs/v1.3/strategy.md)
 - [UI-designsystem, numerics og symbolske ankere](docs/ui-v1/design-system.md)
 - [Research og visuel strategi](docs/ui-v1/visual-strategy.md)

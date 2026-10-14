@@ -18,6 +18,47 @@ async function settings(page:import('@playwright/test').Page){
  const backup=page.locator('.settings-group').filter({has:page.getByText('Backup og historik',{exact:true})});if(await backup.getAttribute('open')===null)await backup.locator('summary').first().click();
 }
 const prices=()=>({bitcoin:{usd:100000,last_updated_at:Math.floor(Date.now()/1000)-5},ethereum:{usd:4000,last_updated_at:Math.floor(Date.now()/1000)-5}});
+test('a late response for a key replaced in another tab cannot publish status or reference cache', async ({ page, context }) => {
+ await page.goto(''); await waitForInteractive(page); await settings(page);
+ await page.getByRole('button', { name: 'Connect CoinGecko', exact: true }).click();
+ await page.getByLabel('API key').fill(crypto.randomUUID());
+ await page.getByRole('button', { name: 'Save locally' }).click();
+ const before = JSON.parse(await backupText(page));
+ const other = await context.newPage(); await other.goto(''); await waitForInteractive(other); await settings(other);
+ await page.evaluate(() => {
+  const original = window.fetch.bind(window);
+  let release!: () => void;
+  const held = new Promise<void>(resolve => { release = resolve; });
+  Object.assign(window, { oldCredentialRequestHeld: false, releaseOldCredentialRequest: release });
+  window.fetch = async (...args) => {
+   if (String(args[0]).startsWith('https://api.coingecko.com/')) {
+    Object.assign(window, { oldCredentialRequestHeld: true });
+    // Deliberately ignore abort to exercise the publication guard against a
+    // transport completing after cancellation, rather than only fetch abort.
+    await held;
+    const at = Math.floor(Date.now() / 1000) - 5;
+    return new Response(JSON.stringify({ bitcoin: { usd: 100000, last_updated_at: at }, ethereum: { usd: 4000, last_updated_at: at } }), { headers: { 'Content-Type': 'application/json' } });
+   }
+   return original(...args);
+  };
+ });
+ await page.getByRole('button', { name: 'Test connection CoinGecko', exact: true }).click();
+ await page.waitForFunction(() => (window as unknown as { oldCredentialRequestHeld: boolean }).oldCredentialRequestHeld);
+ await other.getByRole('button', { name: 'Replace key CoinGecko', exact: true }).click();
+ await other.getByLabel('API key').fill(crypto.randomUUID());
+ await other.getByRole('button', { name: 'Save locally' }).click();
+ await expect(page.locator('.provider-row').filter({ hasText: 'CoinGecko' })).toContainText('Credential state changed');
+ await page.evaluate(() => (window as unknown as { releaseOldCredentialRequest: () => void }).releaseOldCredentialRequest());
+ await expect(page.getByRole('button', { name: 'Test connection CoinGecko', exact: true })).toBeEnabled();
+ await expect(page.getByText('Connected ✓', { exact: true })).toHaveCount(0);
+ await expect(page.getByTestId('market-references')).toHaveCount(0);
+ const after = JSON.parse(await backupText(page));
+ expect(after.state).toEqual(before.state); expect(after.snapshots).toEqual(before.snapshots);
+ await page.reload(); await waitForInteractive(page); await settings(page);
+ await expect(page.getByTestId('market-references')).toHaveCount(0);
+ await expect(page.locator('.provider-row').filter({ hasText: 'CoinGecko' })).toContainText('Saved locally · not tested');
+ await other.close();
+});
 test('credential sheet saves, masks, persists, replaces, removes and excludes backup',async({page})=>{
  const key=crypto.randomUUID(),replacement=crypto.randomUUID();await page.goto(''); await waitForInteractive(page);await expect(page.getByRole('dialog')).toHaveCount(0);await settings(page);
  await page.getByRole('button',{name:'Connect Massive',exact:true}).click();const dialog=page.getByRole('dialog');await expect(dialog).toBeVisible();await expect(dialog.getByLabel('API key')).toHaveAttribute('type','password');

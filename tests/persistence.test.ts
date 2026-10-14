@@ -4,6 +4,98 @@ import { initialState, migrateState } from "../src/persistence/schema";
 import { Store } from "../src/persistence/store";
 import { calculate, inputFromState } from "../src/snapshots/calculate";
 import { seal } from "../src/snapshots/integrity";
+import { demoDataset } from "../src/market-data/demo";
+
+async function writeRawState(name: string, value: unknown) {
+  await new Promise<void>((resolve, reject) => {
+    const request = indexedDB.open(name);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const db = request.result, transaction = db.transaction('state', 'readwrite');
+      transaction.oncomplete = () => { db.close(); resolve(); };
+      transaction.onabort = transaction.onerror = () => { db.close(); reject(transaction.error); };
+      transaction.objectStore('state').put(value, 'current');
+    };
+  });
+}
+
+it.each([
+  ['NaN', NaN],
+  ['Infinity', Infinity],
+  ['negative zero', -0],
+  ['Date', new Date('2026-10-02T06:00:00.000Z')],
+  ['Map', new Map([['original', 91]])],
+  ['undefined field', { retained: undefined }],
+  ['sparse array', new Array(2)],
+  ['shared object identity', (() => { const retained = { value: 91 }; return { first: retained, second: retained }; })()],
+])('raw recovery refuses lossy JSON export of %s while retaining the original in recovery', async (kind, unknownOldField) => {
+  const name = crypto.randomUUID(), db = await Store.open(name);
+  try {
+    await db.save(initialState(), 0);
+    const backup = await db.backup();
+    const corrupt = { ...initialState(), revision: 'corrupt', unknownOldField };
+    await writeRawState(name, corrupt);
+    await expect(db.load()).rejects.toThrow('CORRUPTED_OR_UNSUPPORTED_STATE');
+    await expect(db.rawBackup()).rejects.toThrow('RAW_RECOVERY_NOT_JSON_SAFE');
+    await db.restore(backup, await db.currentRevision());
+    const recovered = (await db.recoveryCopies())[0].state;
+    expect(recovered).toStrictEqual(corrupt);
+    if (kind === 'shared object identity') expect(recovered.unknownOldField.first).toBe(recovered.unknownOldField.second);
+    await expect(db.rawBackup()).rejects.toThrow('RAW_RECOVERY_NOT_JSON_SAFE');
+    expect(JSON.parse(await db.backup()).state.capital).toBe(initialState().capital);
+  } finally { db.close(); }
+});
+
+it('raw recovery preserves JSON-safe unknown old fields and restore retains them unchanged', async () => {
+  const name = crypto.randomUUID(), db = await Store.open(name);
+  try {
+    await db.save(initialState(), 0);
+    const backup = await db.backup();
+    const corrupt = { ...initialState(), revision: 'corrupt', unknownOldField: { original: [0, null, 'evidence'] }, credentials: { legacyMarker: 'synthetic-forensic-marker' } };
+    await writeRawState(name, corrupt);
+    expect(JSON.parse(await db.rawBackup()).state).toStrictEqual(corrupt);
+    await db.restore(backup, await db.currentRevision());
+    expect((await db.recoveryCopies())[0].state).toStrictEqual(corrupt);
+    expect(JSON.parse(await db.rawBackup()).recovery[0].state).toStrictEqual(corrupt);
+  } finally { db.close(); }
+});
+
+it('fresh database and restore from absence remain JSON-safe without inventing a previous state', async () => {
+  const db = await Store.open(crypto.randomUUID());
+  try {
+    expect(JSON.parse(await db.rawBackup())).not.toHaveProperty('state');
+    await db.restore(await db.backup(), 0);
+    expect(JSON.parse(await db.rawBackup()).recovery[0]).not.toHaveProperty('state');
+  } finally { db.close(); }
+});
+
+it('raw export still preserves a valid risk dataset and its sealed calculation', async () => {
+  const db = await Store.open(crypto.randomUUID()), state = initialState(), now = '2026-10-02T06:00:00.000Z';
+  state.dataset = demoDataset(now); state.model = 'erc';
+  state.holdings.forEach(h => { h.priceDKK = 100; h.priceAsOf = now; });
+  const snapshot = await seal(calculate(inputFromState(state, now)));
+  try {
+    const saved = await db.save(state, 0, snapshot), raw = JSON.parse(await db.rawBackup());
+    expect(raw.state).toEqual(saved); expect(raw.snapshots).toEqual([snapshot]);
+  } finally { db.close(); }
+});
+
+it('simultaneous stale writers on separate connections commit exactly one complete state/snapshot pair', async () => {
+  const name = crypto.randomUUID(), a = await Store.open(name), b = await Store.open(name);
+  const now = '2026-10-02T06:00:00.000Z', base = initialState();
+  base.holdings.forEach(h => { h.priceDKK = 100; h.priceAsOf = now; });
+  const states = [1234, 4321].map(capital => ({ ...base, capital }));
+  const snapshots = await Promise.all(states.map(state => seal(calculate(inputFromState(state, now)))));
+  try {
+    const results = await Promise.allSettled([a.save(states[0], 0, snapshots[0]), b.save(states[1], 0, snapshots[1])]);
+    expect(results.filter(r => r.status === 'fulfilled')).toHaveLength(1);
+    const rejected = results.find(r => r.status === 'rejected');
+    expect(rejected?.status === 'rejected' && String(rejected.reason)).toContain('STATE_CONFLICT');
+    const winner = results.findIndex(r => r.status === 'fulfilled'), loaded = await a.load();
+    expect(loaded.state).toEqual({ ...states[winner], revision: 1 });
+    expect(loaded.snapshots).toEqual([snapshots[winner]]);
+  } finally { a.close(); b.close(); }
+});
 it("migration is idempotent and unknown future/corrupt state fails", () => {
   const s = initialState();
   expect(migrateState(s)).toEqual(migrateState(migrateState(s)));

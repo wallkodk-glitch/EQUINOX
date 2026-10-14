@@ -59,7 +59,7 @@ manifest = {
     'format': 'EQUINOX_RELEASE_MANIFEST_V3', 'appVersion': version,
     'engineVersion': '1.0.1', 'marketDataModelVersion': '1.1.2', 'snapshotSchemaVersions': [1, 2],
     'releaseStatus': 'BLOCKED' if checks['status'] == 'BLOCKED' else 'RELEASE CANDIDATE — IPHONE VALIDATION PENDING',
-    'authoritativeBaseline': {'archive': baseline['inputArchive'], 'sha256': baseline['inputSHA256'], 'appVersion': baseline['inputAppVersion']},
+    'authoritativeBaseline': baseline.get('workingBaseline', {'archive': baseline['inputArchive'], 'sha256': baseline['inputSHA256'], 'appVersion': baseline['inputAppVersion']}),
     'entryCount': len(paths) + 1,
     'scope': 'Every archived regular file except this manifest; workflows hashed separately. No dist, dependencies, traces or financial exports.',
     'files': product,
@@ -124,7 +124,7 @@ receipt = {'status': 'PASS', 'scope': 'Archive re-verification and delivered imp
     'actualZipImportValidator': 'PASS'}
 with (output / 'ARCHIVE-VERIFICATION.json').open('x') as f:
     f.write(json.dumps(receipt, indent=2) + '\n')
-for source, name in [('docs/final-hardening/report.md', 'EQUINOX-v1.3.2-FINAL-REPORT.md'), ('docs/iphone-checklist.md', 'IPHONE-VALIDATION.md')]:
+for source, name in [('docs/claim-parity/report.md', f'EQUINOX-v{version}-CLAIM-PARITY-REPORT.md'), ('docs/iphone-checklist.md', 'IPHONE-VALIDATION.md')]:
     with (output / name).open('xb') as f:
         f.write((root / source).read_bytes())
 print(json.dumps(receipt, indent=2))

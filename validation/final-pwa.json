@@ -1,6 +1,6 @@
 {
   "format": "EQUINOX_UI_PWA_STATIC_V1",
-  "checkedAt": "2026-10-12T12:44:15.607Z",
+  "checkedAt": "2026-10-14T13:53:45.200Z",
   "status": "PASS",
   "scope": "Generated manifest/icon/brand checks plus Node VM worker request-guard and install-asset exercise only.",
   "manifest": {
@@ -72,16 +72,16 @@
   "shellAssetCount": 10,
   "assets": [
     {
+      "file": "index-BdPBzs7B.js",
+      "bytes": 503669,
+      "gzipBytes": 141584,
+      "sha256": "16bf8c1730ef95f5ccef9f947ae835c47dee4e5a921cb9aced2cc9d7cbcabeb3"
+    },
+    {
       "file": "index-Cn0XyK9b.css",
       "bytes": 28060,
       "gzipBytes": 6518,
       "sha256": "6b66330d12cb00ccbe2af92dc9adaf9305bd3e15e4da75b85ba00255aa44508d"
-    },
-    {
-      "file": "index-DRTVQSvt.js",
-      "bytes": 502728,
-      "gzipBytes": 141326,
-      "sha256": "6c69e1cea9ec0b11b6af8593e9f96137d58dde97225f53e21ba38bd7208b0b46"
     }
   ],
   "primaryBrandBytes": 130188,

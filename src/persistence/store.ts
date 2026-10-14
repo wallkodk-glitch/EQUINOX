@@ -24,10 +24,33 @@ const revisionOf = (raw: unknown) =>
   typeof raw === "object" &&
   "revision" in raw &&
   typeof raw.revision === "number" &&
-  Number.isInteger(raw.revision) &&
+  Number.isSafeInteger(raw.revision) &&
   raw.revision >= 0
     ? raw.revision
     : 0;
+const nextRevision = (revision: number) => {
+  const next = revision + 1;
+  requireThat(Number.isSafeInteger(next), "STATE_REVISION_EXHAUSTED");
+  return next;
+};
+
+// IndexedDB can retain values that JSON silently changes or drops. Raw export
+// must not turn corrupt forensic material into a misleading recovery file.
+// This check never rewrites the stored records or their recovery copies.
+function requireRecoveryJSON(value: unknown, seen = new Set<object>()): void {
+  if (value === null || typeof value === 'string' || typeof value === 'boolean') return;
+  if (typeof value === 'number' && Number.isFinite(value) && !Object.is(value, -0)) return;
+  if (typeof value !== 'object' || seen.has(value)) throw new Error('RAW_RECOVERY_NOT_JSON_SAFE');
+  if (Array.isArray(value)) {
+    const keys = Object.keys(value);
+    if (keys.length !== value.length || keys.some((key, index) => key !== String(index)))
+      throw new Error('RAW_RECOVERY_NOT_JSON_SAFE');
+  } else if (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null) {
+    throw new Error('RAW_RECOVERY_NOT_JSON_SAFE');
+  }
+  seen.add(value);
+  for (const child of Object.values(value)) requireRecoveryJSON(child, seen);
+}
 export class Store {
   private constructor(private db: IDBDatabase) {}
   static async open(name = "EQUINOX_V1"): Promise<Store> {
@@ -54,8 +77,10 @@ export class Store {
   async load() {
     const t = this.db.transaction(["state", "snapshots"], "readonly"),
       done = completed(t);
-    const [raw, snapshots] = await Promise.all([
-      req(t.objectStore("state").get("current")),
+    // get() returns undefined for BOTH absence and a stored undefined value.
+    // Keep record presence so corrupt data can never become a fresh state.
+    const [records, snapshots] = await Promise.all([
+      req(t.objectStore("state").getAll("current")),
       req(t.objectStore("snapshots").getAll()),
     ]);
     await done;
@@ -63,7 +88,7 @@ export class Store {
     for (const snapshot of snapshots)
       validated.push(await validateSeal(snapshot));
     return {
-      state: raw === undefined ? initialState() : migrateState(raw),
+      state: records.length === 0 ? initialState() : migrateState(records[0]),
       snapshots: validated,
     };
   }
@@ -77,11 +102,11 @@ export class Store {
     const t = this.db.transaction(["state", "snapshots"], "readwrite", { durability: "strict" }),
       done = completed(t);
     try {
-      const store = t.objectStore("state"), raw = await req(store.get("current"));
-      const old = raw === undefined ? initialState() : migrateState(raw);
+      const store = t.objectStore("state"), records = await req(store.getAll("current"));
+      const old = records.length === 0 ? initialState() : migrateState(records[0]);
       if (old.revision !== expectedRevision)
         throw new Error("STATE_CONFLICT: another tab saved newer data; reload before editing");
-      const state = { ...parsed, revision: old.revision + 1 };
+      const state = { ...parsed, revision: nextRevision(old.revision) };
       store.put(state, "current");
       if (validatedSnapshot) t.objectStore("snapshots").put(validatedSnapshot);
       await done;
@@ -113,17 +138,20 @@ export class Store {
         "readonly",
       ),
       done = completed(t);
-    const [state, snapshots, recovery] = await Promise.all([
-      req(t.objectStore("state").get("current")),
+    const [records, snapshots, recovery] = await Promise.all([
+      req(t.objectStore("state").getAll("current")),
       req(t.objectStore("snapshots").getAll()),
       req(t.objectStore("recovery").getAll()),
     ]);
     await done;
-    return JSON.stringify(
-      { format: "EQUINOX_RAW_RECOVERY", state, snapshots, recovery },
-      null,
-      2,
-    );
+    const raw = { format: "EQUINOX_RAW_RECOVERY", ...(records.length === 0 ? {} : { state: records[0] }), snapshots, recovery };
+    try {
+      requireRecoveryJSON(raw);
+      return JSON.stringify(raw, null, 2);
+    } catch {
+      // Do not echo potentially sensitive corrupt values in the error.
+      throw new Error('RAW_RECOVERY_NOT_JSON_SAFE');
+    }
   }
   async recoveryCopies() {
     const t = this.db.transaction("recovery"),
@@ -161,14 +189,14 @@ export class Store {
       ),
       done = completed(t);
     try {
-      const raw = await req(t.objectStore("state").get("current"));
+      const records = await req(t.objectStore("state").getAll("current")), raw = records[0];
       const revision = revisionOf(raw);
       if (revision !== expectedRevision) throw new Error("STATE_CONFLICT");
+      const restored = { ...state, revision: nextRevision(expectedRevision) };
       const oldSnapshots = await req(t.objectStore("snapshots").getAll());
       t.objectStore("recovery").add({
-        savedAt: new Date().toISOString(), state: raw, snapshots: oldSnapshots,
+        savedAt: new Date().toISOString(), ...(records.length === 0 ? {} : { state: raw }), snapshots: oldSnapshots,
       });
-      const restored = { ...state, revision: expectedRevision + 1 };
       t.objectStore("state").put(restored, "current");
       const ss = t.objectStore("snapshots");
       ss.clear();

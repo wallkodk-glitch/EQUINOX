@@ -24,21 +24,25 @@ it('installation fetches exact build bytes without a stale HTTP cache and activa
   await writeFile(join(folder, 'dist/index.html'), html);
   execFileSync(process.execPath, [resolve('scripts/build-pwa.mjs')], { cwd: folder });
   const handlers = new Map<string, (event: unknown) => void>();
-  let requests: Request[] = [], installed: Promise<void> | undefined, activated: Promise<void> | undefined;
+  let requests: Request[] = [], installed: Promise<void> | undefined, activated: Promise<void> | undefined, skipWaitingCalls = 0;
   const activation = Promise.resolve();
   runInNewContext(await readFile(join(folder, 'dist/sw.js'), 'utf8'), {
    URL, Request, self: { location: { origin: 'https://equinox.test' },
-    skipWaiting: () => activation, addEventListener: (n: string, f: (e: unknown) => void) => handlers.set(n, f) },
+    skipWaiting: () => { skipWaitingCalls++; return activation; }, addEventListener: (n: string, f: (e: unknown) => void) => handlers.set(n, f) },
    caches: { keys: async () => [], open: async () => ({ addAll: async (items: Request[]) => { requests = items; } }) },
   });
   handlers.get('install')!({ waitUntil: (p: Promise<void>) => { installed = p; } });
   await installed;
+  expect(skipWaitingCalls).toBe(0);
+  handlers.get('message')!({ data: { type: 'UNRELATED_MESSAGE' } });
+  expect(skipWaitingCalls).toBe(0);
   expect(requests.length).toBeGreaterThan(0);
   expect(requests.every(r => r instanceof Request && r.cache === 'reload')).toBe(true);
   const index = requests.find(r => r.url.endsWith('/index.html'));
   expect(index?.integrity).toBe('sha256-' + createHash('sha256').update(html).digest('base64'));
   handlers.get('message')!({ data: { type: 'ACTIVATE_UPDATE' }, waitUntil: (p: Promise<void>) => { activated = p; } });
   expect(activated).toBe(activation);
+  expect(skipWaitingCalls).toBe(1);
  } finally { await rm(folder, { recursive: true, force: true }); }
 });
 

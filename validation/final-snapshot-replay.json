@@ -1,6 +1,6 @@
 {
   "format": "EQUINOX_UI_SNAPSHOT_COMPATIBILITY_V1",
-  "checkedAt": "2026-10-12T12:43:15.171Z",
+  "checkedAt": "2026-10-14T13:53:29.747Z",
   "status": "PASS",
   "scope": "Frozen Engine Node replay and exact canonical comparison to supplied accepted snapshots/data. Not Node-to-browser replay.",
   "snapshots": [

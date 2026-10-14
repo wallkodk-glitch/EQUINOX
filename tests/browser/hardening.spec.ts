@@ -1,10 +1,109 @@
 import { test, expect, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { waitForInteractive } from './helpers';
 
 async function settings(page: Page) {
   await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
   await page.locator('.settings-group').filter({ hasText: 'Backup og historik' }).locator('summary').first().click();
 }
+
+test('a demo history file held across exit cannot alter the personal database', async ({ page }) => {
+  const fixture = JSON.parse(readFileSync('validation/closure-final-synchronized.json', 'utf8'));
+  await page.clock.install({ time: new Date(fixture.validationAsOf) });
+  await page.goto('./'); await waitForInteractive(page);
+  await page.getByLabel('Ny kapital i DKK').fill('4321');
+  await expect(page.locator('.statusline')).toContainText('Gemt lokalt');
+  const readState = () => page.evaluate(async () => {
+    return new Promise<unknown>((resolve, reject) => {
+      const opened = indexedDB.open('EQUINOX_V1');
+      opened.onerror = () => reject(opened.error);
+      opened.onsuccess = () => {
+        const db = opened.result, t = db.transaction('state');
+        const current = t.objectStore('state').get('current');
+        t.oncomplete = () => { db.close(); resolve(current.result); };
+        t.onabort = () => { db.close(); reject(t.error); };
+      };
+    });
+  });
+  const before = await readState();
+  await page.getByRole('button', { name: 'Prøv med demodata' }).click();
+  await page.getByRole('navigation').getByRole('button', { name: 'Settings', exact: true }).click();
+  await page.locator('.settings-group').filter({ hasText: 'Historiske markedsdata' }).locator('summary').first().click();
+  await page.evaluate(() => {
+    const text = File.prototype.text;
+    let release!: () => void;
+    const gate = new Promise<void>(resolve => { release = resolve; });
+    Object.assign(window, { demoFileHeld: false, releaseDemoFile: release });
+    File.prototype.text = async function () {
+      if (this.name === 'held-history.json') { Object.assign(window, { demoFileHeld: true }); await gate; }
+      return text.call(this);
+    };
+  });
+  await page.getByLabel('Importér datasæt', { exact: true }).setInputFiles({
+    name: 'held-history.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(fixture.normalizedInput)),
+  });
+  await page.waitForFunction(() => (window as unknown as { demoFileHeld: boolean }).demoFileHeld);
+  await page.getByRole('button', { name: 'Afslut demo' }).click();
+  await page.evaluate(() => (window as unknown as { releaseDemoFile: () => void }).releaseDemoFile());
+  await expect(page.getByLabel('Importér datasæt', { exact: true })).toBeEnabled();
+  expect(await readState()).toEqual(before);
+  await expect(page.getByText('Historik importeret.', { exact: false })).toHaveCount(0);
+  await page.reload(); await waitForInteractive(page);
+  expect(await readState()).toEqual(before);
+  await expect(page.getByLabel('Ny kapital i DKK')).toHaveValue('4321');
+});
+
+test('an existing undefined state record requires recovery and is not silently reset', async ({ page }) => {
+  await page.goto('./'); await waitForInteractive(page);
+  await page.evaluate(() => new Promise<void>((resolve, reject) => {
+    const opened = indexedDB.open('EQUINOX_V1');
+    opened.onerror = () => reject(opened.error);
+    opened.onsuccess = () => {
+      const db = opened.result, t = db.transaction('state', 'readwrite');
+      t.objectStore('state').put(undefined, 'current');
+      t.oncomplete = () => { db.close(); resolve(); };
+      t.onabort = () => { db.close(); reject(t.error); };
+    };
+  }));
+  await page.reload(); await waitForInteractive(page);
+  await expect(page.getByRole('heading', { name: 'Bevar dine data' })).toBeVisible();
+  await expect(page.getByRole('alert')).toContainText('CORRUPTED_OR_UNSUPPORTED_STATE');
+  await page.getByRole('button', { name: 'Eksportér recovery-kopi' }).click();
+  await expect(page.getByRole('alert')).toContainText('RAW_RECOVERY_NOT_JSON_SAFE');
+});
+
+test('a delayed demo result cannot select itself in a later demo session', async ({ page }) => {
+  await page.goto('./'); await waitForInteractive(page);
+  await page.getByLabel('Ny kapital i DKK').fill('4321');
+  await expect(page.locator('.statusline')).toContainText('Gemt lokalt');
+  await page.getByRole('button', { name: 'Prøv med demodata' }).click();
+  await page.getByLabel('Ny kapital i DKK').fill('1234');
+  await page.evaluate(() => {
+    const digest = crypto.subtle.digest.bind(crypto.subtle);
+    let release!: () => void, first = true;
+    const held = new Promise<void>(resolve => { release = resolve; });
+    Object.assign(window, { demoDigestHeld: false, releaseDemoDigest: release });
+    crypto.subtle.digest = async (...args) => {
+      if (first) { first = false; Object.assign(window, { demoDigestHeld: true }); await held; }
+      return digest(...args);
+    };
+  });
+  await page.getByRole('button', { name: 'Beregn fordeling' }).click();
+  await page.waitForFunction(() => (window as unknown as { demoDigestHeld: boolean }).demoDigestHeld);
+  await page.getByRole('button', { name: 'Afslut demo' }).click();
+  await page.getByRole('button', { name: 'Prøv med demodata' }).click();
+  await page.getByLabel('Ny kapital i DKK').fill('9876');
+  await page.evaluate(() => (window as unknown as { releaseDemoDigest: () => void }).releaseDemoDigest());
+  await expect(page.getByRole('button', { name: 'Beregn fordeling' })).toBeEnabled();
+  await expect(page.locator('.buy-plan')).toHaveCount(0);
+  await expect(page.getByLabel('Ny kapital i DKK')).toHaveValue('9876');
+  await page.getByRole('button', { name: 'Beregn fordeling' }).click();
+  await expect(page.getByText('Midlertidigt demo-snapshot', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Afslut demo' }).click();
+  await expect(page.getByLabel('Ny kapital i DKK')).toHaveValue('4321');
+  await settings(page);
+  await expect(page.locator('.history-row')).toHaveCount(0);
+});
 
 test('calculation excludes restore and duplicate submits but preserves rapid edits and exact snapshot input', async ({ page }) => {
   await page.goto('./'); await waitForInteractive(page);

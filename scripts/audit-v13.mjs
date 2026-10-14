@@ -1,10 +1,11 @@
-// Frozen boundary audit against the actual supplied 1.3.1 ZIP, not an older Git HEAD.
+// Frozen source ancestry stays bound to the supplied 1.3.1 ZIP; the current
+// working archive is recorded separately and must not replace those hashes.
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 const baseline = JSON.parse(await readFile('validation/final-baseline.json'));
 const operational = {
-  'src/persistence/store.ts': 'Reproduced partial save/restore rollback, unhandled read abort, sanitized snapshot storage; strict financial durability.',
+  'src/persistence/store.ts': 'Reproduced partial save/restore rollback, unhandled read abort, sanitized new snapshot storage; strict durability. Raw JSON export now rejects lossy values without altering corrupt originals or recovery copies.',
   'src/market-data/live/cache.ts': 'Reproduced unhandled transaction abort; operation still rejects and preserves previous cache.',
   'src/market-data/live/network.ts': 'Reproduced response-size limit applied only after unbounded buffering; bound streamed bytes and cancel excess.',
 };
@@ -21,9 +22,10 @@ for (const path of await readdir('src', { recursive: true })) {
 const packageMetadata = JSON.parse(await readFile('package.json'));
 assert.deepEqual(packageMetadata.dependencies, baseline.dependencies);
 assert.deepEqual(packageMetadata.devDependencies, { ...baseline.devDependencies, '@playwright/test': '1.64.0' });
-assert.equal(packageMetadata.version, '1.3.2');
+assert.equal(packageMetadata.version, '1.3.4');
 const report = { format: 'EQUINOX_FINAL_FROZEN_AUDIT_V1', checkedAt: new Date().toISOString(), status: 'PASS',
   inputSHA256: baseline.inputSHA256, inputAppVersion: baseline.inputAppVersion, finalAppVersion: packageMetadata.version,
+  inputScope: 'Frozen source ancestry, not the current working archive', workingBaseline: baseline.workingBaseline,
   engineVersion: '1.0.1', marketDataModelVersion: '1.1.2', frozenFiles, operationalFiles,
   financialMathByteIdentical: true, tsmEvidenceAndSemanticsByteIdentical: true,
   dependencyChanges: [{ name: '@playwright/test', before: '1.63.0', after: '1.64.0', scope: 'Development only; upstream WebKit service-worker offline fix #42894.' }] };

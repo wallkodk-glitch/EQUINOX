@@ -1,0 +1,152 @@
+{
+  "format": "EQUINOX_RED_TEAM_V1",
+  "inputVerdict": "PATCH REQUIRED",
+  "correctedAppVersion": "1.3.4",
+  "releaseStatus": "BLOCKED",
+  "inputArchive": "EQUINOX-v1.3.3-hardened-5a7ea73cd604bbeb(1).zip",
+  "inputArchiveSHA256": "f481df7c1fa7d6ba404dddf406c6e2f3d10269309038833999b7dd7d273994db",
+  "workingBaselineSHA256": "30e5ba825b00e1f16f531c945d668148ecca3ca1864559fb40f10f0f991eba3d",
+  "inputIdentity": {
+    "entryCount": 246,
+    "manifestCoveredFiles": 245,
+    "productFiles": 243,
+    "infrastructureFiles": 2,
+    "crc": "PASS",
+    "hashesAndBytes": "PASS",
+    "sourceGate": "PASS"
+  },
+  "inputProductionChanges": [
+    "src/persistence/store.ts",
+    "src/ui/App.tsx"
+  ],
+  "correctedProductionChanges": [
+    "src/persistence/store.ts",
+    "src/ui/App.tsx"
+  ],
+  "engineVersion": "1.0.1",
+  "marketDataModelVersion": "1.1.2",
+  "financialSchema": 1,
+  "snapshotSchemas": [
+    1,
+    2
+  ],
+  "dependenciesAndLockEntriesUnchanged": true,
+  "workflowsUnchanged": true,
+  "all223OriginalSourceTestHashBindingsMatch": true,
+  "duplicateClaimIDs": false,
+  "originalCounts": {
+    "VERIFIED IMPLEMENTED": 155,
+    "IMPLEMENTED BUT UNDERTESTED": 37,
+    "GUIDANCE ONLY": 24,
+    "HISTORICAL ONLY": 7
+  },
+  "redTeamInputCounts": {
+    "VERIFIED IMPLEMENTED": 148,
+    "AMBIGUOUS / CANNOT PROVE": 1,
+    "IMPLEMENTED BUT UNDERTESTED": 35,
+    "IMPLEMENTATION VIOLATES CONTRACT": 8,
+    "GUIDANCE ONLY": 24,
+    "HISTORICAL ONLY": 7
+  },
+  "correctedOverlayCounts": {
+    "VERIFIED IMPLEMENTED": 154,
+    "AMBIGUOUS / CANNOT PROVE": 1,
+    "IMPLEMENTED BUT UNDERTESTED": 37,
+    "GUIDANCE ONLY": 24,
+    "HISTORICAL ONLY": 7
+  },
+  "methodology": "Seven-domain broad source/assertion review; SHA binding and full suite are not exhaustive semantic proof of all 223 rows. C/D/E are never runtime PASS.",
+  "proofs": {
+    "persistence-red-before": {
+      "path": "validation/red-team-persistence-red-before.json",
+      "sha256": "5c37580f33ea215ea7c675097937a810bf4420ba34c7c40d146b9875add117e0",
+      "passed": 6,
+      "failed": 4,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "persistence-green-after": {
+      "path": "validation/red-team-persistence-green-after.json",
+      "sha256": "1fb565a465b88cae1aedd84a551a6219dd8fc0c1948ebf72ce62de2a123ad7a5",
+      "passed": 34,
+      "failed": 0,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "ui-file-red-before": {
+      "path": "validation/red-team-ui-file-red-before.json",
+      "sha256": "3fbc47b06f8e79bc9f11b9a0ac1be82b3146bd5845ec6cf7c66d5a64d54b0b2f",
+      "passed": 2,
+      "failed": 4,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "ui-file-green-after": {
+      "path": "validation/red-team-ui-file-green-after.json",
+      "sha256": "e6f8d8c458ff079928f4dc7777220cff82ce836b86ef775bf369cf70146dd083",
+      "passed": 6,
+      "failed": 0,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "ui-update-red-before": {
+      "path": "validation/red-team-ui-update-red-before.json",
+      "sha256": "1931ebe2cc012e28d1d99b476d7cd84a9e8bcadf9bca01dbc57c92bb391c70b9",
+      "passed": 2,
+      "failed": 1,
+      "pending": 6,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "ui-session-green-after": {
+      "path": "validation/red-team-ui-session-green-after.json",
+      "sha256": "e5c06b426bfbb50e887b85fd3f7d9394401f9265deb5adc75395ebdf5195796f",
+      "passed": 9,
+      "failed": 0,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "revision-red-before": {
+      "path": "validation/red-team-revision-red-before.json",
+      "sha256": "d590c21b56a8cbe09494a141126e4dc9998d7545da126f52c36f1ce87a75b4f9",
+      "passed": 0,
+      "failed": 3,
+      "pending": 13,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    },
+    "revision-green-after": {
+      "path": "validation/red-team-revision-green-after.json",
+      "sha256": "c9fea9a3c3cc8da40475443d2d4a72e6deaa92a1c05ffe134d36e46b597c96c9",
+      "passed": 40,
+      "failed": 0,
+      "pending": 0,
+      "scope": "Node production code with fake-IDB or extracted App closures; NOT native browser/device"
+    }
+  },
+  "currentSourceHashes": {
+    "src/persistence/store.ts": "3f60078fe920440a0ae44fce8930a8ee03c4df75c84acd3741371ce66e5c6f16",
+    "src/ui/App.tsx": "846e2293e22bc9c5597b2b19d267cee065c214c5685690cd58e8b709a4a17b5b"
+  },
+  "freshGates": "validation/final-checks.json",
+  "freshGatesSHA256": "95cc46ebb25d65744e59064c53f6262e4e9bc3178dd2d02b5d1e7910d9a31a5a",
+  "unitIntegrationTests": 314,
+  "browserCasesDiscovered": 94,
+  "browserApplicationAssertionsExecuted": 0,
+  "chromium": "BLOCKED: pinned executable unavailable/download did not produce a usable archive",
+  "webkit": "BLOCKED: installed pinned binary requires missing host libraries",
+  "hosted": "NOT TESTED",
+  "remoteImportPush": "NOT TESTED",
+  "githubActions": "NOT TESTED",
+  "liveProviderAuthCORS": "NOT TESTED",
+  "physicalIPhone": "NOT TESTED",
+  "installedPWA": "NOT TESTED",
+  "patchBoundary": "Session guard protects asynchronous dataset/snapshot publication; it is not cancellation/rollback of an already-entered restore.",
+  "supersededGateRun": {
+    "path": "validation/red-team-first-gates.json",
+    "status": "HISTORICAL FAIL",
+    "resolvedCauses": [
+      "New UI version expected literal needed 1.3.4",
+      "New persistence fixture lacked required acknowledgement"
+    ],
+    "note": "No production validator relaxed; superseded by fresh final-checks.json."
+  }
+}

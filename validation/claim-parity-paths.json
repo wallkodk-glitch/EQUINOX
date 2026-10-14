@@ -1,0 +1,1784 @@
+{
+  "status": "PASS",
+  "scope": "nine AI files, literal repository references, Markdown links, root/router/domain reachability; guidance domain shorthand excluded",
+  "files": [
+    "AGENTS.md",
+    "ai/README.md",
+    "ai/system/README.md",
+    "ai/math/README.md",
+    "ai/data/README.md",
+    "ai/persistence/README.md",
+    "ai/ui/README.md",
+    "ai/pwa/README.md",
+    "ai/release/README.md"
+  ],
+  "referenceCount": 353,
+  "missing": [],
+  "references": [
+    {
+      "file": "AGENTS.md",
+      "path": "ai/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/system/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "AGENTS.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "AGENTS.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/system/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/system/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/domain/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/market-data/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/portfolio/accounting.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/risk/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/optimization/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/execution/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/snapshots/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/persistence/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/ui/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/domain/core.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/main.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "docs/audit.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "docs/reference-audit.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "reference/",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "docs/final-data-closure/data-semantics.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "docs/data-contract.md",
+      "exists": true
+    },
+    {
+      "file": "ai/system/README.md",
+      "path": "docs/final-hardening/",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/optimization/targets.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/risk/math.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/optimization/targets.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/execution/allocator.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/risk/math.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/snapshots/calculate.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/domain/core.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/portfolio/accounting.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/risk/math.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/optimization/targets.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/execution/allocator.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/snapshots/calculate.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "src/portfolio/accounting.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "tests/engine.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "tests/reference.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "tests/reference.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "reference/reproduce.py",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "reference/reference.json",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "docs/reference-audit.md",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "reference/final-risk.py",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "docs/audit.md",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/math/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/model.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-provenance.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-actions.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/synchronized.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/snapshots/calculate.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/data.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/synchronized-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/risk-refresh.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/ui/risk-import.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/risk-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/data-contract.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/final-data-closure/data-semantics.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/retrospective-fx.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/nationalbank-history.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/calendar.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/sessions.json",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/timestamps.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-actions.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/tsm-adr.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/tsm-adr.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-actions.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/tsm-final-dividend.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/tsm-adr.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "validation/v1.3-tsm-evidence-renewal.json",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/synchronized.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-provenance.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/cache.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/credentials.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/coingecko.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/calendar.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/retrospective-fx.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/sessions.json",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/model.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/network.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/synchronized.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-provenance.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-actions.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/retrospective-fx.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/nationalbank-history.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/risk-actions.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/tsm-adr.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/cache.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/market-cache.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/market-data/live/credentials.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/credentials.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "src/ui/MarketDataSettings.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/market-settings.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/risk-refresh.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/final-data-closure/data-semantics.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/data-contract.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/data-contract.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/data-provider-research.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "docs/data-provider-research.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "reference/final-risk.py",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/data.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/market-parsers.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/market-network.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/refresh-network.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/historical-fx.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/retrospective-fx-contract.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/official-fx-holiday-gaps.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/synchronized-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/synchronized-risk-boundary.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/risk-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/tsm-adr.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/tsm-final-dividend.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/risk-refresh.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/nationalbank.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "tests/browser/market-settings.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/data/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/schema.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/store.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/market-data/live/cache.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/market-data/live/credentials.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/schema.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/schema.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/store.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/snapshots/integrity.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/snapshots/calculate.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/store.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/schema.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/persistence/store.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/snapshots/integrity.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "src/snapshots/calculate.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "tests/persistence.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "tests/snapshots.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "tests/legacy-snapshot.json",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "docs/final-hardening/engineering-ledger.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/persistence/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/format.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/calculation-job.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/risk-import.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/market-data/provider.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/BuyPlan.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/RiskView.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/Details.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/presentation.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/format.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/LaunchIntro.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/launch-state.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "docs/ui-v1/design-system.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "docs/ui-v1/visual-strategy.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/styles.css",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/browser-hardening.css",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/presentation.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/format.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/calculation-job.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/calculation-job.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/hardening.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/risk-import.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/risk-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/risk-refresh.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/data.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/Overview.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/BuyPlan.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/RiskView.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/Details.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/MarketDataSettings.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/BalanceRail.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/LaunchIntro.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/launch-state.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/styles.css",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "src/ui/browser-hardening.css",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "docs/ui-v1/design-system.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "docs/ui-v1/visual-strategy.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "docs/ui-v1/review.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/ui-presentation.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "playwright.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/helpers.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/app.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/hardening.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/launch.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/ui.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "tests/browser/market-settings.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/ui/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "vite.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "index.html",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/icon-192.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/icon-512.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/apple-touch-icon.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/service-worker-security.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "index.html",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/styles.css",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/browser-hardening.css",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/LaunchIntro.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/launch-state.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/apple-touch-icon.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/icon-192.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "public/icon-512.png",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "vite.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "docs/iphone-checklist.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "vite.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "playwright.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "vite.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "playwright.config.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "index.html",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/build-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/App.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/styles.css",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/browser-hardening.css",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/LaunchIntro.tsx",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "src/ui/launch-state.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "scripts/check-ui-pwa.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/service-worker-security.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/helpers.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/app.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/hardening.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/launch.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/ui.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "tests/browser/app.spec.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "docs/iphone-checklist.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "docs/ui-v1/device-release-gate.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "docs/final-hardening/engineering-ledger.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/pwa/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "RELEASE-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "RELEASE-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "src/domain/core.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "src/market-data/live/model.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "RELEASE-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "RELEASE-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/import-release.yml",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/check-release-source.py",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/pages.yml",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/pages.yml",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/iphone-checklist.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "AGENTS.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/system/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/release/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "RELEASE-MANIFEST.json",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/check-release-source.py",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/verify.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/validate-v13.mjs",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/package-v13.py",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/package-release.py",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "scripts/package-ui-release.py",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/import-release.yml",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": ".github/workflows/pages.yml",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "tests/release-import.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "tests/release-source.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "tests/hosted-release.test.ts",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/mobile-release.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/final-hardening/report.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/final-hardening/engineering-ledger.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/final-hardening/CHANGELOG.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "docs/iphone-checklist.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/math/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/data/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/persistence/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/ui/README.md",
+      "exists": true
+    },
+    {
+      "file": "ai/release/README.md",
+      "path": "ai/pwa/README.md",
+      "exists": true
+    }
+  ]
+}
